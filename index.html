@@ -486,43 +486,10 @@
   /* ── PRICING ── */
   .pricing { background: var(--white); }
 
-  .pricing-tabs {
-    display: flex;
-    gap: 0.5rem;
-    margin-bottom: 2rem;
-    background: var(--cream-dark);
-    border-radius: 100px;
-    padding: 5px;
-    width: fit-content;
-  }
-
-  .pricing-tab {
-    padding: 0.5rem 1.4rem;
-    border-radius: 100px;
-    border: none;
-    background: transparent;
-    font-family: 'Nunito', sans-serif;
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: var(--ink-muted);
-    cursor: pointer;
-    transition: all 0.2s;
-    letter-spacing: 0.02em;
-  }
-
-  .pricing-tab.active {
-    background: var(--white);
-    color: var(--ink);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  }
-
-  .pricing-panel { display: none; }
-  .pricing-panel.active { display: block; }
-
   .pricing-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.2rem;
     margin-top: 1rem;
   }
 
@@ -530,7 +497,7 @@
     background: var(--cream);
     border: 1.5px solid var(--cream-border);
     border-radius: 20px;
-    padding: 2rem 1.6rem;
+    padding: 2rem 1.4rem;
     display: flex;
     flex-direction: column;
     gap: 0.9rem;
@@ -567,7 +534,7 @@
 
   .plan-name-jp {
     font-family: 'Noto Sans JP', sans-serif;
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 700;
   }
 
@@ -586,7 +553,7 @@
 
   .plan-price-amount {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 3rem;
+    font-size: 2.8rem;
     line-height: 1;
     color: var(--terra);
   }
@@ -599,9 +566,9 @@
   }
 
   .plan-sessions {
-    font-size: 0.88rem;
+    font-size: 0.85rem;
     opacity: 0.7;
-    padding-bottom: 0.8rem;
+    padding-bottom: 0.6rem;
     border-bottom: 1px solid rgba(0,0,0,0.08);
   }
 
@@ -615,11 +582,10 @@
     border: 1px solid rgba(192,74,42,0.15);
     border-radius: 100px;
     padding: 0.25rem 0.8rem;
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     font-weight: 700;
     color: var(--terra);
     width: fit-content;
-    margin-top: -0.3rem;
   }
 
   .pricing-card.featured .plan-per-class {
@@ -640,13 +606,13 @@
     flex-direction: column;
     gap: 0.5rem;
     flex: 1;
+    font-size: 0.82rem;
   }
 
   .plan-features li {
-    font-size: 0.85rem;
     display: flex;
     align-items: flex-start;
-    gap: 0.6rem;
+    gap: 0.5rem;
     opacity: 0.85;
   }
 
@@ -678,10 +644,7 @@
     background: transparent;
   }
 
-  .plan-cta-outline:hover {
-    border-color: var(--terra);
-    color: var(--terra);
-  }
+  .plan-cta-outline:hover { border-color: var(--terra); color: var(--terra); }
 
   .plan-cta-solid {
     background: var(--terra);
@@ -689,10 +652,7 @@
     border: 1.5px solid var(--terra);
   }
 
-  .plan-cta-solid:hover {
-    background: var(--terra-light);
-    transform: translateY(-1px);
-  }
+  .plan-cta-solid:hover { background: var(--terra-light); transform: translateY(-1px); }
 
   .plan-cta-white {
     background: var(--white);
@@ -719,10 +679,7 @@
     margin-bottom: 0.3rem;
   }
 
-  .trial-note-en {
-    font-size: 0.85rem;
-    color: var(--ink-soft);
-  }
+  .trial-note-en { font-size: 0.85rem; color: var(--ink-soft); }
 
   .trial-note-price {
     font-family: 'Bebas Neue', sans-serif;
@@ -733,7 +690,29 @@
     margin: 0.4rem 0;
   }
 
-  /* ── FAQ ── */
+  .cancel-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--cream-dark);
+    border: 1px solid var(--cream-border);
+    border-radius: 100px;
+    padding: 0.3rem 1rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--ink-soft);
+    margin-bottom: 1.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .pricing-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 480px) {
+    .pricing-grid { grid-template-columns: 1fr; max-width: 340px; margin: 1rem auto 0; }
+  }
+
+    /* ── FAQ ── */
   .faq { background: var(--cream); }
 
   .faq-list {
@@ -1012,7 +991,7 @@
         Real conversation. Real progress. No textbooks, no scripts — just you and a qualified native English teacher talking about things that actually matter to you.
       </p>
       <div class="hero-actions">
-        <a href="https://buy.stripe.com/test_4gM00lfI91qUeRo5x600000" target="_blank" class="btn-primary">
+        <a href="https://buy.stripe.com/14AbJ2cQy8Ng5lTgyu1RC03" target="_blank" class="btn-primary">
           体験レッスンを予約する
           <small>¥1,000 · 25分</small>
         </a>
@@ -1209,243 +1188,111 @@
 <section class="pricing" id="pricing">
   <div class="section-inner">
     <div class="section-label">料金プラン · Pricing</div>
-    <div class="section-title-jp">シンプルな料金体系</div>
-    <div class="section-title-en">Simple, honest pricing. No hidden fees.</div>
+    <div class="section-title-jp">シンプルな月額プラン</div>
+    <div class="section-title-en">Simple monthly plans. Cancel anytime before your next billing date.</div>
+
+    <div style="text-align:center; margin-bottom: 2rem;">
+      <span class="cancel-badge">✓ いつでもキャンセル可 · Cancel anytime · No long-term commitment</span>
+    </div>
+
+    <div class="pricing-grid">
+
+      <!-- SUPER LIGHT -->
+      <div class="pricing-card">
+        <div class="plan-name-jp">スーパーライト</div>
+        <div class="plan-name-en">Super Light</div>
+        <div class="plan-price">
+          <div class="plan-price-amount">¥5,000</div>
+          <div class="plan-price-unit">/月</div>
+        </div>
+        <div class="plan-sessions">月2回 · 25分 · 隔週 / twice monthly</div>
+        <div class="plan-per-class">1回あたり <span>¥2,500</span></div>
+        <ul class="plan-features">
+          <li>毎回同じ講師</li>
+          <li>レッスン後フィードバック</li>
+          <li>オリジナル教材使用</li>
+          <li>LINEサポート</li>
+          <li>未使用レッスン繰り越し（最大3回）</li>
+        </ul>
+        <a href="https://buy.stripe.com/dRm4gA8Aie7Ag0x6XU1RC0b" target="_blank" class="plan-cta plan-cta-outline">このプランを選ぶ</a>
+      </div>
+
+      <!-- LIGHT -->
+      <div class="pricing-card">
+        <div class="plan-name-jp">ライト</div>
+        <div class="plan-name-en">Light</div>
+        <div class="plan-price">
+          <div class="plan-price-amount">¥9,000</div>
+          <div class="plan-price-unit">/月</div>
+        </div>
+        <div class="plan-sessions">月4回 · 25分 · 週1回 / once a week</div>
+        <div class="plan-per-class">1回あたり <span>¥2,250</span></div>
+        <ul class="plan-features">
+          <li>毎回同じ講師</li>
+          <li>レッスン後フィードバック</li>
+          <li>オリジナル教材使用</li>
+          <li>LINEサポート</li>
+          <li>未使用レッスン繰り越し（最大6回）</li>
+        </ul>
+        <a href="https://buy.stripe.com/7sYbJ2eYG6F84hP2HE1RC0d" target="_blank" class="plan-cta plan-cta-outline">このプランを選ぶ</a>
+      </div>
+
+      <!-- REGULAR -->
+      <div class="pricing-card featured">
+        <div class="pricing-badge">おすすめ · Most Popular</div>
+        <div class="plan-name-jp">レギュラー</div>
+        <div class="plan-name-en">Regular</div>
+        <div class="plan-price">
+          <div class="plan-price-amount">¥15,000</div>
+          <div class="plan-price-unit">/月</div>
+        </div>
+        <div class="plan-sessions">月8回 · 25分 · 週2回 / twice a week</div>
+        <div class="plan-per-class">1回あたり <span>¥1,875</span></div>
+        <ul class="plan-features">
+          <li>毎回同じ講師</li>
+          <li>レッスン後フィードバック</li>
+          <li>オリジナル教材使用</li>
+          <li>LINEサポート</li>
+          <li>月次進捗レポート</li>
+          <li>未使用レッスン繰り越し（最大12回）</li>
+        </ul>
+        <a href="https://buy.stripe.com/6oU3cwg2K8Ng7u15TQ1RC0a" target="_blank" class="plan-cta plan-cta-white">このプランを選ぶ</a>
+      </div>
+
+      <!-- INTENSIVE -->
+      <div class="pricing-card">
+        <div class="plan-name-jp">集中</div>
+        <div class="plan-name-en">Intensive</div>
+        <div class="plan-price">
+          <div class="plan-price-amount">¥20,400</div>
+          <div class="plan-price-unit">/月</div>
+        </div>
+        <div class="plan-sessions">月12回 · 25分 · 週3回 / three times a week</div>
+        <div class="plan-per-class">1回あたり <span>¥1,700</span></div>
+        <ul class="plan-features">
+          <li>毎回同じ講師</li>
+          <li>レッスン後フィードバック</li>
+          <li>オリジナル教材使用</li>
+          <li>LINEサポート</li>
+          <li>月次進捗レポート</li>
+          <li>未使用レッスン繰り越し（最大18回）</li>
+        </ul>
+        <a href="https://buy.stripe.com/eVq28s2bY6F8eWtgyu1RC0e" target="_blank" class="plan-cta plan-cta-outline">このプランを選ぶ</a>
+      </div>
+
+    </div>
 
     <div class="trial-note">
       <div class="trial-note-jp">まずは体験レッスンから</div>
       <span class="trial-note-price">¥1,000</span>
-      <div class="trial-note-en">25-minute trial lesson · No commitment · Book directly below<br>気に入ったらそのままプランへ / If you enjoy it, move straight into a plan</div>
+      <div class="trial-note-en">25-minute trial lesson · No commitment · One per student<br>気に入ったらそのままプランへ / Move straight into a plan if you enjoy it</div>
       <br>
-      <a href="https://buy.stripe.com/test_4gM00lfI91qUeRo5x600000" target="_blank" class="btn-primary" style="display:inline-flex; margin-top:0.5rem;">体験レッスンを予約する<small>25分 · ¥1,000</small></a>
+      <a href="https://buy.stripe.com/14AbJ2cQy8Ng5lTgyu1RC03" target="_blank" class="btn-primary" style="display:inline-flex; margin-top:0.5rem;">体験レッスンを予約する<small>25分 · ¥1,000</small></a>
     </div>
 
-    <br><br>
-
-    <!-- Frequency tabs -->
-    <div class="pricing-tabs">
-      <button class="pricing-tab" onclick="showPlan('light', this)">ライト · 週1回</button>
-      <button class="pricing-tab active" onclick="showPlan('regular', this)">レギュラー · 週2回</button>
-      <button class="pricing-tab" onclick="showPlan('intensive', this)">集中 · 週3回</button>
-    </div>
-
-    <!-- LIGHT: 4 sessions/month -->
-    <div class="pricing-panel" id="panel-light">
-      <div class="pricing-grid">
-
-        <div class="pricing-card">
-          <div class="plan-name-jp">ライト · 月払い</div>
-          <div class="plan-name-en">Light · Monthly</div>
-          <div class="plan-price">
-            <div class="plan-price-amount">¥10,000</div>
-            <div class="plan-price-unit">/月</div>
-          </div>
-          <div class="plan-sessions">月4回 · 25分 / 4 sessions · ~1×/week</div>
-          <div class="plan-per-class">1回あたり <span>¥2,500</span> / per class</div>
-          <ul class="plan-features">
-            <li>毎回同じ講師</li>
-            <li>レッスン後フィードバック</li>
-            <li>オリジナル教材使用</li>
-            <li>LINEサポート</li>
-            <li>いつでもキャンセル可</li>
-            <li>未使用レッスン繰り越し可（最大6回）</li>
-          </ul>
-          <a href="https://buy.stripe.com/test_dRmaEZbrT2uY9x48Ji00001" target="_blank" class="plan-cta plan-cta-outline">このプランを選ぶ</a>
-        </div>
-
-        <div class="pricing-card featured">
-          <div class="pricing-badge">おすすめ · Best Value</div>
-          <div class="plan-name-jp">ライト · 3ヶ月</div>
-          <div class="plan-name-en">Light · 3 Month Commit</div>
-          <div class="plan-price">
-            <div class="plan-price-amount">¥8,500</div>
-            <div class="plan-price-unit">/月</div>
-          </div>
-          <div class="plan-sessions">月4回 · 25分 · 3ヶ月前払い ¥25,500</div>
-          <div class="plan-per-class">1回あたり <span>¥2,125</span> / per class</div>
-          <ul class="plan-features">
-            <li>毎回同じ講師</li>
-            <li>レッスン後フィードバック</li>
-            <li>オリジナル教材使用</li>
-            <li>LINEサポート</li>
-            <li>月次進捗レポート</li>
-            <li>月払いより15%お得</li>
-            <li>最大4週間の一時停止可</li>
-            <li>未使用レッスン繰り越し可（最大6回）</li>
-          </ul>
-          <a href="https://buy.stripe.com/test_fZu00lfI9c5ydNk6Ba00002" target="_blank" class="plan-cta plan-cta-white">このプランを選ぶ</a>
-        </div>
-
-        <div class="pricing-card">
-          <div class="plan-name-jp">ライト · 年間</div>
-          <div class="plan-name-en">Light · Annual</div>
-          <div class="plan-price">
-            <div class="plan-price-amount">¥7,000</div>
-            <div class="plan-price-unit">/月</div>
-          </div>
-          <div class="plan-sessions">月4回 · 25分 · 年間前払い ¥84,000</div>
-          <div class="plan-per-class">1回あたり <span>¥1,750</span> / per class</div>
-          <ul class="plan-features">
-            <li>毎回同じ講師</li>
-            <li>レッスン後フィードバック</li>
-            <li>オリジナル教材使用</li>
-            <li>LINEサポート</li>
-            <li>月次進捗レポート</li>
-            <li>最もお得な年間プラン</li>
-            <li>最大12週間の一時停止可</li>
-          </ul>
-          <a href="https://buy.stripe.com/test_dRm6oJeE55HabFc9Nm00003" target="_blank" class="plan-cta plan-cta-outline">このプランを選ぶ</a>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- REGULAR: 8 sessions/month -->
-    <div class="pricing-panel active" id="panel-regular">
-      <div class="pricing-grid">
-
-        <div class="pricing-card">
-          <div class="plan-name-jp">レギュラー · 月払い</div>
-          <div class="plan-name-en">Regular · Monthly</div>
-          <div class="plan-price">
-            <div class="plan-price-amount">¥18,000</div>
-            <div class="plan-price-unit">/月</div>
-          </div>
-          <div class="plan-sessions">月8回 · 25分 / 8 sessions · ~2×/week</div>
-          <div class="plan-per-class">1回あたり <span>¥2,250</span> / per class</div>
-          <ul class="plan-features">
-            <li>毎回同じ講師</li>
-            <li>レッスン後フィードバック</li>
-            <li>オリジナル教材使用</li>
-            <li>LINEサポート</li>
-            <li>いつでもキャンセル可</li>
-            <li>未使用レッスン繰り越し可（最大12回）</li>
-          </ul>
-          <a href="https://buy.stripe.com/test_8x214panP8TmfVs2kU00004" target="_blank" class="plan-cta plan-cta-outline">このプランを選ぶ</a>
-        </div>
-
-        <div class="pricing-card featured">
-          <div class="pricing-badge">おすすめ · Best Value</div>
-          <div class="plan-name-jp">レギュラー · 3ヶ月</div>
-          <div class="plan-name-en">Regular · 3 Month Commit</div>
-          <div class="plan-price">
-            <div class="plan-price-amount">¥15,000</div>
-            <div class="plan-price-unit">/月</div>
-          </div>
-          <div class="plan-sessions">月8回 · 25分 · 3ヶ月前払い ¥45,000</div>
-          <div class="plan-per-class">1回あたり <span>¥1,875</span> / per class</div>
-          <ul class="plan-features">
-            <li>毎回同じ講師</li>
-            <li>レッスン後フィードバック</li>
-            <li>オリジナル教材使用</li>
-            <li>LINEサポート</li>
-            <li>月次進捗レポート</li>
-            <li>月払いより17%お得</li>
-            <li>最大4週間の一時停止可</li>
-            <li>未使用レッスン繰り越し可（最大12回）</li>
-          </ul>
-          <a href="https://buy.stripe.com/test_aFaaEZfI92uYeRo7Fe00005" target="_blank" class="plan-cta plan-cta-white">このプランを選ぶ</a>
-        </div>
-
-        <div class="pricing-card">
-          <div class="plan-name-jp">レギュラー · 年間</div>
-          <div class="plan-name-en">Regular · Annual</div>
-          <div class="plan-price">
-            <div class="plan-price-amount">¥12,500</div>
-            <div class="plan-price-unit">/月</div>
-          </div>
-          <div class="plan-sessions">月8回 · 25分 · 年間前払い ¥150,000</div>
-          <div class="plan-per-class">1回あたり <span>¥1,563</span> / per class</div>
-          <ul class="plan-features">
-            <li>毎回同じ講師</li>
-            <li>レッスン後フィードバック</li>
-            <li>オリジナル教材使用</li>
-            <li>LINEサポート</li>
-            <li>月次進捗レポート</li>
-            <li>最もお得な年間プラン</li>
-            <li>最大12週間の一時停止可</li>
-          </ul>
-          <a href="https://buy.stripe.com/test_8x228t53v1qUaB82kU00006" target="_blank" class="plan-cta plan-cta-outline">このプランを選ぶ</a>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- INTENSIVE: 12 sessions/month -->
-    <div class="pricing-panel" id="panel-intensive">
-      <div class="pricing-grid">
-
-        <div class="pricing-card">
-          <div class="plan-name-jp">集中 · 月払い</div>
-          <div class="plan-name-en">Intensive · Monthly</div>
-          <div class="plan-price">
-            <div class="plan-price-amount">¥25,000</div>
-            <div class="plan-price-unit">/月</div>
-          </div>
-          <div class="plan-sessions">月12回 · 25分 / 12 sessions · ~3×/week</div>
-          <div class="plan-per-class">1回あたり <span>¥2,083</span> / per class</div>
-          <ul class="plan-features">
-            <li>毎回同じ講師</li>
-            <li>レッスン後フィードバック</li>
-            <li>オリジナル教材使用</li>
-            <li>LINEサポート</li>
-            <li>いつでもキャンセル可</li>
-            <li>未使用レッスン繰り越し可（最大18回）</li>
-          </ul>
-          <a href="https://buy.stripe.com/test_aFa28t53vc5y38GbVu00007" target="_blank" class="plan-cta plan-cta-outline">このプランを選ぶ</a>
-        </div>
-
-        <div class="pricing-card featured">
-          <div class="pricing-badge">おすすめ · Best Value</div>
-          <div class="plan-name-jp">集中 · 3ヶ月</div>
-          <div class="plan-name-en">Intensive · 3 Month Commit</div>
-          <div class="plan-price">
-            <div class="plan-price-amount">¥21,000</div>
-            <div class="plan-price-unit">/月</div>
-          </div>
-          <div class="plan-sessions">月12回 · 25分 · 3ヶ月前払い ¥63,000</div>
-          <div class="plan-per-class">1回あたり <span>¥1,750</span> / per class</div>
-          <ul class="plan-features">
-            <li>毎回同じ講師</li>
-            <li>レッスン後フィードバック</li>
-            <li>オリジナル教材使用</li>
-            <li>LINEサポート</li>
-            <li>月次進捗レポート</li>
-            <li>月払いより16%お得</li>
-            <li>最大4週間の一時停止可</li>
-            <li>未使用レッスン繰り越し可（最大18回）</li>
-          </ul>
-          <a href="https://buy.stripe.com/test_fZufZjdA19XqaB8bVu00008" target="_blank" class="plan-cta plan-cta-white">このプランを選ぶ</a>
-        </div>
-
-        <div class="pricing-card">
-          <div class="plan-name-jp">集中 · 年間</div>
-          <div class="plan-name-en">Intensive · Annual</div>
-          <div class="plan-price">
-            <div class="plan-price-amount">¥17,500</div>
-            <div class="plan-price-unit">/月</div>
-          </div>
-          <div class="plan-sessions">月12回 · 25分 · 年間前払い ¥210,000</div>
-          <div class="plan-per-class">1回あたり <span>¥1,458</span> / per class</div>
-          <ul class="plan-features">
-            <li>毎回同じ講師</li>
-            <li>レッスン後フィードバック</li>
-            <li>オリジナル教材使用</li>
-            <li>LINEサポート</li>
-            <li>月次進捗レポート</li>
-            <li>最もお得な年間プラン</li>
-            <li>最大12週間の一時停止可</li>
-          </ul>
-          <a href="https://buy.stripe.com/test_14A9AVanP9XqgZw6Ba00009" target="_blank" class="plan-cta plan-cta-outline">このプランを選ぶ</a>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- Pricing note -->
     <p style="text-align:center; font-size:0.8rem; color:var(--ink-muted); margin-top:1.5rem;">
-      全プラン25分レッスン · All plans include 25-minute sessions via Google Meet<br>
-      セッション未使用の場合は翌月へ繰り越し可 · Unused sessions roll over monthly
+      全プラン25分レッスン · Google Meet · いつでもキャンセル可<br>
+      Unused lessons roll over monthly · Cancel before next billing date · No hidden fees
     </p>
 
   </div>
@@ -1625,14 +1472,14 @@
 <div class="footer-cta">
   <div class="footer-cta-jp">さあ、話してみましょう。</div>
   <div class="footer-cta-en">Your English journey starts with one conversation.</div>
-  <a href="https://buy.stripe.com/test_4gM00lfI91qUeRo5x600000" target="_blank" class="btn-primary" style="display:inline-flex;">
+  <a href="https://buy.stripe.com/14AbJ2cQy8Ng5lTgyu1RC03" target="_blank" class="btn-primary" style="display:inline-flex;">
     体験レッスンを予約する
     <small>¥1,000 · 25分 · No commitment</small>
   </a>
 </div>
 
 <footer>
-  © 2025 JawsChat · <span>PTV</span> — Polmeartagami Ventures · jawschat.com
+  © 2026 JawsChat · <span>PTV</span> — Polmeartagami Ventures · jawschat.com
   <br><br>
   <a href="jawschat_terms.html" style="color:rgba(255,255,255,0.4); text-decoration:none; font-size:0.75rem; letter-spacing:0.06em; transition:color 0.2s;"
      onmouseover="this.style.color='#c04a2a'" onmouseout="this.style.color='rgba(255,255,255,0.4)'">
@@ -1641,13 +1488,6 @@
 </footer>
 
 <script>
-function showPlan(plan, btn) {
-  document.querySelectorAll('.pricing-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.pricing-tab').forEach(t => t.classList.remove('active'));
-  document.getElementById('panel-' + plan).classList.add('active');
-  btn.classList.add('active');
-}
-
 function toggleFaq(btn) {
   const item = btn.parentElement;
   const isOpen = item.classList.contains('open');
