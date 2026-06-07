@@ -30,7 +30,6 @@
     line-height: 1.7;
   }
 
-  /* NAV */
   nav {
     position: sticky;
     top: 0;
@@ -45,281 +44,56 @@
     justify-content: space-between;
   }
 
-  .nav-logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-  }
-
-  .nav-logo-text {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.6rem;
-    letter-spacing: 0.06em;
-    color: var(--ink);
-    line-height: 1;
-  }
-
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-logo-text { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
   .nav-logo-text span { color: var(--terra); }
-
-  .nav-back {
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: var(--terra);
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    letter-spacing: 0.02em;
-    transition: opacity 0.2s;
-  }
-
+  .nav-back { font-size: 0.85rem; font-weight: 700; color: var(--terra); text-decoration: none; display: flex; align-items: center; gap: 6px; letter-spacing: 0.02em; transition: opacity 0.2s; }
   .nav-back:hover { opacity: 0.7; }
 
-  /* HERO */
-  .terms-hero {
-    background: var(--ink);
-    padding: 4rem 2rem;
-    text-align: center;
-  }
-
-  .terms-hero h1 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 3rem;
-    letter-spacing: 0.08em;
-    color: var(--white);
-    line-height: 1;
-    margin-bottom: 0.5rem;
-  }
-
+  .terms-hero { background: var(--ink); padding: 4rem 2rem; text-align: center; }
+  .terms-hero h1 { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; letter-spacing: 0.08em; color: var(--white); line-height: 1; margin-bottom: 0.5rem; }
   .terms-hero h1 span { color: var(--terra); }
+  .terms-hero-jp { font-family: 'Noto Sans JP', sans-serif; font-size: 1.2rem; font-weight: 700; color: rgba(255,255,255,0.7); margin-bottom: 1rem; }
+  .terms-hero-meta { font-size: 0.8rem; color: rgba(255,255,255,0.4); letter-spacing: 0.06em; }
 
-  .terms-hero-jp {
-    font-family: 'Noto Sans JP', sans-serif;
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: rgba(255,255,255,0.7);
-    margin-bottom: 1rem;
-  }
+  .terms-layout { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem 6rem; display: grid; grid-template-columns: 240px 1fr; gap: 3rem; align-items: start; }
 
-  .terms-hero-meta {
-    font-size: 0.8rem;
-    color: rgba(255,255,255,0.4);
-    letter-spacing: 0.06em;
-  }
+  .toc { position: sticky; top: 80px; background: var(--white); border: 1px solid var(--cream-border); border-radius: 14px; padding: 1.5rem; }
+  .toc-title { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--terra); margin-bottom: 1rem; }
+  .toc-list { list-style: none; display: flex; flex-direction: column; gap: 0.1rem; }
+  .toc-list a { text-decoration: none; font-size: 0.78rem; color: var(--ink-muted); font-weight: 600; display: block; padding: 0.35rem 0.6rem; border-radius: 6px; transition: all 0.15s; line-height: 1.4; }
+  .toc-list a:hover { background: var(--terra-pale); color: var(--terra); }
+  .toc-list .toc-num { color: var(--terra); font-family: 'Bebas Neue', sans-serif; font-size: 0.9rem; margin-right: 4px; }
 
-  /* LAYOUT */
-  .terms-layout {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 3rem 2rem 6rem;
-    display: grid;
-    grid-template-columns: 240px 1fr;
-    gap: 3rem;
-    align-items: start;
-  }
+  .terms-content { display: flex; flex-direction: column; gap: 3rem; }
 
-  /* SIDEBAR TOC */
-  .toc {
-    position: sticky;
-    top: 80px;
-    background: var(--white);
-    border: 1px solid var(--cream-border);
-    border-radius: 14px;
-    padding: 1.5rem;
-  }
+  .terms-intro { background: var(--terra-pale); border: 1px solid rgba(192,74,42,0.15); border-radius: 14px; padding: 1.8rem 2rem; }
+  .terms-intro-jp { font-family: 'Noto Sans JP', sans-serif; font-size: 0.95rem; line-height: 2; color: var(--ink-soft); margin-bottom: 1rem; }
+  .terms-intro-en { font-size: 0.88rem; line-height: 1.8; color: var(--ink-muted); border-left: 3px solid rgba(192,74,42,0.2); padding-left: 1rem; }
 
-  .toc-title {
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--terra);
-    margin-bottom: 1rem;
-  }
-
-  .toc-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.1rem;
-  }
-
-  .toc-list a {
-    text-decoration: none;
-    font-size: 0.78rem;
-    color: var(--ink-muted);
-    font-weight: 600;
-    display: block;
-    padding: 0.35rem 0.6rem;
-    border-radius: 6px;
-    transition: all 0.15s;
-    line-height: 1.4;
-  }
-
-  .toc-list a:hover {
-    background: var(--terra-pale);
-    color: var(--terra);
-  }
-
-  .toc-list .toc-num {
-    color: var(--terra);
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 0.9rem;
-    margin-right: 4px;
-  }
-
-  /* CONTENT */
-  .terms-content {
-    display: flex;
-    flex-direction: column;
-    gap: 3rem;
-  }
-
-  .terms-intro {
-    background: var(--terra-pale);
-    border: 1px solid rgba(192,74,42,0.15);
-    border-radius: 14px;
-    padding: 1.8rem 2rem;
-  }
-
-  .terms-intro-jp {
-    font-family: 'Noto Sans JP', sans-serif;
-    font-size: 0.95rem;
-    line-height: 2;
-    color: var(--ink-soft);
-    margin-bottom: 1rem;
-  }
-
-  .terms-intro-en {
-    font-size: 0.88rem;
-    line-height: 1.8;
-    color: var(--ink-muted);
-    border-left: 3px solid rgba(192,74,42,0.2);
-    padding-left: 1rem;
-  }
-
-  .terms-section {
-    scroll-margin-top: 80px;
-  }
-
-  .section-header {
-    display: flex;
-    align-items: baseline;
-    gap: 12px;
-    margin-bottom: 1.2rem;
-    padding-bottom: 0.8rem;
-    border-bottom: 2px solid var(--cream-border);
-  }
-
-  .section-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2rem;
-    color: var(--terra);
-    opacity: 0.4;
-    line-height: 1;
-    flex-shrink: 0;
-  }
-
+  .terms-section { scroll-margin-top: 80px; }
+  .section-header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 1.2rem; padding-bottom: 0.8rem; border-bottom: 2px solid var(--cream-border); }
+  .section-num { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--terra); opacity: 0.4; line-height: 1; flex-shrink: 0; }
   .section-titles { display: flex; flex-direction: column; gap: 2px; }
+  .section-title-jp { font-family: 'Noto Sans JP', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--ink); line-height: 1.3; }
+  .section-title-en { font-size: 0.78rem; color: var(--ink-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; }
 
-  .section-title-jp {
-    font-family: 'Noto Sans JP', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--ink);
-    line-height: 1.3;
-  }
+  .clause { background: var(--white); border: 1px solid var(--cream-border); border-radius: 12px; padding: 1.4rem 1.6rem; margin-bottom: 1rem; }
+  .clause-jp { font-family: 'Noto Sans JP', sans-serif; font-size: 0.9rem; line-height: 2; color: var(--ink-soft); margin-bottom: 0.8rem; }
+  .clause-en { font-size: 0.83rem; line-height: 1.8; color: var(--ink-muted); border-left: 2px solid var(--cream-border); padding-left: 1rem; }
+  .clause-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--terra); margin-bottom: 0.6rem; display: block; }
 
-  .section-title-en {
-    font-size: 0.78rem;
-    color: var(--ink-muted);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-  }
-
-  .clause {
-    background: var(--white);
-    border: 1px solid var(--cream-border);
-    border-radius: 12px;
-    padding: 1.4rem 1.6rem;
-    margin-bottom: 1rem;
-  }
-
-  .clause-jp {
-    font-family: 'Noto Sans JP', sans-serif;
-    font-size: 0.9rem;
-    line-height: 2;
-    color: var(--ink-soft);
-    margin-bottom: 0.8rem;
-  }
-
-  .clause-en {
-    font-size: 0.83rem;
-    line-height: 1.8;
-    color: var(--ink-muted);
-    border-left: 2px solid var(--cream-border);
-    padding-left: 1rem;
-  }
-
-  .clause-label {
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--terra);
-    margin-bottom: 0.6rem;
-    display: block;
-  }
-
-  /* Tables */
-  .terms-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.83rem;
-    margin: 0.5rem 0 1rem;
-    border-radius: 10px;
-    overflow: hidden;
-    border: 1px solid var(--cream-border);
-  }
-
-  .terms-table th {
-    background: var(--ink);
-    color: var(--white);
-    padding: 0.7rem 1rem;
-    text-align: left;
-    font-weight: 700;
-    font-size: 0.75rem;
-    letter-spacing: 0.05em;
-  }
-
-  .terms-table td {
-    padding: 0.65rem 1rem;
-    border-bottom: 1px solid var(--cream-border);
-    color: var(--ink-soft);
-    vertical-align: top;
-    line-height: 1.6;
-  }
-
+  .terms-table { width: 100%; border-collapse: collapse; font-size: 0.83rem; margin: 0.5rem 0 1rem; border-radius: 10px; overflow: hidden; border: 1px solid var(--cream-border); }
+  .terms-table th { background: var(--ink); color: var(--white); padding: 0.7rem 1rem; text-align: left; font-weight: 700; font-size: 0.75rem; letter-spacing: 0.05em; }
+  .terms-table td { padding: 0.65rem 1rem; border-bottom: 1px solid var(--cream-border); color: var(--ink-soft); vertical-align: top; line-height: 1.6; }
   .terms-table tr:last-child td { border-bottom: none; }
   .terms-table tr:nth-child(even) td { background: var(--cream); }
 
-  /* Footer */
-  .terms-footer {
-    background: var(--ink);
-    padding: 2rem;
-    text-align: center;
-    font-size: 0.78rem;
-    color: rgba(255,255,255,0.3);
-    letter-spacing: 0.04em;
-  }
-
+  .terms-footer { background: var(--ink); padding: 2rem; text-align: center; font-size: 0.78rem; color: rgba(255,255,255,0.3); letter-spacing: 0.04em; }
   .terms-footer span { color: var(--terra); }
   .terms-footer a { color: rgba(255,255,255,0.5); text-decoration: none; }
   .terms-footer a:hover { color: var(--terra); }
 
-  /* Responsive */
   @media (max-width: 768px) {
     .terms-layout { grid-template-columns: 1fr; }
     .toc { position: static; }
@@ -329,7 +103,6 @@
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <a href="index.html" class="nav-logo">
     <div class="nav-logo-text">JAWS<span>Chat</span></div>
@@ -337,17 +110,14 @@
   <a href="index.html" class="nav-back">← ホームに戻る · Back to Home</a>
 </nav>
 
-<!-- HERO -->
 <div class="terms-hero">
   <div class="terms-hero-jp">利用規約</div>
   <h1>TERMS & <span>CONDITIONS</span></h1>
   <div class="terms-hero-meta">最終更新 · Last updated: 2026 · JawsChat (PTV — Polmeartagami Ventures)</div>
 </div>
 
-<!-- LAYOUT -->
 <div class="terms-layout">
 
-  <!-- TOC SIDEBAR -->
   <aside class="toc">
     <div class="toc-title">目次 · Contents</div>
     <ul class="toc-list">
@@ -358,7 +128,7 @@
       <li><a href="#s5"><span class="toc-num">05</span> 体験レッスン · Trial</a></li>
       <li><a href="#s6"><span class="toc-num">06</span> キャンセル · Cancellation</a></li>
       <li><a href="#s7"><span class="toc-num">07</span> 繰り越し · Rollover</a></li>
-      <li><a href="#s8"><span class="toc-num">08</span> 一時停止 · Pause</a></li>
+      <li><a href="#s8"><span class="toc-num">08</span> 休会・再開 · Pause &amp; Resume</a></li>
       <li><a href="#s9"><span class="toc-num">09</span> 解約・返金 · Refunds</a></li>
       <li><a href="#s10"><span class="toc-num">10</span> 講師変更 · Teachers</a></li>
       <li><a href="#s11"><span class="toc-num">11</span> 遅刻・無断欠席 · No-shows</a></li>
@@ -373,16 +143,14 @@
     </ul>
   </aside>
 
-  <!-- MAIN CONTENT -->
   <main class="terms-content">
 
-    <!-- INTRO -->
     <div class="terms-intro">
       <p class="terms-intro-jp">本利用規約（以下「本規約」）は、JawsChat（PTV — Polmeartagami Ventures 運営）が提供するオンライン英会話サービス（以下「本サービス」）の利用に関する条件を定めるものです。本サービスをご利用いただく前に、本規約をよくお読みください。体験レッスンの予約、プランのご購入、または本サービスの利用開始をもって、本規約に同意したものとみなします。</p>
       <p class="terms-intro-en">These Terms and Conditions ("Terms") govern your use of the online English conversation service provided by JawsChat, operated by PTV (Polmeartagami Ventures). Please read these Terms carefully before using the service. By booking a trial lesson, purchasing a plan, or using the service in any way, you agree to be bound by these Terms in full.</p>
     </div>
 
-    <!-- SECTION 1 -->
+    <!-- S1 -->
     <div class="terms-section" id="s1">
       <div class="section-header">
         <div class="section-num">01</div>
@@ -393,23 +161,28 @@
       </div>
       <div class="clause">
         <span class="clause-label">定義 · Definitions</span>
-        <p class="clause-jp">本規約において使用する主な用語の定義は以下のとおりです。<br><br>
-        「当社」とは、PTV（Polmeartagami Ventures）およびJawsChatブランドを運営する事業体を指します。<br>
-        「生徒」とは、本サービスを利用するすべての個人を指します。<br>
-        「講師」とは、JawsChatを通じて英会話レッスンを提供する認定指導者を指します。<br>
-        「レッスン」とは、Google Meetを通じて行われる25分間のオンライン英会話セッションを指します。<br>
-        「プラン」とは、当社が提供する月払い・3ヶ月・年間のいずれかのサブスクリプションを指します。<br>
-        「クレジット」とは、購入済みのレッスン予約権を指します。</p>
-        <p class="clause-en">"We", "us", or "our" refers to PTV (Polmeartagami Ventures) and the JawsChat brand.<br>
-        "Student" means any individual who uses the service.<br>
-        "Teacher" means any qualified instructor delivering lessons through JawsChat.<br>
-        "Lesson" means a 25-minute online English conversation session conducted via Google Meet.<br>
-        "Plan" means any monthly, 3-month, or annual subscription offered by us.<br>
-        "Credit" means a purchased entitlement to book one lesson.</p>
+        <p class="clause-jp">
+          「当社」とは、PTV（Polmeartagami Ventures）およびJawsChatブランドを運営する事業体を指します。<br>
+          「生徒」とは、本サービスを利用するすべての個人を指します。<br>
+          「講師」とは、JawsChatを通じて英会話レッスンを提供する認定指導者を指します。<br>
+          「レッスン」とは、Google Meetを通じて行われる25分間のオンライン英会話セッションを指します。<br>
+          「プラン」とは、当社が提供する月払いのサブスクリプションを指します。<br>
+          「クレジット」とは、購入済みのレッスン予約権を指します。<br>
+          「請求日」とは、生徒が最初にプランを購入した日付、またはその30日後ごとの更新日を指します。
+        </p>
+        <p class="clause-en">
+          "We", "us", or "our" refers to PTV (Polmeartagami Ventures) and the JawsChat brand.<br>
+          "Student" means any individual who uses the service.<br>
+          "Teacher" means any qualified instructor delivering lessons through JawsChat.<br>
+          "Lesson" means a 25-minute online English conversation session conducted via Google Meet.<br>
+          "Plan" means any monthly subscription offered by us.<br>
+          "Credit" means a purchased entitlement to book one lesson.<br>
+          "Billing date" means the date on which a student first purchased a plan, and every 30 days thereafter.
+        </p>
       </div>
     </div>
 
-    <!-- SECTION 2 -->
+    <!-- S2 -->
     <div class="terms-section" id="s2">
       <div class="section-header">
         <div class="section-num">02</div>
@@ -420,79 +193,50 @@
       </div>
       <div class="clause">
         <span class="clause-label">サービス内容 · What We Provide</span>
-        <p class="clause-jp">JawsChatは、ネイティブ英語講師による25分間のオンライン英会話レッスンを提供します。すべてのレッスンはGoogle Meetを使用して実施されます。レッスンは教科書やスクリプトを使用せず、生徒の目標・レベル・興味に合わせた完全カスタマイズ形式で行われます。当社は、レッスンの予約・実施・フォローアップを通じて、継続的な英語力向上をサポートします。</p>
-        <p class="clause-en">JawsChat provides 25-minute online English conversation lessons delivered by qualified native English-speaking teachers via Google Meet. Lessons follow a conversational approach tailored to each student's goals, level, and interests — no textbooks, no scripts. We support ongoing improvement through structured lesson delivery, post-lesson feedback, and personalised progress tracking.</p>
+        <p class="clause-jp">JawsChatは、ネイティブ英語講師による25分間のオンライン英会話レッスンを提供します。すべてのレッスンはGoogle Meetを使用して実施されます。レッスンは教科書やスクリプトを使用せず、生徒の目標・レベル・興味に合わせた完全カスタマイズ形式で行われます。</p>
+        <p class="clause-en">JawsChat provides 25-minute online English conversation lessons delivered by a qualified native English-speaking teacher via Google Meet. Lessons follow a conversational approach tailored to each student's goals, level, and interests — no textbooks, no scripts.</p>
       </div>
-
       <div class="clause">
         <span class="clause-label">連続レッスン · Back-to-Back Lessons</span>
-        <p class="clause-jp">生徒が2コマ連続で予約した場合、そのレッスンは2回の25分レッスンとしてではなく、55分間の連続レッスンとして実施されます。これにより、会話の流れを中断させることなく、より深いトピックの探求や自然な対話の継続が可能になります。連続レッスンは2クレジットを消化します。3コマ以上の連続予約は原則として受け付けておりません。</p>
-        <p class="clause-en">When a student books two consecutive lesson slots, those sessions are delivered as a single 55-minute lesson rather than two separate 25-minute sessions. This allows for deeper topic exploration and a more natural conversational flow without interruption. A back-to-back booking uses 2 credits. Bookings of 3 or more consecutive slots are not available as standard — please contact us if you have a specific requirement.</p>
+        <p class="clause-jp">生徒が2コマ連続で予約した場合、そのレッスンは55分間の連続レッスンとして実施されます。連続レッスンは2クレジットを消化します。3コマ以上の連続予約は原則として受け付けておりません。</p>
+        <p class="clause-en">When a student books two consecutive lesson slots, those sessions are delivered as a single 55-minute lesson. A back-to-back booking uses 2 credits. Bookings of 3 or more consecutive slots are not available as standard — please contact us if you have a specific requirement.</p>
       </div>
       <div class="clause">
         <span class="clause-label">サービスの変更 · Service Changes</span>
         <p class="clause-jp">当社は、事前に通知することにより、提供するサービスの内容、機能、または形式を変更する権利を留保します。重要な変更がある場合は、登録済みのメールアドレスまたはLINEにて事前にご通知します。</p>
-        <p class="clause-en">We reserve the right to modify, update, or change aspects of the service with prior notice. For significant changes, we will notify students via their registered email address or LINE account in advance of any changes taking effect.</p>
+        <p class="clause-en">We reserve the right to modify aspects of the service with prior notice. For significant changes, we will notify students via their registered email address or LINE account in advance.</p>
       </div>
     </div>
 
-    <!-- SECTION 3 -->
+    <!-- S3 -->
     <div class="terms-section" id="s3">
       <div class="section-header">
         <div class="section-num">03</div>
         <div class="section-titles">
-          <div class="section-title-jp">料金プランの詳細</div>
-          <div class="section-title-en">Plan Details & Pricing</div>
+          <div class="section-title-jp">料金プラン</div>
+          <div class="section-title-en">Plans &amp; Pricing</div>
         </div>
       </div>
       <div class="clause">
         <span class="clause-label">プラン構成 · Plan Structure</span>
-        <p class="clause-jp">当社は以下の9プランを提供します。すべてのレッスンは25分間です。</p>
-        <p class="clause-en">We offer nine plans across three frequency tiers and three commitment lengths. All sessions are 25 minutes.</p>
+        <p class="clause-jp">当社は以下の4つの月払いプランを提供します。すべてのレッスンは25分間です。すべての料金は日本円（JPY）で表示されており、入会金・隠れた費用は一切ありません。</p>
+        <p class="clause-en">We offer four monthly plans. All sessions are 25 minutes. Prices are in Japanese Yen (JPY). There are no enrolment fees or hidden charges.</p>
         <table class="terms-table">
-          <thead>
-            <tr>
-              <th>プラン · Plan</th>
-              <th>回数/月 · Sessions</th>
-              <th>月払い · Monthly</th>
-              <th>3ヶ月 · 3-Month</th>
-              <th>年間 · Annual</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>ライト · Light</td>
-              <td>4回/month</td>
-              <td>¥10,000/月</td>
-              <td>¥8,500/月 (¥25,500)</td>
-              <td>¥7,000/月 (¥84,000)</td>
-            </tr>
-            <tr>
-              <td>レギュラー · Regular</td>
-              <td>8回/month</td>
-              <td>¥18,000/月</td>
-              <td>¥15,000/月 (¥45,000)</td>
-              <td>¥12,500/月 (¥150,000)</td>
-            </tr>
-            <tr>
-              <td>集中 · Intensive</td>
-              <td>12回/month</td>
-              <td>¥25,000/月</td>
-              <td>¥21,000/月 (¥63,000)</td>
-              <td>¥17,500/月 (¥210,000)</td>
-            </tr>
-          </tbody>
+          <tr><th>プラン · Plan</th><th>回数/月 · Sessions</th><th>月額 · Monthly</th><th>1回あたり · Per Lesson</th></tr>
+          <tr><td>スーパーライト · Super Light</td><td>2回</td><td>¥5,000</td><td>¥2,500</td></tr>
+          <tr><td>ライト · Light</td><td>4回</td><td>¥9,000</td><td>¥2,250</td></tr>
+          <tr><td>レギュラー · Regular</td><td>8回</td><td>¥15,000</td><td>¥1,875</td></tr>
+          <tr><td>集中 · Intensive</td><td>12回</td><td>¥20,400</td><td>¥1,700</td></tr>
         </table>
-        <p class="clause-en">Prices displayed are in Japanese Yen (JPY) and are inclusive of all applicable fees. We do not charge any hidden fees or enrolment costs.</p>
       </div>
       <div class="clause">
         <span class="clause-label">プランの変更 · Changing Plans</span>
-        <p class="clause-jp">プランの変更（アップグレード・ダウングレード）は、現在のプラン終了時に適用されます。プラン期間中のダウングレードはできません。アップグレードをご希望の場合は、LINEまたはメールにてお問い合わせください。ダウングレード時には、繰り越しレッスン残高が新プランの上限に調整されます（超過分は失効します）。</p>
-        <p class="clause-en">Plan changes (upgrades or downgrades) take effect at the end of the current plan period. Downgrades cannot be applied mid-plan. If you wish to upgrade mid-plan, please contact us via LINE or email and we will accommodate where possible. On downgrade, any rollover balance exceeding the new plan's cap will be forfeited at the point of renewal.</p>
+        <p class="clause-jp">プランの変更（アップグレード・ダウングレード）は、次回の請求日に適用されます。変更が適用されるまでは現在のプランが継続されます。請求日に新しいクレジットが付与された後、合計残高が新プランの上限を超える場合、超過分は失効します。</p>
+        <p class="clause-en">Plan changes (upgrades or downgrades) take effect on your next billing date. Your current plan continues until then. On the billing date, new credits are added at the new plan rate, and the total balance is then checked against the new plan's cap — any excess is forfeited at that point.</p>
       </div>
     </div>
 
-    <!-- SECTION 4 -->
+    <!-- S4 -->
     <div class="terms-section" id="s4">
       <div class="section-header">
         <div class="section-num">04</div>
@@ -507,18 +251,18 @@
         <p class="clause-en">All payments are processed securely via Stripe using credit or debit card. Accepted cards include Visa, Mastercard, American Express, and JCB. All transactions are processed in Japanese Yen (JPY).</p>
       </div>
       <div class="clause">
-        <span class="clause-label">自動更新 · Automatic Renewal</span>
-        <p class="clause-jp">3ヶ月プランおよび年間プランは、プラン終了日に自動的に更新されます。更新の10日前にLINEまたはメールにて通知します。自動更新を停止する場合は、更新日の3日前までにご連絡ください。月払いプランは自動更新されません。</p>
-        <p class="clause-en">3-Month and Annual plans renew automatically at the end of each plan period. We will notify you 10 days before renewal via LINE or email. To cancel auto-renewal, please contact us at least 3 days before the renewal date. Monthly plans do not auto-renew.</p>
+        <span class="clause-label">請求サイクル · Billing Cycle</span>
+        <p class="clause-jp">各プランは月払いで、30日ごとに自動更新されます。請求日は最初のお支払い日から30日ごとに設定されます。解約はいつでも生徒ポータルから行うことができます。解約後は次回の請求が発生せず、現在の30日間のクレジットは期間終了まで有効です。</p>
+        <p class="clause-en">Each plan is billed monthly and renews automatically every 30 days. Your billing date is set 30 days from your first payment and repeats every 30 days thereafter. You may cancel at any time via the student portal. After cancellation, no further charges are made and your existing credits remain valid until the end of your current 30-day period.</p>
       </div>
       <div class="clause">
         <span class="clause-label">支払い失敗 · Failed Payments</span>
-        <p class="clause-jp">支払いが失敗した場合、当社は3日以内に再試行します。再試行後も支払いが完了しない場合、プランは一時停止され、未解決の残高が清算されるまでレッスンの予約ができなくなります。</p>
-        <p class="clause-en">If a payment fails, we will retry within 3 days. If payment remains unsuccessful after retry, the plan will be suspended and lesson bookings will be unavailable until the outstanding balance is resolved. We will contact you via LINE or email to resolve the issue.</p>
+        <p class="clause-jp">支払いが処理できなかった場合、現在の30日間のクレジットは期間終了まで有効です。支払いが確認されない場合、期間終了後はレッスンの予約ができなくなります。未払いが続く場合はLINEまたはメールにてご連絡します。</p>
+        <p class="clause-en">If a payment cannot be processed, your existing credits remain valid until the end of your current 30-day period. If payment is not received, you will not be able to book lessons after that date. We will contact you via LINE or email to resolve the issue.</p>
       </div>
     </div>
 
-    <!-- SECTION 5 -->
+    <!-- S5 -->
     <div class="terms-section" id="s5">
       <div class="section-header">
         <div class="section-num">05</div>
@@ -529,217 +273,164 @@
       </div>
       <div class="clause">
         <span class="clause-label">体験レッスンの条件 · Trial Terms</span>
-        <p class="clause-jp">体験レッスンは¥1,000（税込）にて提供されます。体験レッスンは1名につき1回のみご利用いただけます。体験レッスンは25分間で、通常のレッスンと同一の形式で実施されます。体験レッスン後、プランへのご加入をご案内しますが、強制ではありません。</p>
-        <p class="clause-en">A trial lesson is available for ¥1,000 per person, per lifetime — one trial per student. The trial is a standard 25-minute lesson delivered in the same format as regular lessons. Following the trial, you will be invited to join a plan, but there is no obligation to do so. The trial fee is non-refundable once the lesson has taken place.</p>
+        <p class="clause-jp">体験レッスンは¥1,000（税込）にて提供されます。体験レッスンは1名につき1回のみご利用いただけます。体験レッスンは25分間で、通常のレッスンと同一の形式で実施されます。体験レッスン後、プランへのご加入をご案内しますが、強制ではありません。体験レッスン料金は、レッスン実施後は返金されません。</p>
+        <p class="clause-en">A trial lesson is available for ¥1,000 — one trial per student, per lifetime. The trial is a standard 25-minute lesson in the same format as regular lessons. Following the trial you will be invited to join a plan, but there is no obligation to do so. The trial fee is non-refundable once the lesson has taken place.</p>
       </div>
       <div class="clause">
         <span class="clause-label">体験レッスンのキャンセル · Trial Cancellation</span>
-        <p class="clause-jp">体験レッスンのキャンセルは、レッスン開始24時間前までに行ってください。24時間以内のキャンセルまたは無断欠席の場合、¥1,000は返金されません。24時間以上前のキャンセルの場合、1回に限り日程変更が可能です。</p>
-        <p class="clause-en">Trial lesson cancellations must be made at least 24 hours before the scheduled start time. Cancellations within 24 hours or no-shows are non-refundable. Cancellations made more than 24 hours in advance may be rescheduled once at no additional cost.</p>
+        <p class="clause-jp">体験レッスンのキャンセルは、レッスン開始24時間前までに行ってください。24時間以上前のキャンセルの場合、1回に限り日程変更が可能です。24時間以内のキャンセルまたは無断欠席の場合、¥1,000は返金されません。</p>
+        <p class="clause-en">Trial lesson cancellations must be made at least 24 hours before the scheduled start time. Cancellations made more than 24 hours in advance may be rescheduled once at no additional cost. Cancellations within 24 hours or no-shows are non-refundable.</p>
       </div>
     </div>
 
-    <!-- SECTION 6 -->
+    <!-- S6 -->
     <div class="terms-section" id="s6">
       <div class="section-header">
         <div class="section-num">06</div>
         <div class="section-titles">
-          <div class="section-title-jp">キャンセルポリシー</div>
-          <div class="section-title-en">Cancellation Policy</div>
+          <div class="section-title-jp">レッスンのキャンセル</div>
+          <div class="section-title-en">Lesson Cancellation</div>
         </div>
       </div>
       <div class="clause">
         <span class="clause-label">生徒によるキャンセル · Student Cancellation</span>
-        <p class="clause-jp">
-          予約済みレッスンのキャンセルには以下のポリシーが適用されます：<br><br>
-          ・<strong>24時間以上前のキャンセル：</strong>月に1回のみ翌月への繰り越しが可能です。同月内の2回目以降のキャンセルはレッスン消化扱いとなります。<br>
-          ・<strong>24時間以内のキャンセル：</strong>レッスンは消化扱いとなり、クレジットは返還されません。<br>
-          ・<strong>無断欠席：</strong>レッスンは消化扱いとなり、クレジットは返還されません。
-        </p>
+        <p class="clause-jp">予約済みレッスンのキャンセルには以下のポリシーが適用されます。<br>
+        ・ 24時間以上前のキャンセル：1ヶ月（30日間）に1回のみ、クレジットを残高に返還します。同期間中の2回目以降のキャンセルはレッスン消化扱いとなります。<br>
+        ・ 24時間以内のキャンセル：レッスンは消化扱いとなり、クレジットは返還されません。<br>
+        ・ 無断欠席：レッスンは消化扱いとなり、クレジットは返還されません。</p>
         <p class="clause-en">
-          <strong>Cancellation with more than 24 hours notice:</strong> One rollover per calendar month is permitted. A second or subsequent cancellation in the same month will be counted as a used session.<br><br>
-          <strong>Cancellation within 24 hours:</strong> The lesson is counted as used. No credit is returned.<br><br>
-          <strong>No-show (no contact):</strong> The lesson is counted as used. No credit is returned.
-        </p>
+        Cancellation with more than 24 hours notice: One credit return per 30-day period is permitted. A second or subsequent cancellation in the same period is counted as a used lesson.<br>
+        Cancellation within 24 hours: The lesson is counted as used. No credit is returned.<br>
+        No-show (no contact): The lesson is counted as used. No credit is returned.</p>
       </div>
       <div class="clause">
         <span class="clause-label">当社によるキャンセル · Teacher/JawsChat Cancellation</span>
-        <p class="clause-jp">当社または講師の都合によりレッスンをキャンセルする場合、該当レッスンのクレジットは即時返還され、有効期限は延長されます。当社起因のキャンセルにより生徒に不利益が生じた場合、代替レッスンの提供または追加クレジットの付与により対応します。</p>
-        <p class="clause-en">If we or the teacher cancel a lesson for any reason on our side, the lesson credit is returned immediately and any relevant expiry date is extended accordingly. If a pattern of teacher-side cancellations causes inconvenience, we will offer a replacement lesson or additional credit as compensation.</p>
+        <p class="clause-jp">当社または講師の都合によりレッスンをキャンセルする場合、該当レッスンのクレジットは即時返還されます。当社起因のキャンセルが続く場合、代替レッスンの提供または追加クレジットの付与により対応します。</p>
+        <p class="clause-en">If we or the teacher cancel a lesson for any reason on our side, the lesson credit is returned immediately. If a pattern of teacher-side cancellations causes inconvenience, we will offer a replacement lesson or additional credit as compensation.</p>
       </div>
     </div>
 
-    <!-- SECTION 7 -->
+    <!-- S7 -->
     <div class="terms-section" id="s7">
       <div class="section-header">
         <div class="section-num">07</div>
         <div class="section-titles">
-          <div class="section-title-jp">未使用レッスンの繰り越しと有効期限</div>
-          <div class="section-title-en">Lesson Rollover & Expiry</div>
+          <div class="section-title-jp">クレジットの繰り越しと有効期限</div>
+          <div class="section-title-en">Rollover &amp; Expiry</div>
         </div>
       </div>
       <div class="clause">
-        <span class="clause-label">繰り越し上限 · Rollover Cap</span>
-        <p class="clause-jp">未使用レッスンは翌月に繰り越されますが、蓄積できる上限（キャップ）があります。月払い・3ヶ月プランは月間枚数の1.5倍まで、年間プランは月間枚数の2倍まで積み立て可能です。上限を超えたレッスンは、新たなレッスンが付与される前に失効します。</p>
-        <p class="clause-en">Unused lessons roll over month to month, subject to a cap. Monthly and 3-Month plans may accumulate up to 1.5× their monthly allowance. Annual plans may accumulate up to 2× their monthly allowance. Lessons above the cap are forfeited before new lessons are added at the start of each period.</p>
+        <span class="clause-label">繰り越しの仕組み · How Rollover Works</span>
+        <p class="clause-jp">未使用のクレジットは翌月に繰り越されますが、各プランに上限（キャップ）が設けられています。請求日に新しいクレジットが先に付与され、その後の合計残高が上限を超えた場合、超過分が失効します。クレジットは最後のお支払いから30日後に失効します。</p>
+        <p class="clause-en">Unused credits roll over to the next 30-day period, subject to a cap. On your billing date, new credits are added first. The total balance is then checked against your plan's cap — any amount above the cap is forfeited at that point. All credits expire 30 days after your last payment if no renewal is made.</p>
+      </div>
+      <div class="clause">
+        <span class="clause-label">繰り越し上限 · Rollover Caps</span>
         <table class="terms-table">
-          <thead>
-            <tr><th>プラン · Plan</th><th>月間枚数 · Monthly</th><th>上限 · Cap</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>月払い/3ヶ月 ライト</td><td>4回</td><td>最大6回</td></tr>
-            <tr><td>月払い/3ヶ月 レギュラー</td><td>8回</td><td>最大12回</td></tr>
-            <tr><td>月払い/3ヶ月 集中</td><td>12回</td><td>最大18回</td></tr>
-            <tr><td>年間 ライト</td><td>4回</td><td>最大8回</td></tr>
-            <tr><td>年間 レギュラー</td><td>8回</td><td>最大16回</td></tr>
-            <tr><td>年間 集中</td><td>12回</td><td>最大24回</td></tr>
-          </tbody>
+          <tr><th>プラン · Plan</th><th>月間回数 · Monthly</th><th>上限 · Cap</th></tr>
+          <tr><td>スーパーライト · Super Light</td><td>2回</td><td>最大3回</td></tr>
+          <tr><td>ライト · Light</td><td>4回</td><td>最大6回</td></tr>
+          <tr><td>レギュラー · Regular</td><td>8回</td><td>最大12回</td></tr>
+          <tr><td>集中 · Intensive</td><td>12回</td><td>最大18回</td></tr>
         </table>
       </div>
       <div class="clause">
-        <span class="clause-label">有効期限 · Expiry Rules</span>
-        <p class="clause-jp">
-          <strong>月払いプラン：</strong>レッスンクレジットは最後の購入日から30日後に失効します。毎月新たに購入することで30日の時計がリセットされます。<br><br>
-          <strong>3ヶ月・年間プラン：</strong>プラン有効期間中はレッスンクレジットは失効しません。プラン終了後は30日間の猶予期間があり、残りのクレジットをご利用いただけます。猶予期間終了後、未使用クレジットはすべて失効します。プランを更新した場合、残高は新プランに引き継がれます（上限の範囲内）。
-        </p>
-        <p class="clause-en">
-          <strong>Monthly plan:</strong> Credits expire 30 days after the most recent purchase date. Purchasing again resets the 30-day clock.<br><br>
-          <strong>3-Month and Annual plans:</strong> Credits do not expire while the plan is active. Upon plan end without renewal, a 30-day grace period begins during which remaining credits may be used. After the grace period, all unused credits are forfeited. On renewal, the existing balance carries forward subject to the applicable cap.
-        </p>
+        <span class="clause-label">繰り越し例 · Rollover Example</span>
+        <p class="clause-jp">例：レギュラープラン（月8回、上限12回）の生徒が5クレジットを残して請求日を迎えた場合、8クレジットが新たに付与され、合計13クレジットになります。上限の12を超えているため、1クレジットが失効し、残高は12クレジットとなります。</p>
+        <p class="clause-en">Example: A Regular plan student (8/month, cap 12) reaches their billing date with 5 credits remaining. 8 new credits are added first, bringing the total to 13. As this exceeds the cap of 12, 1 credit is forfeited and the balance becomes 12.</p>
       </div>
       <div class="clause">
-        <span class="clause-label">再加入通知 · Re-engagement Notifications</span>
-        <p class="clause-jp">クレジットの失効が近づいた場合、講師または当社よりLINEにて日本語でお知らせします。これは自動的なシステムメッセージではなく、講師からの個人的なご連絡です。</p>
-        <p class="clause-en">When your lesson credits are approaching expiry, you will receive a personal notification via LINE from your teacher or from JawsChat. This is not an automated system message — it is a genuine personal reminder because we want you to use every lesson you have paid for.</p>
-        <table class="terms-table">
-          <thead>
-            <tr><th>タイミング · Timing</th><th>内容 · Purpose</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>最終購入から20日後（月払い）</td><td>10日以内に失効するクレジットのご案内</td></tr>
-            <tr><td>最終購入から28日後（月払い）</td><td>2日以内失効の最終通知</td></tr>
-            <tr><td>プラン終了30日前（3ヶ月・年間）</td><td>残高確認と予約のご案内</td></tr>
-            <tr><td>猶予期間20日目</td><td>10日以内に失効する残高のご案内</td></tr>
-          </tbody>
-        </table>
+        <span class="clause-label">失効通知 · Expiry Notifications</span>
+        <p class="clause-jp">クレジットの失効が近づいた場合、講師または当社よりLINEにてお知らせします。これは自動システムではなく、個人的なご連絡です。</p>
+        <p class="clause-en">When your credits are approaching expiry, you will receive a personal notification via LINE from your teacher or from JawsChat. This is not an automated system message — it is a genuine personal reminder because we want you to use every lesson you have paid for.</p>
       </div>
     </div>
 
-    <!-- SECTION 8 -->
+    <!-- S8 -->
     <div class="terms-section" id="s8">
       <div class="section-header">
         <div class="section-num">08</div>
         <div class="section-titles">
-          <div class="section-title-jp">一時停止ポリシー</div>
-          <div class="section-title-en">Pause Policy</div>
+          <div class="section-title-jp">休会・再開</div>
+          <div class="section-title-en">Pause &amp; Resume</div>
         </div>
       </div>
       <div class="clause">
-        <span class="clause-label">一時停止の条件 · Pause Eligibility</span>
-        <p class="clause-jp">一時停止は3ヶ月プランおよび年間プランのみに適用されます。月払いプランには一時停止機能はありません（購入しないことで自然に休止できます）。</p>
-        <p class="clause-en">The pause feature applies to 3-Month and Annual plans only. Monthly plans do not have a formal pause — simply do not purchase in months where you do not need the service.</p>
+        <span class="clause-label">休会の方法 · How to Pause</span>
+        <p class="clause-jp">JawsChatは月払いで自動更新されますが、長期契約はありません。休会を希望する場合は、生徒ポータルのキャンセルボタンから解約手続きを行ってください。解約はいつでも可能で、自動更新が停止されます。現在の30日間のクレジットは期間終了まで有効です。</p>
+        <p class="clause-en">JawsChat renews automatically each month, but there is no long-term commitment. To pause the service, cancel via the student portal at any time. Cancellation stops your automatic renewal immediately. Your existing credits remain valid until the end of your current 30-day period.</p>
       </div>
       <div class="clause">
-        <span class="clause-label">一時停止の上限と規則 · Pause Rules</span>
-        <p class="clause-jp">
-          ・<strong>3ヶ月プラン：</strong>合計最大4週間（28日）まで一時停止可能。最小単位は1週間（7日）。<br>
-          ・<strong>年間プラン：</strong>合計最大12週間（84日）まで一時停止可能。最小単位は1週間（7日）。<br>
-          ・一時停止は何度でも分割してご利用いただけます（上限内であれば）。<br>
-          ・一時停止はプラン開始から2週間以内には開始できません。<br>
-          ・一時停止の申請はLINEにて3日以上前にご連絡ください。<br>
-          ・一時停止中に予約済みのレッスンがある場合、そのレッスンはキャンセルされ、クレジットは残高に返還されます。<br>
-          ・プラン終了日は一時停止した日数分だけ自動的に延長されます。<br>
-          ・一時停止によりレッスンが失われることはありません。
-        </p>
-        <p class="clause-en">
-          <strong>3-Month plan:</strong> Up to 4 weeks (28 days) total pause allowance. Minimum per pause: 1 week (7 days).<br><br>
-          <strong>Annual plan:</strong> Up to 12 weeks (84 days) total pause allowance. Minimum per pause: 1 week (7 days).<br><br>
-          Pauses may be taken in multiple separate blocks within the total allowance. A pause may not begin within the first 2 weeks of a new plan. Pause requests must be submitted via LINE at least 3 days in advance. Any pre-booked lessons falling within the pause window will be cancelled and credits returned to your balance. The plan end date extends automatically by the exact number of days paused. No lessons are ever lost due to a pause.
-        </p>
+        <span class="clause-label">アカウントの保持 · Account Retention</span>
+        <p class="clause-jp">解約後もアカウントは保持されます。いつでも再度プランを購入することでサービスを再開できます。再開時には、以前のレッスン記録・進捗情報がそのまま引き継がれます。未使用クレジットは解約時に失効します。</p>
+        <p class="clause-en">Your account remains active after cancellation. You can resume the service at any time by purchasing a new plan. Your lesson history and progress notes are retained and will be available when you return. Any unused credits at the time of cancellation expire at the end of that 30-day period.</p>
       </div>
     </div>
 
-    <!-- SECTION 9 -->
+    <!-- S9 -->
     <div class="terms-section" id="s9">
       <div class="section-header">
         <div class="section-num">09</div>
         <div class="section-titles">
-          <div class="section-title-jp">解約・返金ポリシー</div>
-          <div class="section-title-en">Cancellation & Refund Policy</div>
+          <div class="section-title-jp">解約・返金</div>
+          <div class="section-title-en">Cancellation &amp; Refunds</div>
         </div>
       </div>
       <div class="clause">
-        <span class="clause-label">月払いプランの解約 · Monthly Plan Cancellation</span>
-        <p class="clause-jp">月払いプランは自動更新されないため、次月の購入を行わないことで自動的に解約となります。既存のクレジットは最後の購入から30日間有効です。返金は行いません。</p>
-        <p class="clause-en">Monthly plans do not auto-renew. To stop the service, simply do not purchase the next month. Existing credits remain valid for 30 days from the last purchase date. No refunds are issued for unused monthly credits.</p>
+        <span class="clause-label">解約方法 · How to Cancel</span>
+        <p class="clause-jp">解約は生徒ポータルのキャンセルボタンから30日サイクル中いつでも行えます。解約後、次回の自動更新および請求は停止されます。現在の30日間のクレジットは期間終了まで有効です。解約に違約金は一切発生しません。</p>
+        <p class="clause-en">You may cancel at any time during your 30-day cycle via the cancel button in your student portal. After cancellation, your automatic renewal is stopped and no further charges are made. Your existing credits remain valid until the end of your current 30-day period. There is no penalty for cancelling at any time.</p>
       </div>
       <div class="clause">
-        <span class="clause-label">3ヶ月・年間プランの解約 · Committed Plan Cancellation</span>
-        <p class="clause-jp">
-          コミットプラン（3ヶ月・年間）の途中解約は原則として認められていません。ただし、以下の例外的な事情がある場合は、個別にご相談ください：<br><br>
-          ・重篤な疾病または怪我（医師の診断書が必要）<br>
-          ・家族の緊急事態<br>
-          ・その他、当社が合理的と判断する特別な事情<br><br>
-          上記に該当する場合、未使用クレジット分の按分返金を検討します（支払済み総額から実施済みレッスン分を差し引いた金額の最大80%を上限とします）。返金の判断は当社の裁量に委ねられます。
-        </p>
-        <p class="clause-en">
-          Committed plans (3-Month and Annual) are not routinely cancellable mid-term. However, we recognise that exceptional circumstances arise. The following may be considered for a pro-rata refund at our discretion:<br><br>
-          · Serious illness or injury (medical documentation required)<br>
-          · Family emergency<br>
-          · Other circumstances we deem genuinely exceptional<br><br>
-          In such cases, a pro-rata refund of up to 80% of the unused portion may be offered (total amount paid minus the value of lessons already delivered). All refund decisions are at the sole discretion of JawsChat/PTV.
-        </p>
-      </div>
-      <div class="clause">
-        <span class="clause-label">自動更新のキャンセル · Cancelling Auto-Renewal</span>
-        <p class="clause-jp">自動更新をキャンセルするには、更新日の3日前までにLINEまたはメールにてご連絡ください。キャンセルが確認された場合、更新日以降の請求は発生しません。現在のプラン期間中のアクセスは継続されます。</p>
-        <p class="clause-en">To cancel auto-renewal, contact us via LINE or email at least 3 days before the renewal date. Once confirmed, no further charges will be made. You retain access to the service until the end of the current paid period.</p>
+        <span class="clause-label">返金ポリシー · Refund Policy</span>
+        <p class="clause-jp">月払いプランの性質上、原則として返金は行いません。ただし、以下の例外的な事情がある場合は個別にご相談ください：重篤な疾病または怪我（医師の診断書が必要）、家族の緊急事態、その他当社が合理的と判断する特別な事情。返金の判断はすべて当社の裁量に委ねられます。</p>
+        <p class="clause-en">Due to the monthly nature of the service, refunds are not issued as standard. However, we recognise that exceptional circumstances arise. The following may be considered for a pro-rata refund at our sole discretion: serious illness or injury (medical documentation required), family emergency, or other circumstances we deem genuinely exceptional. All refund decisions rest with JawsChat/PTV.</p>
       </div>
     </div>
 
-    <!-- SECTION 10 -->
+    <!-- S10 -->
     <div class="terms-section" id="s10">
       <div class="section-header">
         <div class="section-num">10</div>
         <div class="section-titles">
           <div class="section-title-jp">講師の割り当てと変更</div>
-          <div class="section-title-en">Teacher Assignment & Changes</div>
+          <div class="section-title-en">Teacher Assignment &amp; Changes</div>
         </div>
       </div>
       <div class="clause">
         <span class="clause-label">担当講師 · Assigned Teacher</span>
-        <p class="clause-jp">JawsChatは、生徒と特定の講師との継続的な関係を重視しています。原則として、ご契約期間中は同じ講師が担当します。やむを得ない事情（講師の退職・病気・個人的な事情など）により担当講師が変更となる場合は、速やかにご連絡し、適切な後任講師をご紹介します。</p>
-        <p class="clause-en">JawsChat values the ongoing relationship between student and teacher. We endeavour to provide the same teacher throughout your plan. If a teacher becomes unavailable for any reason (departure, illness, personal circumstances), we will notify you promptly and introduce a suitable replacement teacher. You will have the opportunity to meet the replacement teacher before committing to continued lessons.</p>
+        <p class="clause-jp">JawsChatは、生徒と特定の講師との継続的な関係を重視しています。原則として、ご契約期間中は同じ講師が担当します。やむを得ない事情により担当講師が変更となる場合は、速やかにご連絡し、適切な後任講師をご紹介します。</p>
+        <p class="clause-en">JawsChat values the ongoing relationship between student and teacher. We endeavour to provide the same teacher throughout your time with us. If a teacher becomes unavailable for any reason, we will notify you promptly and introduce a suitable replacement. You will have the opportunity to meet the replacement teacher before committing to continued lessons.</p>
       </div>
       <div class="clause">
-        <span class="clause-label">講師変更のリクエスト · Requesting a Teacher Change</span>
-        <p class="clause-jp">担当講師の変更をご希望の場合は、LINEまたはメールにてご連絡ください。変更の理由をお知らせいただく必要はありませんが、ご要望に応じてより適切な講師をご紹介するためにお聞きする場合があります。</p>
-        <p class="clause-en">If you would like to request a different teacher, please contact us via LINE or email. You are not required to provide a reason, but sharing your preferences helps us match you with the most suitable teacher. We will accommodate reasonable requests subject to teacher availability.</p>
+        <span class="clause-label">講師変更のリクエスト · Requesting a Change</span>
+        <p class="clause-jp">担当講師の変更をご希望の場合は、LINEまたはメールにてご連絡ください。変更の理由をお知らせいただく必要はありません。</p>
+        <p class="clause-en">If you would like to request a different teacher, please contact us via LINE or email. You are not required to provide a reason. We will accommodate reasonable requests subject to teacher availability.</p>
       </div>
     </div>
 
-    <!-- SECTION 11 -->
+    <!-- S11 -->
     <div class="terms-section" id="s11">
       <div class="section-header">
         <div class="section-num">11</div>
         <div class="section-titles">
           <div class="section-title-jp">遅刻・無断欠席</div>
-          <div class="section-title-en">Late Arrival & No-Shows</div>
+          <div class="section-title-en">Late Arrival &amp; No-Shows</div>
         </div>
       </div>
       <div class="clause">
         <span class="clause-label">遅刻 · Late Arrival</span>
-        <p class="clause-jp">生徒が遅刻した場合、レッスン終了時刻は変わりません。例えば、予定時刻から10分遅れてご参加いただいた場合、残り15分のレッスンとなります。講師はレッスン開始時刻から10分間お待ちします。10分を過ぎても接続がない場合は無断欠席とみなし、レッスンは消化扱いとなります。</p>
-        <p class="clause-en">If a student arrives late, the lesson ends at the originally scheduled time. For example, if you are 10 minutes late, you will receive a 15-minute lesson. The teacher will wait for 10 minutes from the scheduled start time. If no connection is made within 10 minutes, the lesson will be treated as a no-show and the credit will be used.</p>
+        <p class="clause-jp">生徒が遅刻した場合、レッスン終了時刻は変わりません。講師はレッスン開始時刻から10分間お待ちします。10分を過ぎても接続がない場合は無断欠席とみなし、クレジットは消化扱いとなります。</p>
+        <p class="clause-en">If a student arrives late, the lesson ends at the originally scheduled time. The teacher will wait for 10 minutes from the scheduled start time. If no connection is made within 10 minutes, the lesson is treated as a no-show and the credit is used.</p>
       </div>
       <div class="clause">
         <span class="clause-label">講師の遅刻 · Teacher Late Arrival</span>
-        <p class="clause-jp">講師が遅刻した場合、レッスン時間はフルの25分を確保します。やむを得ない場合、同等の補填（追加クレジットまたは延長レッスン）を提供します。</p>
+        <p class="clause-jp">講師が遅刻した場合、レッスン時間はフルの25分を確保します。これが難しい場合、同等の補填（追加クレジットまたは延長レッスン）を提供します。</p>
         <p class="clause-en">If the teacher is late, the full 25-minute lesson will be provided from the time of connection. Where this is not possible, equivalent compensation (additional credit or extended lesson) will be offered.</p>
       </div>
     </div>
 
-    <!-- SECTION 12 -->
+    <!-- S12 -->
     <div class="terms-section" id="s12">
       <div class="section-header">
         <div class="section-num">12</div>
@@ -751,20 +442,19 @@
       <div class="clause">
         <span class="clause-label">接続問題の対応 · Connection Issues</span>
         <p class="clause-jp">
-          技術的な問題が発生した場合の対応は以下のとおりです：<br><br>
-          ・<strong>生徒側の接続問題：</strong>レッスン開始から5分以内に解決できない場合、レッスンは消化扱いとなります（当社の裁量により個別対応する場合があります）。<br>
-          ・<strong>講師側または当社側の接続問題：</strong>レッスンクレジットは即時返還され、代替日程を提供します。<br>
-          ・<strong>双方に原因不明の接続問題：</strong>合計接続時間が10分未満の場合、クレジットを返還します。
+        ・ 生徒側の接続問題：レッスン開始から5分以内に解決できない場合、原則としてクレジットは消化扱いとなります。個別の事情により柔軟に対応する場合があります。<br>
+        ・ 講師側または当社側の問題：クレジットは即時返還され、代替日程を提供します。<br>
+        ・ 原因不明の接続問題：接続時間の合計が10分未満の場合、クレジットを返還します。
         </p>
         <p class="clause-en">
-          <strong>Student-side technical issues:</strong> If the student cannot connect within 5 minutes of the start time and the issue cannot be resolved, the lesson will generally be treated as used. We will consider individual circumstances on a case-by-case basis.<br><br>
-          <strong>Teacher or JawsChat-side technical issues:</strong> The lesson credit is returned immediately and an alternative time is offered.<br><br>
-          <strong>Indeterminate connection issues:</strong> If total connected time is less than 10 minutes and no fault is determinable, the credit will be returned in good faith.
+        Student-side issues: If the student cannot connect within 5 minutes and the issue cannot be resolved, the lesson will generally be treated as used. Individual circumstances will be considered on a case-by-case basis.<br>
+        Teacher or JawsChat-side issues: The credit is returned immediately and an alternative time is offered.<br>
+        Indeterminate issues: If total connected time is less than 10 minutes and no fault is determinable, the credit will be returned in good faith.
         </p>
       </div>
     </div>
 
-    <!-- SECTION 13 -->
+    <!-- S13 -->
     <div class="terms-section" id="s13">
       <div class="section-header">
         <div class="section-num">13</div>
@@ -775,33 +465,17 @@
       </div>
       <div class="clause">
         <span class="clause-label">生徒の行動規範 · Student Conduct</span>
-        <p class="clause-jp">
-          生徒は以下の行動を禁止します：<br><br>
-          ・講師または当社スタッフへの差別的・ハラスメント的・脅迫的な言動<br>
-          ・不適切または性的な内容を含む会話<br>
-          ・レッスンの無断録画・録音<br>
-          ・第三者へのアカウントの共有または譲渡<br>
-          ・当社の知的財産（教材・活動ツール等）の無断複製・配布<br><br>
-          上記に違反した場合、当社は警告なしにサービスの提供を停止することができます。この場合、未使用クレジットの返金はいたしません。
-        </p>
-        <p class="clause-en">
-          Students must not engage in any of the following:<br><br>
-          · Discriminatory, harassing, or threatening behaviour toward teachers or staff<br>
-          · Inappropriate or sexual conversation<br>
-          · Recording lessons without prior written consent from JawsChat<br>
-          · Sharing or transferring account access to any third party<br>
-          · Reproducing or distributing our materials or intellectual property without permission<br><br>
-          Violation of this code may result in immediate suspension of service without warning and without refund of unused credits.
-        </p>
+        <p class="clause-jp">生徒は以下の行動を禁止します：講師または当社スタッフへの差別的・ハラスメント的・脅迫的な言動、不適切または性的な内容を含む会話、レッスンの無断録画・録音、第三者へのアカウントの共有または譲渡、当社の知的財産の無断複製・配布。上記に違反した場合、当社は警告なしにサービスの提供を停止することができます。この場合、未使用クレジットの返金はいたしません。</p>
+        <p class="clause-en">Students must not engage in any of the following: discriminatory, harassing, or threatening behaviour toward teachers or staff; inappropriate or sexual conversation; recording lessons without prior written consent; sharing or transferring account access to any third party; reproducing or distributing our materials without permission. Violation may result in immediate suspension without warning and without refund of unused credits.</p>
       </div>
       <div class="clause">
         <span class="clause-label">講師の行動規範 · Teacher Conduct</span>
-        <p class="clause-jp">当社の講師はすべて、専門的かつ敬意ある対応を行う義務を負います。講師の行動についてご不満がある場合は、LINEまたはメールにてお知らせください。すべての苦情は真摯に対応します。</p>
-        <p class="clause-en">All JawsChat teachers are bound by a professional code of conduct requiring respectful, appropriate, and high-quality lesson delivery. If you have any concern about a teacher's conduct, please contact us via LINE or email. All complaints will be taken seriously and handled promptly and confidentially.</p>
+        <p class="clause-jp">当社の講師はすべて、専門的かつ敬意ある対応を行う義務を負います。講師の行動についてご不満がある場合は、LINEまたはメールにてお知らせください。</p>
+        <p class="clause-en">All JawsChat teachers are bound by a professional code of conduct. If you have any concern about a teacher's conduct, please contact us via LINE or email. All complaints will be taken seriously and handled promptly and confidentially.</p>
       </div>
     </div>
 
-    <!-- SECTION 14 -->
+    <!-- S14 -->
     <div class="terms-section" id="s14">
       <div class="section-header">
         <div class="section-num">14</div>
@@ -813,23 +487,23 @@
       <div class="clause">
         <span class="clause-label">教材の所有権 · Ownership of Materials</span>
         <p class="clause-jp">レッスンで使用されるすべての教材、活動ツール、コンテンツの著作権はPTV（JawsChat）に帰属します。生徒は個人的な学習目的においてのみこれらの教材を使用することができます。商業目的での使用、第三者への配布、複製、改変は禁止されています。</p>
-        <p class="clause-en">All lesson materials, activity tools, frameworks, and content created by or for JawsChat are the intellectual property of PTV (Polmeartagami Ventures). Students may use materials for personal study purposes only. Commercial use, distribution to third parties, reproduction, or modification without express written permission is strictly prohibited.</p>
+        <p class="clause-en">All lesson materials, activity tools, and content created by or for JawsChat are the intellectual property of PTV (Polmeartagami Ventures). Students may use materials for personal study only. Commercial use, distribution, reproduction, or modification without express written permission is strictly prohibited.</p>
       </div>
     </div>
 
-    <!-- SECTION 15 -->
+    <!-- S15 -->
     <div class="terms-section" id="s15">
       <div class="section-header">
         <div class="section-num">15</div>
         <div class="section-titles">
           <div class="section-title-jp">個人情報の取り扱い</div>
-          <div class="section-title-en">Privacy & Personal Data</div>
+          <div class="section-title-en">Privacy &amp; Personal Data</div>
         </div>
       </div>
       <div class="clause">
         <span class="clause-label">収集する情報 · Data We Collect</span>
         <p class="clause-jp">当社は、サービス提供のために以下の個人情報を収集します：氏名、メールアドレス、LINEアカウント情報、支払い情報（Stripeを通じて処理）、学習目標・レベル・興味に関する情報、レッスン記録・進捗情報。</p>
-        <p class="clause-en">We collect the following personal information to provide the service: name, email address, LINE account information, payment details (processed via Stripe), learning goals, level and interests, lesson records and progress notes.</p>
+        <p class="clause-en">We collect the following personal information to provide the service: name, email address, LINE account information, payment details (processed via Stripe), learning goals, level and interests, and lesson records and progress notes.</p>
       </div>
       <div class="clause">
         <span class="clause-label">情報の利用目的 · Use of Data</span>
@@ -839,32 +513,32 @@
       <div class="clause">
         <span class="clause-label">データの保管 · Data Retention</span>
         <p class="clause-jp">退会後、個人情報は会計・法的要件を満たすために必要な期間（最大7年）保持されます。その後、安全に削除されます。個人情報の削除をご希望の場合は、LINEまたはメールにてご連絡ください。</p>
-        <p class="clause-en">Following cancellation of service, personal data is retained for the period required by applicable accounting and legal requirements (up to 7 years). Data is then securely deleted. To request deletion of your personal data, contact us via LINE or email.</p>
+        <p class="clause-en">Following cancellation, personal data is retained for the period required by applicable accounting and legal requirements (up to 7 years), then securely deleted. To request deletion of your personal data, contact us via LINE or email.</p>
       </div>
     </div>
 
-    <!-- SECTION 16 -->
+    <!-- S16 -->
     <div class="terms-section" id="s16">
       <div class="section-header">
         <div class="section-num">16</div>
         <div class="section-titles">
           <div class="section-title-jp">免責事項・責任の制限</div>
-          <div class="section-title-en">Disclaimer & Limitation of Liability</div>
+          <div class="section-title-en">Disclaimer &amp; Limitation of Liability</div>
         </div>
       </div>
       <div class="clause">
         <span class="clause-label">学習成果 · Learning Outcomes</span>
-        <p class="clause-jp">当社は、特定の学習成果（試験合格・スコア向上・流暢性の達成等）を保証するものではありません。英語力の向上は生徒の努力・継続性・個人差によって異なります。当社は最高品質のレッスンを提供することを約束しますが、特定の結果を保証するものではありません。</p>
-        <p class="clause-en">We do not guarantee specific learning outcomes, including but not limited to exam results, score improvements, or fluency milestones. Language learning progress varies between individuals and depends on student effort and consistency. We commit to delivering high-quality lessons but cannot guarantee specific results.</p>
+        <p class="clause-jp">当社は、特定の学習成果（試験合格・スコア向上・流暢性の達成等）を保証するものではありません。英語力の向上は生徒の努力・継続性・個人差によって異なります。</p>
+        <p class="clause-en">We do not guarantee specific learning outcomes, including exam results, score improvements, or fluency milestones. Progress varies between individuals and depends on student effort and consistency.</p>
       </div>
       <div class="clause">
         <span class="clause-label">責任の制限 · Limitation of Liability</span>
         <p class="clause-jp">法令により認められる最大限の範囲において、当社の責任はお客様が支払われたサービス料金の総額を上限とします。当社は、間接的損害・逸失利益・事業機会の損失等については責任を負いません。</p>
-        <p class="clause-en">To the maximum extent permitted by applicable law, our total liability to any student is limited to the total amount paid by that student for the service. We are not liable for indirect losses, loss of profit, loss of business opportunity, or any consequential damages arising from use or inability to use the service.</p>
+        <p class="clause-en">To the maximum extent permitted by applicable law, our total liability to any student is limited to the total amount paid by that student for the service. We are not liable for indirect losses, loss of profit, or any consequential damages.</p>
       </div>
     </div>
 
-    <!-- SECTION 17 -->
+    <!-- S17 -->
     <div class="terms-section" id="s17">
       <div class="section-header">
         <div class="section-num">17</div>
@@ -875,28 +549,28 @@
       </div>
       <div class="clause">
         <span class="clause-label">変更の通知 · Notification of Changes</span>
-        <p class="clause-jp">本規約を変更する場合、変更発効の14日前までにLINEまたはメールにてご通知します。重大な変更の場合は30日前にご通知します。変更後も本サービスを継続してご利用いただいた場合、変更後の規約に同意したものとみなします。変更内容にご同意いただけない場合は、発効日前にサービスを解約することができます。</p>
-        <p class="clause-en">We will notify you of any changes to these Terms at least 14 days before they take effect, or 30 days in advance for material changes, via LINE or email. Continued use of the service after the effective date constitutes acceptance of the revised Terms. If you do not agree with the changes, you may cancel the service before the effective date without penalty.</p>
+        <p class="clause-jp">本規約を変更する場合、変更発効の14日前までにLINEまたはメールにてご通知します。重大な変更の場合は30日前にご通知します。変更後も本サービスを継続してご利用いただいた場合、変更後の規約に同意したものとみなします。</p>
+        <p class="clause-en">We will notify you of any changes to these Terms at least 14 days before they take effect, or 30 days in advance for material changes, via LINE or email. Continued use of the service after the effective date constitutes acceptance of the revised Terms.</p>
       </div>
     </div>
 
-    <!-- SECTION 18 -->
+    <!-- S18 -->
     <div class="terms-section" id="s18">
       <div class="section-header">
         <div class="section-num">18</div>
         <div class="section-titles">
           <div class="section-title-jp">準拠法・管轄裁判所</div>
-          <div class="section-title-en">Governing Law & Jurisdiction</div>
+          <div class="section-title-en">Governing Law &amp; Jurisdiction</div>
         </div>
       </div>
       <div class="clause">
         <span class="clause-label">準拠法 · Governing Law</span>
         <p class="clause-jp">本規約は日本法に準拠し、解釈されます。本規約に関する紛争については、日本の裁判所を専属的合意管轄裁判所とします。当社は誠意をもって紛争の解決に努め、法的手続きの前に話し合いによる解決を優先します。</p>
-        <p class="clause-en">These Terms are governed by and construed in accordance with the laws of Japan. Any disputes arising from or relating to these Terms shall be subject to the exclusive jurisdiction of the courts of Japan. We are committed to resolving disputes in good faith and will always seek resolution through communication before any formal legal process.</p>
+        <p class="clause-en">These Terms are governed by and construed in accordance with the laws of Japan. Any disputes shall be subject to the exclusive jurisdiction of the courts of Japan. We are committed to resolving disputes in good faith and will always seek resolution through communication before any formal legal process.</p>
       </div>
     </div>
 
-    <!-- SECTION 19 -->
+    <!-- S19 -->
     <div class="terms-section" id="s19">
       <div class="section-header">
         <div class="section-num">19</div>
@@ -907,15 +581,12 @@
       </div>
       <div class="clause">
         <span class="clause-label">ご連絡方法 · How to Contact Us</span>
-        <p class="clause-jp">本規約に関するご質問・ご不明点・苦情等は、以下の方法にてお問い合わせください。できる限り速やかに（通常2営業日以内に）ご返答いたします。</p>
+        <p class="clause-jp">本規約に関するご質問・ご不明点・苦情等は、以下の方法にてお問い合わせください。通常2営業日以内にご返答いたします。</p>
         <p class="clause-en">For any questions, concerns, or complaints regarding these Terms or the service, please contact us via the following. We aim to respond within 2 business days.</p>
-        <table class="terms-table">
-          <thead><tr><th>方法 · Method</th><th>詳細 · Details</th></tr></thead>
-          <tbody>
-            <tr><td>LINE</td><td>JawsChat LINE公式アカウント · JawsChat LINE Official Account</td></tr>
-            <tr><td>Email</td><td>jawschat.com のお問い合わせフォームより · Via contact form at jawschat.com</td></tr>
-            <tr><td>運営 · Operated by</td><td>PTV — Polmeartagami Ventures</td></tr>
-          </tbody>
+        <table class="terms-table" style="margin-top:1rem;">
+          <tr><th>方法 · Method</th><th>詳細 · Details</th></tr>
+          <tr><td>LINE</td><td>JawsChat LINE公式アカウント · JawsChat LINE Official Account</td></tr>
+          <tr><td>Email</td><td>jawschat1@gmail.com</td></tr>
         </table>
       </div>
     </div>
@@ -923,11 +594,11 @@
   </main>
 </div>
 
-<!-- FOOTER -->
-<div class="terms-footer">
-  © 2026 JawsChat · <span>PTV</span> — Polmeartagami Ventures · jawschat.com<br>
+<footer class="terms-footer">
+  運営 · Operated by PTV — Polmeartagami Ventures<br><br>
+  © 2026 JawsChat · <span>PTV</span> — Polmeartagami Ventures · jawschat.com<br><br>
   <a href="index.html">← ホームに戻る · Back to Home</a>
-</div>
+</footer>
 
 </body>
 </html>
