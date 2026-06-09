@@ -515,8 +515,6 @@
 
 <script>
 const FORM_ACTION = 'https://hook.eu1.make.com/yrlgecvymac1otsfe9iqdsodlyz6vsyd';
-const urlParams = new URLSearchParams(window.location.search);
-const studentEmail = urlParams.get('email') || '';
 
 
 const form     = document.getElementById('intakeForm');
@@ -555,7 +553,6 @@ form.addEventListener('submit', async (e) => {
 
 
   const formData = {
-    email:    studentEmail,
     name:     document.getElementById('f-name').value.trim(),
     nickname: document.getElementById('f-nick').value.trim(),
     goals:    document.getElementById('f-goals').value.trim(),
