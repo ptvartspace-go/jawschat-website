@@ -471,7 +471,7 @@ async function validateToken(token) {
 
     const data = await res.json();
 
-    if (!data.student || !data.student.id) {
+    if (!data.id) {
       localStorage.removeItem('jawschat_token');
       localStorage.removeItem('jawschat_token_expiry');
       showScreen('login');
@@ -484,7 +484,7 @@ async function validateToken(token) {
     localStorage.setItem('jawschat_token', token);
     localStorage.setItem('jawschat_token_expiry', localExpiry.toISOString());
 
-    await loadPortal(data.student, data.lessons || []);
+    await loadPortal(data, data.lessons || []);
 
   } catch(err) {
     console.error(err);
@@ -493,20 +493,17 @@ async function validateToken(token) {
 }
 
 // ── LOAD PORTAL ──
-async function loadPortal(studentRecord, lessons) {
-  const f = studentRecord.fields;
-  const recordId = studentRecord.id;
-
+async function loadPortal(data, lessons) {
   // Greeting
-  const name = f['Nickname'] || f['Student name'] || '';
+  const name = data.nickname || data.name || '';
   document.getElementById('greetingName').innerHTML =
     `こんにちは、<span style="color:var(--terra)">${name}</span>さん！`;
   document.getElementById('greetingPlan').textContent =
-    `${f['Plan'] || '—'} プラン`;
+    `${data.plan || '—'} プラン`;
 
   // Credits
-  const credits = f['Credits remaining'] || 0;
-  const plan = f['Plan'] || '';
+  const credits = data.credits || 0;
+  const plan = data.plan || '';
   const cap = { 'Super Light': 3, 'Light': 6, 'Regular': 12, 'Intensive': 18 }[plan] || 12;
   document.getElementById('creditsNumber').innerHTML =
     `${credits}<span>/ ${cap}</span>`;
@@ -521,7 +518,7 @@ async function loadPortal(studentRecord, lessons) {
   }
 
   // Expiry
-  const billing = f['Billing date'];
+  const billing = data.billing;
   if (billing) {
     const billingDate = new Date(billing);
     const today = new Date();
@@ -532,11 +529,11 @@ async function loadPortal(studentRecord, lessons) {
   }
 
   // Account
-  document.getElementById('accountPlan').textContent = f['Plan'] || '—';
+  document.getElementById('accountPlan').textContent = data.plan || '—';
   document.getElementById('accountBilling').textContent = billing
     ? new Date(billing).toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' })
     : '—';
-  document.getElementById('accountStatus').textContent = f['Status'] || '—';
+  document.getElementById('accountStatus').textContent = data.status || '—';
 
   // Lessons
   renderLessons(lessons);
