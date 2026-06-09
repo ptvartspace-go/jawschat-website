@@ -514,8 +514,15 @@
 </footer>
 
 <script>
-const FORM_ACTION = 'https://hook.eu1.make.com/yrlgecvymac1otsfe9iqdsodlyz6vsyd';
-
+const FORM_ACTION = 'https://docs.google.com/forms/d/e/1FAIpQLSfY5a3L0rh1MtK_b3ib2D-P4-Ms5jcCDzF9MJ66R3jnmGB3OA/formResponse';
+const ENTRY = {
+  name:     'entry.2076907990',
+  nickname: 'entry.1610240146',
+  goals:    'entry.1171218563',
+  level:    'entry.1584981083',
+  topics:   'entry.480475262',
+  worries:  'entry.1954443446'
+};
 
 const form     = document.getElementById('intakeForm');
 const loading  = document.getElementById('loadingOverlay');
@@ -550,25 +557,24 @@ form.addEventListener('submit', async (e) => {
   loading.classList.add('visible');
   document.getElementById('submitBtn').disabled = true;
 
-
-
-  const formData = {
-    name:     document.getElementById('f-name').value.trim(),
-    nickname: document.getElementById('f-nick').value.trim(),
-    goals:    document.getElementById('f-goals').value.trim(),
-    level:    document.querySelector('input[name="level"]:checked').value,
-    topics:   Array.from(document.querySelectorAll('input[name="topics"]:checked')).map(cb => cb.value),
-    worries:  document.getElementById('f-worries').value.trim()
-  };
+  const params = new URLSearchParams();
+  params.append(ENTRY.name,     document.getElementById('f-name').value.trim());
+  params.append(ENTRY.nickname, document.getElementById('f-nick').value.trim());
+  params.append(ENTRY.goals,    document.getElementById('f-goals').value.trim());
+  params.append(ENTRY.level,    document.querySelector('input[name="level"]:checked').value);
+  document.querySelectorAll('input[name="topics"]:checked').forEach(cb => {
+    params.append(ENTRY.topics, cb.value);
+  });
+  params.append(ENTRY.worries,  document.getElementById('f-worries').value.trim());
 
   try {
     await fetch(FORM_ACTION, {
       method: 'POST',
-      mode: 'cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData)
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: params.toString()
     });
-  } catch(err) { console.log('Submission error:', err); }
+  } catch(err) { /* no-cors always throws — submission still goes through */ }
 
   loading.classList.remove('visible');
   formSect.style.display = 'none';
