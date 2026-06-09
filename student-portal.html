@@ -395,12 +395,8 @@
 
 <script>
 // ── CONFIG ──
-const AIRTABLE_TOKEN = 'patfNWQ3r4TLLnM5c.58da209fb918b2bffcf6836633f70918f82e27ffbecf19d771bc20e0fcd2c029
-';
-const BASE_ID = 'appZUKdPB3UY4CO5B';
-const STUDENTS_TABLE = 'tblxsxy6CHq2oy4JU';
-const LESSONS_TABLE  = 'tbl0H9Yi18c3d8DV0';
 const MAGIC_LINK_WEBHOOK = 'https://hook.eu1.make.com/5c45nbpvwgyul3hvlpmk50c4214h8u7w';
+const DATA_WEBHOOK = 'https://hook.eu1.make.com/3uxpu1otpmbd69lch4769c80n5hbzt1o';
 const TOKEN_EXPIRY_DAYS = 30;
 
 // ── INIT ──
@@ -460,24 +456,22 @@ async function requestMagicLink() {
 async function validateToken(token) {
   showScreen('loading');
   try {
-    // Search for student with this token
-    const formula = encodeURIComponent(`{Login token} = "${token}"`);
-    const res = await fetch(
-      `https://api.airtable.com/v0/${BASE_ID}/${STUDENTS_TABLE}?filterByFormula=${formula}`,
-      { headers: { 'Authorization': `Bearer ${AIRTABLE_TOKEN}` } }
-    );
-    const data = await res.json();
+    const res = await fetch(DATA_WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token })
+    });
 
-    if (!data.records || data.records.length === 0) {
+    if (!res.ok) {
       localStorage.removeItem('jawschat_token');
       localStorage.removeItem('jawschat_token_expiry');
       showScreen('login');
       return;
     }
 
-    const record = data.records[0];
-    const expiry = record.fields['Token expiry'];
-    if (!expiry || new Date() > new Date(expiry)) {
+    const data = await res.json();
+
+    if (!data.student || !data.student.id) {
       localStorage.removeItem('jawschat_token');
       localStorage.removeItem('jawschat_token_expiry');
       showScreen('login');
@@ -489,9 +483,8 @@ async function validateToken(token) {
     localExpiry.setDate(localExpiry.getDate() + TOKEN_EXPIRY_DAYS);
     localStorage.setItem('jawschat_token', token);
     localStorage.setItem('jawschat_token_expiry', localExpiry.toISOString());
-    localStorage.setItem('jawschat_record_id', record.id);
 
-    await loadPortal(record);
+    await loadPortal(data.student, data.lessons || []);
 
   } catch(err) {
     console.error(err);
@@ -500,7 +493,7 @@ async function validateToken(token) {
 }
 
 // ── LOAD PORTAL ──
-async function loadPortal(studentRecord) {
+async function loadPortal(studentRecord, lessons) {
   const f = studentRecord.fields;
   const recordId = studentRecord.id;
 
@@ -546,52 +539,41 @@ async function loadPortal(studentRecord) {
   document.getElementById('accountStatus').textContent = f['Status'] || '—';
 
   // Lessons
-  await loadLessons(recordId);
+  renderLessons(lessons);
 
   showScreen('portal');
 }
 
-// ── LOAD LESSONS ──
-async function loadLessons(recordId) {
-  try {
-    const formula = encodeURIComponent(`{Student} = "${recordId}"`);
-    const res = await fetch(
-      `https://api.airtable.com/v0/${BASE_ID}/${LESSONS_TABLE}?filterByFormula=${formula}&sort[0][field]=Start%20time&sort[0][direction]=asc`,
-      { headers: { 'Authorization': `Bearer ${AIRTABLE_TOKEN}` } }
-    );
-    const data = await res.json();
-    const lessons = data.records || [];
-    const now = new Date();
+// ── RENDER LESSONS ──
+function renderLessons(lessonData) {
+  const lessons = Array.isArray(lessonData) ? lessonData : (lessonData.records || []);
+  const now = new Date();
 
-    const upcoming = lessons.filter(l => l.fields['Status'] === 'Upcoming' && new Date(l.fields['Start time']) > now);
-    const past = lessons.filter(l => l.fields['Status'] === 'Completed' || new Date(l.fields['Start time']) < now);
+  const upcoming = lessons.filter(l => l.fields['Status'] === 'Upcoming' && new Date(l.fields['Start time']) > now);
+  const past = lessons.filter(l => l.fields['Status'] === 'Completed' || new Date(l.fields['Start time']) <= now);
 
-    // Next lesson
-    const nextEl = document.getElementById('nextLesson');
-    if (upcoming.length > 0) {
-      nextEl.innerHTML = lessonCard(upcoming[0], true);
-    } else {
-      nextEl.innerHTML = `<div class="empty-state">予約中のレッスンはありません。<br>No upcoming lessons booked.</div>`;
-    }
+  // Next lesson
+  const nextEl = document.getElementById('nextLesson');
+  if (upcoming.length > 0) {
+    nextEl.innerHTML = lessonCard(upcoming[0], true);
+  } else {
+    nextEl.innerHTML = `<div class="empty-state">予約中のレッスンはありません。<br>No upcoming lessons booked.</div>`;
+  }
 
-    // Upcoming (rest)
-    const upcomingEl = document.getElementById('upcomingLessons');
-    if (upcoming.length > 1) {
-      upcomingEl.innerHTML = upcoming.slice(1).map(l => lessonCard(l, false)).join('');
-    } else {
-      upcomingEl.innerHTML = `<div class="empty-state">その他の予約はありません。<br>No other upcoming lessons.</div>`;
-    }
+  // Upcoming (rest)
+  const upcomingEl = document.getElementById('upcomingLessons');
+  if (upcoming.length > 1) {
+    upcomingEl.innerHTML = upcoming.slice(1).map(l => lessonCard(l, false)).join('');
+  } else {
+    upcomingEl.innerHTML = `<div class="empty-state">その他の予約はありません。<br>No other upcoming lessons.</div>`;
+  }
 
-    // Past
-    const pastEl = document.getElementById('pastLessons');
-    if (past.length > 0) {
-      pastEl.innerHTML = [...past].reverse().map(l => pastLessonCard(l)).join('');
-    } else {
-      pastEl.innerHTML = `<div class="empty-state">過去のレッスン記録はまだありません。<br>No past lessons yet.</div>`;
-    }
-
-  } catch(err) {
-    console.error('Failed to load lessons:', err);
+  // Past
+  const pastEl = document.getElementById('pastLessons');
+  if (past.length > 0) {
+    pastEl.innerHTML = [...past].reverse().map(l => pastLessonCard(l)).join('');
+  } else {
+    pastEl.innerHTML = `<div class="empty-state">過去のレッスン記録はまだありません。<br>No past lessons yet.</div>`;
   }
 }
 
