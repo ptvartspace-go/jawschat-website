@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JawsChat — Teacher Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@300;400;500;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f5f0e6;
+    --cream-dark: #ede8dc;
+    --cream-border: #ddd8cc;
+    --ink: #1a1a1a;
+    --ink-soft: #444;
+    --ink-muted: #888;
+    --terra: #c04a2a;
+    --terra-light: #d4603e;
+    --terra-pale: #f9ede9;
+    --white: #ffffff;
+    --green: #2a7a4f;
+    --green-pale: #edf7f1;
+    --green-border: #b2d8c0;
+    --amber: #b86a00;
+    --amber-pale: #fff8ed;
+    --amber-border: #f0d090;
+    --red: #c0392b;
+    --red-pale: #fdf0f0;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Nunito', 'Noto Sans JP', sans-serif;
+    background: var(--ink);
+    color: var(--white);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* ── LOGIN ── */
+  .login-screen {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    padding: 2rem;
+    background: var(--ink);
+  }
+  .login-card {
+    background: #222;
+    border: 1px solid #333;
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    width: 100%; max-width: 380px;
+    text-align: center;
+  }
+  .login-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem; letter-spacing: 0.08em;
+    color: var(--white); margin-bottom: 0.25rem;
+  }
+  .login-logo span { color: var(--terra); }
+  .login-sub {
+    font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: #666; margin-bottom: 2rem;
+  }
+  .login-input {
+    width: 100%; background: #111; border: 1px solid #333; border-radius: 8px;
+    color: var(--white); font-family: 'Nunito', sans-serif; font-size: 1rem;
+    padding: 0.8rem 1rem; outline: none; margin-bottom: 0.75rem;
+    transition: border-color 0.15s;
+  }
+  .login-input:focus { border-color: var(--terra); }
+  .btn-login {
+    width: 100%; font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem;
+    letter-spacing: 0.1em; color: var(--white); background: var(--terra);
+    border: none; border-radius: 8px; padding: 0.8rem; cursor: pointer;
+    transition: background 0.15s;
+  }
+  .btn-login:hover { background: var(--terra-light); }
+  .login-error {
+    font-size: 0.8rem; color: var(--terra); margin-top: 0.75rem;
+    display: none;
+  }
+
+  /* ── PORTAL LAYOUT ── */
+  .portal { display: none; min-height: 100vh; }
+  .portal.visible { display: block; }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    background: #111;
+    border-bottom: 1px solid #2a2a2a;
+    padding: 0 1.5rem;
+    height: 56px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .topbar-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem; letter-spacing: 0.08em; color: var(--white);
+  }
+  .topbar-logo span { color: var(--terra); }
+  .topbar-label {
+    font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #555;
+  }
+  .btn-logout {
+    font-size: 0.75rem; color: #555; background: none; border: none;
+    cursor: pointer; font-family: 'Nunito', sans-serif;
+    transition: color 0.15s;
+  }
+  .btn-logout:hover { color: var(--terra); }
+
+  /* ── MAIN GRID ── */
+  .portal-body {
+    max-width: 1000px; margin: 0 auto;
+    padding: 1.5rem 1.25rem 4rem;
+    display: flex; flex-direction: column; gap: 1.5rem;
+  }
+
+  /* ── NOW/NEXT CARD ── */
+  .now-card {
+    background: #161616;
+    border: 1px solid #2a2a2a;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .now-header {
+    background: var(--terra);
+    padding: 0.6rem 1.25rem;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .now-header-label {
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: rgba(255,255,255,0.8);
+  }
+  .now-header-time {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem; letter-spacing: 0.06em; color: var(--white);
+  }
+  .now-body { padding: 1.25rem; }
+  .now-student-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem; letter-spacing: 0.04em; color: var(--white);
+    line-height: 1; margin-bottom: 0.25rem;
+  }
+  .now-plan-credits {
+    font-size: 0.8rem; color: #666; margin-bottom: 1.25rem;
+  }
+  .now-plan-credits span { color: var(--terra); font-weight: 700; }
+
+  .now-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0.75rem; margin-bottom: 1.25rem;
+  }
+  @media (max-width: 600px) { .now-grid { grid-template-columns: 1fr; } }
+
+  .info-block {
+    background: #1e1e1e; border: 1px solid #2a2a2a; border-radius: 10px;
+    padding: 0.85rem 1rem;
+  }
+  .info-block-label {
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: #555; margin-bottom: 0.4rem;
+  }
+  .info-block-value {
+    font-size: 0.88rem; color: #ccc; line-height: 1.6;
+    font-family: 'Noto Sans JP', sans-serif;
+  }
+  .info-block-value.highlight { color: var(--white); font-weight: 600; }
+
+  .now-actions {
+    display: flex; gap: 0.75rem; flex-wrap: wrap;
+  }
+  .btn-meet {
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem;
+    letter-spacing: 0.08em; color: var(--white);
+    background: var(--green); border: none; border-radius: 10px;
+    padding: 0.7rem 1.5rem; cursor: pointer; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: opacity 0.15s; flex: 1; justify-content: center;
+  }
+  .btn-meet:hover { opacity: 0.85; }
+  .btn-complete {
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem;
+    letter-spacing: 0.08em; color: var(--white);
+    background: #2a5298; border: none; border-radius: 10px;
+    padding: 0.7rem 1.5rem; cursor: pointer;
+    transition: opacity 0.15s; flex: 1;
+  }
+  .btn-complete:hover { opacity: 0.85; }
+  .btn-noshow {
+    font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 700;
+    color: #666; background: none; border: 1px solid #333; border-radius: 10px;
+    padding: 0.7rem 1.25rem; cursor: pointer; transition: all 0.15s;
+  }
+  .btn-noshow:hover { border-color: var(--red); color: var(--red); }
+
+  /* ── COMPLETE MODAL ── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.85); z-index: 200;
+    align-items: center; justify-content: center; padding: 1.5rem;
+  }
+  .modal-overlay.visible { display: flex; }
+  .modal {
+    background: #161616; border: 1px solid #333; border-radius: 16px;
+    padding: 2rem; width: 100%; max-width: 440px;
+  }
+  .modal h2 {
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem;
+    letter-spacing: 0.06em; color: var(--white); margin-bottom: 0.25rem;
+  }
+  .modal-sub { font-size: 0.8rem; color: #666; margin-bottom: 1.5rem; }
+  .modal-label {
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: #555; margin-bottom: 0.4rem;
+    display: block;
+  }
+  .modal-input {
+    width: 100%; background: #111; border: 1px solid #333; border-radius: 8px;
+    color: var(--white); font-family: 'Nunito', sans-serif; font-size: 0.9rem;
+    padding: 0.7rem 1rem; outline: none; margin-bottom: 1.25rem;
+    transition: border-color 0.15s;
+  }
+  .modal-input:focus { border-color: var(--terra); }
+  .modal-actions { display: flex; gap: 0.75rem; }
+  .btn-confirm {
+    flex: 1; font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem;
+    letter-spacing: 0.08em; color: var(--white); background: var(--green);
+    border: none; border-radius: 8px; padding: 0.75rem; cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .btn-confirm:hover { opacity: 0.85; }
+  .btn-modal-cancel {
+    font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 700;
+    color: #666; background: none; border: 1px solid #333; border-radius: 8px;
+    padding: 0.75rem 1.25rem; cursor: pointer; transition: all 0.15s;
+  }
+  .btn-modal-cancel:hover { border-color: #555; color: #999; }
+
+  /* ── UPCOMING ── */
+  .section-title {
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: #555;
+    padding-bottom: 0.5rem; border-bottom: 1px solid #222;
+    margin-bottom: 0.75rem;
+  }
+
+  .upcoming-list { display: flex; flex-direction: column; gap: 0.5rem; }
+  .upcoming-item {
+    background: #161616; border: 1px solid #222; border-radius: 10px;
+    padding: 0.85rem 1.1rem;
+    display: flex; align-items: center; gap: 1rem;
+    cursor: pointer; transition: border-color 0.15s;
+  }
+  .upcoming-item:hover { border-color: #444; }
+  .upcoming-time {
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem;
+    color: var(--terra); line-height: 1; flex-shrink: 0; min-width: 52px;
+    text-align: center;
+  }
+  .upcoming-time-sub { font-size: 0.65rem; color: #555; letter-spacing: 0.06em; }
+  .upcoming-info { flex: 1; }
+  .upcoming-name { font-size: 0.95rem; font-weight: 700; color: var(--white); }
+  .upcoming-meta { font-size: 0.78rem; color: #666; }
+  .upcoming-credits {
+    font-size: 0.78rem; font-weight: 700;
+    padding: 0.25rem 0.6rem; border-radius: 6px;
+    background: #1e1e1e; color: #888;
+  }
+  .upcoming-credits.low { background: rgba(192,74,42,0.15); color: var(--terra); }
+
+  /* ── STUDENT LIST ── */
+  .student-list { display: flex; flex-direction: column; gap: 0.5rem; }
+  .student-item {
+    background: #161616; border: 1px solid #222; border-radius: 10px;
+    padding: 0.85rem 1.1rem;
+    display: flex; align-items: center; gap: 1rem;
+    cursor: pointer; transition: border-color 0.15s;
+  }
+  .student-item:hover { border-color: #444; }
+  .student-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--terra); display: flex; align-items: center;
+    justify-content: center; font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem; color: var(--white); flex-shrink: 0;
+  }
+  .student-info { flex: 1; }
+  .student-name { font-size: 0.92rem; font-weight: 700; color: var(--white); }
+  .student-meta { font-size: 0.75rem; color: #666; }
+  .student-credits {
+    text-align: right;
+  }
+  .student-credits-num {
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem;
+    color: var(--white); line-height: 1;
+  }
+  .student-credits-num.low { color: var(--terra); }
+  .student-credits-label { font-size: 0.62rem; color: #555; letter-spacing: 0.06em; }
+
+  /* ── STATUS BADGE ── */
+  .badge {
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 0.2rem 0.5rem; border-radius: 4px;
+    display: inline-block;
+  }
+  .badge-active { background: rgba(42,122,79,0.2); color: #6fd4a0; }
+  .badge-paused { background: rgba(184,106,0,0.2); color: #f5c060; }
+  .badge-cancelled { background: rgba(192,57,43,0.2); color: #e87070; }
+
+  /* ── EMPTY STATE ── */
+  .empty {
+    text-align: center; padding: 2rem 1rem;
+    font-size: 0.85rem; color: #444;
+    background: #161616; border: 1px dashed #2a2a2a; border-radius: 10px;
+  }
+
+  /* ── LOADING ── */
+  .loading-screen {
+    min-height: 100vh; display: flex; align-items: center;
+    justify-content: center; flex-direction: column; gap: 1rem;
+    background: var(--ink);
+  }
+  .spinner {
+    width: 32px; height: 32px;
+    border: 2px solid #333; border-top-color: var(--terra);
+    border-radius: 50%; animation: spin 0.7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-screen p { font-size: 0.8rem; color: #555; letter-spacing: 0.06em; }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%);
+    background: #222; border: 1px solid #333; border-radius: 10px;
+    padding: 0.75rem 1.5rem; font-size: 0.85rem; color: var(--white);
+    opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 300;
+    white-space: nowrap;
+  }
+  .toast.visible { opacity: 1; }
+  .toast.success { border-color: var(--green); color: #6fd4a0; }
+  .toast.error { border-color: var(--red); color: #e87070; }
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-card">
+    <div class="login-logo">JAWS<span>Chat</span></div>
+    <div class="login-sub">Teacher Portal</div>
+    <input type="password" class="login-input" id="passwordInput" placeholder="Password" onkeydown="if(event.key==='Enter')login()">
+    <button class="btn-login" onclick="login()">Enter</button>
+    <div class="login-error" id="loginError">Incorrect password</div>
+  </div>
+</div>
+
+<!-- LOADING -->
+<div class="loading-screen" id="loadingScreen" style="display:none;">
+  <div class="spinner"></div>
+  <p>LOADING PORTAL</p>
+</div>
+
+<!-- PORTAL -->
+<div class="portal" id="portal">
+
+  <div class="topbar">
+    <div class="topbar-logo">JAWS<span>Chat</span></div>
+    <div class="topbar-label">Teacher Portal</div>
+    <button class="btn-logout" onclick="logout()">Log out</button>
+  </div>
+
+  <div class="portal-body">
+
+    <!-- NOW/NEXT -->
+    <div>
+      <div class="section-title">Now · Next Lesson</div>
+      <div id="nowCard"></div>
+    </div>
+
+    <!-- UPCOMING -->
+    <div>
+      <div class="section-title">Upcoming Today</div>
+      <div class="upcoming-list" id="upcomingList"></div>
+    </div>
+
+    <!-- ALL STUDENTS -->
+    <div>
+      <div class="section-title">All Students</div>
+      <div class="student-list" id="studentList"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- COMPLETE MODAL -->
+<div class="modal-overlay" id="completeModal">
+  <div class="modal">
+    <h2>Complete Lesson ✓</h2>
+    <p class="modal-sub" id="modalStudentName">—</p>
+    <label class="modal-label" for="fathomInput">Fathom Recording Link (optional)</label>
+    <input type="url" class="modal-input" id="fathomInput" placeholder="https://fathom.video/share/...">
+    <div class="modal-actions">
+      <button class="btn-confirm" onclick="confirmComplete()">Confirm & Send Feedback</button>
+      <button class="btn-modal-cancel" onclick="closeModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ── CONFIG ──
+const PASSWORD = 'jawschat2026';
+const DATA_WEBHOOK = 'https://hook.eu1.make.com/5yarkqjswqdexbwnu9kggvo13wr34s8q';
+const COMPLETE_WEBHOOK = 'https://hook.eu1.make.com/2j9p2raljgyfienclqbfxek7aoq4br5d';
+const SESSION_KEY = 'jawschat_teacher_session';
+const SESSION_EXPIRY_DAYS = 30;
+
+let allStudents = [];
+let allLessons = [];
+let activeLesson = null;
+
+// ── INIT ──
+window.addEventListener('DOMContentLoaded', () => {
+  const session = localStorage.getItem(SESSION_KEY);
+  const expiry = localStorage.getItem(SESSION_KEY + '_expiry');
+  if (session === 'authenticated' && expiry && new Date() < new Date(expiry)) {
+    loadPortal();
+  }
+});
+
+// ── LOGIN ──
+function login() {
+  const val = document.getElementById('passwordInput').value;
+  if (val === PASSWORD) {
+    const expiry = new Date();
+    expiry.setDate(expiry.getDate() + SESSION_EXPIRY_DAYS);
+    localStorage.setItem(SESSION_KEY, 'authenticated');
+    localStorage.setItem(SESSION_KEY + '_expiry', expiry.toISOString());
+    loadPortal();
+  } else {
+    document.getElementById('loginError').style.display = 'block';
+    document.getElementById('passwordInput').value = '';
+    document.getElementById('passwordInput').focus();
+  }
+}
+
+function logout() {
+  localStorage.removeItem(SESSION_KEY);
+  localStorage.removeItem(SESSION_KEY + '_expiry');
+  location.reload();
+}
+
+// ── LOAD PORTAL ──
+async function loadPortal() {
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('loadingScreen').style.display = 'flex';
+
+  try {
+    const res = await fetch(DATA_WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ request: 'all_data' })
+    });
+    const data = await res.json();
+    allStudents = data.students || [];
+    allLessons = data.lessons || [];
+    renderPortal();
+  } catch(err) {
+    console.error(err);
+    // Show portal anyway with empty state
+    renderPortal();
+  }
+
+  document.getElementById('loadingScreen').style.display = 'none';
+  document.getElementById('portal').classList.add('visible');
+}
+
+// ── RENDER ──
+function renderPortal() {
+  renderNowNext();
+  renderUpcoming();
+  renderStudentList();
+}
+
+function renderNowNext() {
+  const now = new Date();
+  const nowCard = document.getElementById('nowCard');
+
+  // Find next upcoming lesson
+  const upcoming = allLessons
+    .filter(l => l.status === 'Upcoming' && new Date(l.startTime) > new Date(now - 30 * 60 * 1000))
+    .sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
+
+  if (upcoming.length === 0) {
+    nowCard.innerHTML = `<div class="empty">No upcoming lessons today.</div>`;
+    return;
+  }
+
+  const lesson = upcoming[0];
+  activeLesson = lesson;
+  const student = allStudents.find(s => s.id === lesson.studentId) || {};
+  const startTime = new Date(lesson.startTime);
+  const timeStr = startTime.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' });
+  const isNow = startTime <= now && new Date(lesson.endTime) >= now;
+  const creditsLow = (student.credits || 0) <= 1;
+
+  nowCard.innerHTML = `
+    <div class="now-card">
+      <div class="now-header">
+        <span class="now-header-label">${isNow ? '🔴 Now' : '⏰ Next'}</span>
+        <span class="now-header-time">${timeStr}</span>
+      </div>
+      <div class="now-body">
+        <div class="now-student-name">${student.nickname || student.name || '—'}</div>
+        <div class="now-plan-credits">
+          ${student.plan || '—'} · <span class="${creditsLow ? 'low' : ''}">${student.credits || 0} credits remaining</span>
+        </div>
+        <div class="now-grid">
+          <div class="info-block">
+            <div class="info-block-label">Goals</div>
+            <div class="info-block-value">${student.goals || '—'}</div>
+          </div>
+          <div class="info-block">
+            <div class="info-block-label">Level · Topics</div>
+            <div class="info-block-value highlight">${student.level || '—'}</div>
+            <div class="info-block-value" style="margin-top:4px;font-size:0.78rem;">${student.topics || '—'}</div>
+          </div>
+          <div class="info-block">
+            <div class="info-block-label">Last Feedback</div>
+            <div class="info-block-value">${lesson.lastFeedback || 'No feedback yet'}</div>
+          </div>
+          <div class="info-block">
+            <div class="info-block-label">Teacher Notes</div>
+            <div class="info-block-value">${lesson.lastNotes || 'No notes yet'}</div>
+          </div>
+        </div>
+        <div class="now-actions">
+          <a href="${lesson.meetLink || '#'}" target="_blank" class="btn-meet">🎥 Join Meet</a>
+          <button class="btn-complete" onclick="openCompleteModal('${lesson.id}', '${(student.nickname || student.name || '').replace(/'/g, "\\'")}')">✓ Complete</button>
+          <button class="btn-noshow" onclick="markNoShow('${lesson.id}', '${(student.nickname || student.name || '').replace(/'/g, "\\'")}')">✗ No-show</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function renderUpcoming() {
+  const now = new Date();
+  const list = document.getElementById('upcomingList');
+  const upcoming = allLessons
+    .filter(l => l.status === 'Upcoming' && new Date(l.startTime) > now)
+    .sort((a, b) => new Date(a.startTime) - new Date(b.startTime))
+    .slice(1, 6); // skip first (shown in now/next)
+
+  if (upcoming.length === 0) {
+    list.innerHTML = `<div class="empty">No more lessons today.</div>`;
+    return;
+  }
+
+  list.innerHTML = upcoming.map(lesson => {
+    const student = allStudents.find(s => s.id === lesson.studentId) || {};
+    const startTime = new Date(lesson.startTime);
+    const day = startTime.getDate();
+    const month = startTime.toLocaleDateString('en-US', { month: 'short' }).toUpperCase();
+    const time = startTime.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' });
+    const creditsLow = (student.credits || 0) <= 1;
+    return `
+      <div class="upcoming-item">
+        <div class="upcoming-time">
+          ${day}<br>
+          <span class="upcoming-time-sub">${month}</span>
+        </div>
+        <div class="upcoming-info">
+          <div class="upcoming-name">${student.nickname || student.name || '—'}</div>
+          <div class="upcoming-meta">${time} · ${student.plan || '—'} · ${student.level || '—'}</div>
+        </div>
+        <div class="upcoming-credits ${creditsLow ? 'low' : ''}">${student.credits || 0} cr</div>
+      </div>`;
+  }).join('');
+}
+
+function renderStudentList() {
+  const list = document.getElementById('studentList');
+  if (allStudents.length === 0) {
+    list.innerHTML = `<div class="empty">No students yet.</div>`;
+    return;
+  }
+
+  const sorted = [...allStudents].sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+  list.innerHTML = sorted.map(s => {
+    const initial = (s.nickname || s.name || '?')[0].toUpperCase();
+    const creditsLow = (s.credits || 0) <= 1;
+    const statusClass = s.status === 'Active' ? 'badge-active' : s.status === 'Paused' ? 'badge-paused' : 'badge-cancelled';
+    return `
+      <div class="student-item">
+        <div class="student-avatar">${initial}</div>
+        <div class="student-info">
+          <div class="student-name">${s.nickname || s.name || '—'} <span class="badge ${statusClass}">${s.status || '—'}</span></div>
+          <div class="student-meta">${s.plan || '—'} · ${s.email || '—'}</div>
+        </div>
+        <div class="student-credits">
+          <div class="student-credits-num ${creditsLow ? 'low' : ''}">${s.credits || 0}</div>
+          <div class="student-credits-label">CREDITS</div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+// ── COMPLETE MODAL ──
+let pendingLessonId = null;
+let pendingStudentName = null;
+
+function openCompleteModal(lessonId, studentName) {
+  pendingLessonId = lessonId;
+  pendingStudentName = studentName;
+  document.getElementById('modalStudentName').textContent = studentName;
+  document.getElementById('fathomInput').value = '';
+  document.getElementById('completeModal').classList.add('visible');
+  document.getElementById('fathomInput').focus();
+}
+
+function closeModal() {
+  document.getElementById('completeModal').classList.remove('visible');
+  pendingLessonId = null;
+  pendingStudentName = null;
+}
+
+async function confirmComplete() {
+  const fathomLink = document.getElementById('fathomInput').value.trim();
+  closeModal();
+  await sendLessonAction('complete', pendingLessonId, fathomLink);
+}
+
+async function markNoShow(lessonId, studentName) {
+  if (!confirm(`Mark ${studentName}'s lesson as a no-show? No credit will be deducted.`)) return;
+  await sendLessonAction('noshow', lessonId, '');
+}
+
+async function sendLessonAction(action, lessonId, fathomLink) {
+  try {
+    const res = await fetch(COMPLETE_WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action, lessonId, fathomLink })
+    });
+    if (res.ok) {
+      showToast(action === 'complete' ? '✓ Lesson completed · Feedback email sent' : '✗ No-show recorded', 'success');
+      setTimeout(() => loadPortal(), 1500);
+    } else {
+      showToast('Something went wrong — try again', 'error');
+    }
+  } catch(err) {
+    showToast('Something went wrong — try again', 'error');
+  }
+}
+
+// ── TOAST ──
+function showToast(msg, type = '') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = `toast visible ${type}`;
+  setTimeout(() => t.className = 'toast', 3000);
+}
+
+// ── KEYBOARD ──
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+});
+</script>
+</body>
+</html>
