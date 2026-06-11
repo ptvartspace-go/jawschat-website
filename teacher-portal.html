@@ -414,6 +414,7 @@
 // ── CONFIG ──
 const PASSWORD = 'jawschat2026';
 const DATA_WEBHOOK = 'https://hook.eu1.make.com/5yarkqjswqdexbwnu9kggvo13wr34s8q';
+const LESSONS_WEBHOOK = 'https://hook.eu1.make.com/pyvt7vwggmg9av79puvoiigz9c70sds3';
 const COMPLETE_WEBHOOK = 'https://hook.eu1.make.com/2j9p2raljgyfienclqbfxek7aoq4br5d';
 const SESSION_KEY = 'jawschat_teacher_session';
 const SESSION_EXPIRY_DAYS = 30;
@@ -459,18 +460,25 @@ async function loadPortal() {
   document.getElementById('loadingScreen').style.display = 'flex';
 
   try {
-    const res = await fetch(DATA_WEBHOOK, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ request: 'all_data' })
-    });
-    const data = await res.json();
-    allStudents = data.students || [];
-    allLessons = data.lessons || [];
+    const [studentsRes, lessonsRes] = await Promise.all([
+      fetch(DATA_WEBHOOK, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ request: 'students' })
+      }),
+      fetch(LESSONS_WEBHOOK, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ request: 'lessons' })
+      })
+    ]);
+    const studentsData = await studentsRes.json();
+    const lessonsData = await lessonsRes.json();
+    allStudents = studentsData.students || [];
+    allLessons = lessonsData.lessons || [];
     renderPortal();
   } catch(err) {
     console.error(err);
-    // Show portal anyway with empty state
     renderPortal();
   }
 
