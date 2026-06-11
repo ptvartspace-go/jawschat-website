@@ -238,6 +238,32 @@
   }
   .btn-modal-cancel:hover { border-color: #555; color: #999; }
 
+  /* ── NEEDS ACTION ── */
+  .action-list { display: flex; flex-direction: column; gap: 0.5rem; }
+  .action-item {
+    background: rgba(192,74,42,0.08);
+    border: 1px solid rgba(192,74,42,0.35);
+    border-radius: 10px;
+    padding: 0.85rem 1.1rem;
+    display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+  }
+  .action-info { flex: 1; min-width: 140px; }
+  .action-name { font-size: 0.95rem; font-weight: 700; color: var(--white); }
+  .action-meta { font-size: 0.75rem; color: var(--terra); }
+  .action-buttons { display: flex; gap: 0.5rem; }
+  .btn-action-complete {
+    font-family: 'Nunito', sans-serif; font-size: 0.8rem; font-weight: 700;
+    color: var(--white); background: #2a5298; border: none; border-radius: 8px;
+    padding: 0.5rem 1rem; cursor: pointer; transition: opacity 0.15s;
+  }
+  .btn-action-complete:hover { opacity: 0.85; }
+  .btn-action-noshow {
+    font-family: 'Nunito', sans-serif; font-size: 0.8rem; font-weight: 700;
+    color: #888; background: none; border: 1px solid #444; border-radius: 8px;
+    padding: 0.5rem 1rem; cursor: pointer; transition: all 0.15s;
+  }
+  .btn-action-noshow:hover { border-color: var(--red); color: var(--red); }
+
   /* ── UPCOMING ── */
   .section-title {
     font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em;
@@ -372,6 +398,12 @@
 
   <div class="portal-body">
 
+    <!-- NEEDS ACTION -->
+    <div id="needsActionSection" style="display:none;">
+      <div class="section-title" style="color:var(--terra);">⚡ Needs Action — Unmarked Lessons</div>
+      <div class="action-list" id="needsActionList"></div>
+    </div>
+
     <!-- NOW/NEXT -->
     <div>
       <div class="section-title">Now · Next Lesson</div>
@@ -421,7 +453,6 @@ const SESSION_EXPIRY_DAYS = 30;
 
 let allStudents = [];
 let allLessons = [];
-let activeLesson = null;
 
 // ── INIT ──
 window.addEventListener('DOMContentLoaded', () => {
@@ -454,6 +485,35 @@ function logout() {
   location.reload();
 }
 
+// ── HELPERS ──
+function parseDate(val) {
+  if (!val) return null;
+  // Try ISO / standard parse first
+  let d = new Date(val);
+  if (!isNaN(d)) return d;
+  // Try Japanese format: 2026年6月11日 23:30
+  const m = String(val).match(/(\d{4})年(\d{1,2})月(\d{1,2})日\s*(\d{1,2}):(\d{2})/);
+  if (m) {
+    d = new Date(+m[1], +m[2]-1, +m[3], +m[4], +m[5]);
+    if (!isNaN(d)) return d;
+  }
+  return null;
+}
+
+function getStudentForLesson(lesson) {
+  const links = lesson.Student;
+  const ids = Array.isArray(links) ? links : (links ? [links] : []);
+  return allStudents.find(s => ids.includes(s.ID || s.id)) || {};
+}
+
+function lessonStart(l) { return parseDate(l['Start time'] || l.startTime || l['Lesson date']); }
+function lessonEnd(l)   { return parseDate(l['End time'] || l.endTime) || (lessonStart(l) ? new Date(lessonStart(l).getTime() + 25*60000) : null); }
+
+function fmtTime(d) { return d ? d.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' }) : '—'; }
+function fmtDay(d)  { return d ? d.getDate() : '—'; }
+function fmtMonth(d){ return d ? d.toLocaleDateString('en-US', { month: 'short' }).toUpperCase() : ''; }
+function esc(s) { return String(s || '').replace(/'/g, "\\'"); }
+
 // ── LOAD PORTAL ──
 async function loadPortal() {
   document.getElementById('loginScreen').style.display = 'none';
@@ -474,8 +534,8 @@ async function loadPortal() {
     ]);
     const studentsData = await studentsRes.json();
     const lessonsData = await lessonsRes.json();
-    allStudents = studentsData.students || [];
-    allLessons = lessonsData.lessons || [];
+    allStudents = dedupe(studentsData.students || []);
+    allLessons = dedupe(lessonsData.lessons || []);
     renderPortal();
   } catch(err) {
     console.error(err);
@@ -486,55 +546,104 @@ async function loadPortal() {
   document.getElementById('portal').classList.add('visible');
 }
 
+function dedupe(arr) {
+  const seen = new Set();
+  return arr.filter(item => {
+    const id = item.ID || item.id;
+    if (!id || seen.has(id)) return false;
+    seen.add(id);
+    return true;
+  });
+}
+
 // ── RENDER ──
 function renderPortal() {
+  renderNeedsAction();
   renderNowNext();
   renderUpcoming();
   renderStudentList();
 }
 
+// ── NEEDS ACTION: past lessons still marked Upcoming ──
+function renderNeedsAction() {
+  const now = new Date();
+  const container = document.getElementById('needsActionSection');
+  const list = document.getElementById('needsActionList');
+
+  const overdue = allLessons
+    .filter(l => (l.Status || '') === 'Upcoming')
+    .filter(l => { const e = lessonEnd(l); return e && e < now; })
+    .sort((a, b) => lessonEnd(b) - lessonEnd(a));
+
+  if (overdue.length === 0) {
+    container.style.display = 'none';
+    return;
+  }
+
+  container.style.display = 'block';
+  list.innerHTML = overdue.map(lesson => {
+    const student = getStudentForLesson(lesson);
+    const name = student.Nickname || student['Student name'] || '—';
+    const start = lessonStart(lesson);
+    const dateStr = start ? `${fmtDay(start)} ${fmtMonth(start)} · ${fmtTime(start)}` : '—';
+    return `
+      <div class="action-item">
+        <div class="action-info">
+          <div class="action-name">${name}</div>
+          <div class="action-meta">${dateStr} · awaiting completion</div>
+        </div>
+        <div class="action-buttons">
+          <button class="btn-action-complete" onclick="openCompleteModal('${lesson.ID}', '${esc(name)}')">✓ Complete</button>
+          <button class="btn-action-noshow" onclick="markNoShow('${lesson.ID}', '${esc(name)}')">✗ No-show</button>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+// ── NOW / NEXT ──
 function renderNowNext() {
   const now = new Date();
   const nowCard = document.getElementById('nowCard');
 
-  // Find next upcoming lesson
   const upcoming = allLessons
-    .filter(l => (l.Status || l.status) === 'Upcoming' && new Date(l.startTime || l['Start time']) > new Date(now - 30 * 60 * 1000))
-    .sort((a, b) => new Date(a.startTime || a['Start time']) - new Date(b.startTime || b['Start time']));
+    .filter(l => (l.Status || '') === 'Upcoming')
+    .filter(l => { const e = lessonEnd(l); return e && e >= now; })
+    .sort((a, b) => lessonStart(a) - lessonStart(b));
 
   if (upcoming.length === 0) {
-    nowCard.innerHTML = `<div class="empty">No upcoming lessons today.</div>`;
+    nowCard.innerHTML = `<div class="empty">No upcoming lessons.</div>`;
     return;
   }
 
   const lesson = upcoming[0];
-  activeLesson = lesson;
-  const student = allStudents.find(s => s.id === lesson.studentId) || {};
-  const startTime = new Date(lesson.startTime);
-  const timeStr = startTime.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' });
-  const isNow = startTime <= now && new Date(lesson.endTime) >= now;
-  const creditsLow = (student.credits || 0) <= 1;
+  const student = getStudentForLesson(lesson);
+  const sName = student.Nickname || student['Student name'] || '—';
+  const start = lessonStart(lesson);
+  const end = lessonEnd(lesson);
+  const isNow = start && end && start <= now && end >= now;
+  const credits = student['Credits remaining'] ?? '—';
+  const creditsLow = credits !== '—' && credits <= 1;
 
   nowCard.innerHTML = `
     <div class="now-card">
       <div class="now-header">
-        <span class="now-header-label">${isNow ? '🔴 Now' : '⏰ Next'}</span>
-        <span class="now-header-time">${timeStr}</span>
+        <span class="now-header-label">${isNow ? '🔴 NOW' : '⏰ NEXT'}</span>
+        <span class="now-header-time">${start ? `${fmtDay(start)} ${fmtMonth(start)} · ${fmtTime(start)}` : '—'}</span>
       </div>
       <div class="now-body">
-        <div class="now-student-name">${student.nickname || student.name || '—'}</div>
+        <div class="now-student-name">${sName}</div>
         <div class="now-plan-credits">
-          ${student.plan || '—'} · <span class="${creditsLow ? 'low' : ''}">${student.credits || 0} credits remaining</span>
+          ${student['Student name'] || ''} · ${student.Plan || '—'} · <span class="${creditsLow ? 'low' : ''}">${credits} credits remaining</span>
         </div>
         <div class="now-grid">
           <div class="info-block">
             <div class="info-block-label">Goals</div>
-            <div class="info-block-value">${student.goals || '—'}</div>
+            <div class="info-block-value">${student.Goals || '—'}</div>
           </div>
           <div class="info-block">
             <div class="info-block-label">Level · Topics</div>
-            <div class="info-block-value highlight">${student.level || '—'}</div>
-            <div class="info-block-value" style="margin-top:4px;font-size:0.78rem;">${student.topics || '—'}</div>
+            <div class="info-block-value highlight">${student.Level || '—'}</div>
+            <div class="info-block-value" style="margin-top:4px;font-size:0.78rem;">${student['Topics of interest'] || '—'}</div>
           </div>
           <div class="info-block">
             <div class="info-block-label">Last Feedback</div>
@@ -542,53 +651,54 @@ function renderNowNext() {
           </div>
           <div class="info-block">
             <div class="info-block-label">Teacher Notes</div>
-            <div class="info-block-value">${lesson.lastNotes || 'No notes yet'}</div>
+            <div class="info-block-value">${lesson['Teacher notes'] || 'No notes yet'}</div>
           </div>
         </div>
         <div class="now-actions">
-          <a href="${lesson.meetLink || '#'}" target="_blank" class="btn-meet">🎥 Join Meet</a>
-          <button class="btn-complete" onclick="openCompleteModal('${lesson.id}', '${(student.nickname || student.name || '').replace(/'/g, "\\'")}')">✓ Complete</button>
-          <button class="btn-noshow" onclick="markNoShow('${lesson.id}', '${(student.nickname || student.name || '').replace(/'/g, "\\'")}')">✗ No-show</button>
+          <a href="${lesson['Google Meet link'] || '#'}" target="_blank" class="btn-meet">🎥 Join Meet</a>
+          <button class="btn-complete" onclick="openCompleteModal('${lesson.ID}', '${esc(sName)}')">✓ Complete</button>
+          <button class="btn-noshow" onclick="markNoShow('${lesson.ID}', '${esc(sName)}')">✗ No-show</button>
         </div>
       </div>
     </div>`;
 }
 
+// ── UPCOMING ──
 function renderUpcoming() {
   const now = new Date();
   const list = document.getElementById('upcomingList');
   const upcoming = allLessons
-    .filter(l => (l.Status || l.status) === 'Upcoming' && new Date(l.startTime || l['Start time']) > now)
-    .sort((a, b) => new Date(a.startTime || a['Start time']) - new Date(b.startTime || b['Start time']))
-    .slice(1, 6); // skip first (shown in now/next)
+    .filter(l => (l.Status || '') === 'Upcoming')
+    .filter(l => { const e = lessonEnd(l); return e && e >= now; })
+    .sort((a, b) => lessonStart(a) - lessonStart(b))
+    .slice(1, 8);
 
   if (upcoming.length === 0) {
-    list.innerHTML = `<div class="empty">No more lessons today.</div>`;
+    list.innerHTML = `<div class="empty">No more lessons scheduled.</div>`;
     return;
   }
 
   list.innerHTML = upcoming.map(lesson => {
-    const student = allStudents.find(s => s.ID === lesson.studentId) || {};
-    const startTime = new Date(lesson.startTime || lesson['Start time']);
-    const day = startTime.getDate();
-    const month = startTime.toLocaleDateString('en-US', { month: 'short' }).toUpperCase();
-    const time = startTime.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' });
-    const creditsLow = (student['Credits remaining'] || 0) <= 1;
+    const student = getStudentForLesson(lesson);
+    const start = lessonStart(lesson);
+    const credits = student['Credits remaining'] ?? '—';
+    const creditsLow = credits !== '—' && credits <= 1;
     return `
       <div class="upcoming-item">
         <div class="upcoming-time">
-          ${day}<br>
-          <span class="upcoming-time-sub">${month}</span>
+          ${fmtDay(start)}<br>
+          <span class="upcoming-time-sub">${fmtMonth(start)}</span>
         </div>
         <div class="upcoming-info">
           <div class="upcoming-name">${student.Nickname || student['Student name'] || '—'}</div>
-          <div class="upcoming-meta">${time} · ${student.Plan || '—'} · ${student.Level || '—'}</div>
+          <div class="upcoming-meta">${fmtTime(start)} · ${student.Plan || '—'} · ${student.Level || '—'}</div>
         </div>
-        <div class="upcoming-credits ${creditsLow ? 'low' : ''}">${student['Credits remaining'] || 0} cr</div>
+        <div class="upcoming-credits ${creditsLow ? 'low' : ''}">${credits} cr</div>
       </div>`;
   }).join('');
 }
 
+// ── STUDENT LIST ──
 function renderStudentList() {
   const list = document.getElementById('studentList');
   if (allStudents.length === 0) {
@@ -596,19 +706,11 @@ function renderStudentList() {
     return;
   }
 
-  // Deduplicate by ID
-  const seen = new Set();
-  const unique = allStudents.filter(s => {
-    const id = s.ID || s.id;
-    if (seen.has(id)) return false;
-    seen.add(id);
-    return true;
-  });
-  const sorted = [...unique].sort((a, b) => (a['Student name'] || '').localeCompare(b['Student name'] || ''));
+  const sorted = [...allStudents].sort((a, b) => (a['Student name'] || '').localeCompare(b['Student name'] || ''));
   list.innerHTML = sorted.map(s => {
     const name = s.Nickname || s['Student name'] || '?';
     const initial = name[0].toUpperCase();
-    const credits = s['Credits remaining'] || 0;
+    const credits = s['Credits remaining'] ?? 0;
     const creditsLow = credits <= 1;
     const status = s.Status || '—';
     const statusClass = status === 'Active' ? 'badge-active' : status === 'Paused' ? 'badge-paused' : 'badge-cancelled';
@@ -642,18 +744,17 @@ function openCompleteModal(lessonId, studentName) {
 
 function closeModal() {
   document.getElementById('completeModal').classList.remove('visible');
-  pendingLessonId = null;
-  pendingStudentName = null;
 }
 
 async function confirmComplete() {
   const fathomLink = document.getElementById('fathomInput').value.trim();
+  const lessonId = pendingLessonId;
   closeModal();
-  await sendLessonAction('complete', pendingLessonId, fathomLink);
+  await sendLessonAction('complete', lessonId, fathomLink);
 }
 
 async function markNoShow(lessonId, studentName) {
-  if (!confirm(`Mark ${studentName}'s lesson as a no-show? No credit will be deducted.`)) return;
+  if (!confirm(`Mark ${studentName}'s lesson as a no-show? The credit WILL still be deducted (per policy).`)) return;
   await sendLessonAction('noshow', lessonId, '');
 }
 
@@ -683,7 +784,6 @@ function showToast(msg, type = '') {
   setTimeout(() => t.className = 'toast', 3000);
 }
 
-// ── KEYBOARD ──
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeModal();
 });
