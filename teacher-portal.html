@@ -491,8 +491,8 @@ function renderNowNext() {
 
   // Find next upcoming lesson
   const upcoming = allLessons
-    .filter(l => l.status === 'Upcoming' && new Date(l.startTime) > new Date(now - 30 * 60 * 1000))
-    .sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
+    .filter(l => (l.Status || l.status) === 'Upcoming' && new Date(l.startTime || l['Start time']) > new Date(now - 30 * 60 * 1000))
+    .sort((a, b) => new Date(a.startTime || a['Start time']) - new Date(b.startTime || b['Start time']));
 
   if (upcoming.length === 0) {
     nowCard.innerHTML = `<div class="empty">No upcoming lessons today.</div>`;
@@ -550,8 +550,8 @@ function renderUpcoming() {
   const now = new Date();
   const list = document.getElementById('upcomingList');
   const upcoming = allLessons
-    .filter(l => l.status === 'Upcoming' && new Date(l.startTime) > now)
-    .sort((a, b) => new Date(a.startTime) - new Date(b.startTime))
+    .filter(l => (l.Status || l.status) === 'Upcoming' && new Date(l.startTime || l['Start time']) > now)
+    .sort((a, b) => new Date(a.startTime || a['Start time']) - new Date(b.startTime || b['Start time']))
     .slice(1, 6); // skip first (shown in now/next)
 
   if (upcoming.length === 0) {
@@ -560,12 +560,12 @@ function renderUpcoming() {
   }
 
   list.innerHTML = upcoming.map(lesson => {
-    const student = allStudents.find(s => s.id === lesson.studentId) || {};
-    const startTime = new Date(lesson.startTime);
+    const student = allStudents.find(s => s.ID === lesson.studentId) || {};
+    const startTime = new Date(lesson.startTime || lesson['Start time']);
     const day = startTime.getDate();
     const month = startTime.toLocaleDateString('en-US', { month: 'short' }).toUpperCase();
     const time = startTime.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' });
-    const creditsLow = (student.credits || 0) <= 1;
+    const creditsLow = (student['Credits remaining'] || 0) <= 1;
     return `
       <div class="upcoming-item">
         <div class="upcoming-time">
@@ -573,10 +573,10 @@ function renderUpcoming() {
           <span class="upcoming-time-sub">${month}</span>
         </div>
         <div class="upcoming-info">
-          <div class="upcoming-name">${student.nickname || student.name || '—'}</div>
-          <div class="upcoming-meta">${time} · ${student.plan || '—'} · ${student.level || '—'}</div>
+          <div class="upcoming-name">${student.Nickname || student['Student name'] || '—'}</div>
+          <div class="upcoming-meta">${time} · ${student.Plan || '—'} · ${student.Level || '—'}</div>
         </div>
-        <div class="upcoming-credits ${creditsLow ? 'low' : ''}">${student.credits || 0} cr</div>
+        <div class="upcoming-credits ${creditsLow ? 'low' : ''}">${student['Credits remaining'] || 0} cr</div>
       </div>`;
   }).join('');
 }
@@ -588,20 +588,31 @@ function renderStudentList() {
     return;
   }
 
-  const sorted = [...allStudents].sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+  // Deduplicate by ID
+  const seen = new Set();
+  const unique = allStudents.filter(s => {
+    const id = s.ID || s.id;
+    if (seen.has(id)) return false;
+    seen.add(id);
+    return true;
+  });
+  const sorted = [...unique].sort((a, b) => (a['Student name'] || '').localeCompare(b['Student name'] || ''));
   list.innerHTML = sorted.map(s => {
-    const initial = (s.nickname || s.name || '?')[0].toUpperCase();
-    const creditsLow = (s.credits || 0) <= 1;
-    const statusClass = s.status === 'Active' ? 'badge-active' : s.status === 'Paused' ? 'badge-paused' : 'badge-cancelled';
+    const name = s.Nickname || s['Student name'] || '?';
+    const initial = name[0].toUpperCase();
+    const credits = s['Credits remaining'] || 0;
+    const creditsLow = credits <= 1;
+    const status = s.Status || '—';
+    const statusClass = status === 'Active' ? 'badge-active' : status === 'Paused' ? 'badge-paused' : 'badge-cancelled';
     return `
       <div class="student-item">
         <div class="student-avatar">${initial}</div>
         <div class="student-info">
-          <div class="student-name">${s.nickname || s.name || '—'} <span class="badge ${statusClass}">${s.status || '—'}</span></div>
-          <div class="student-meta">${s.plan || '—'} · ${s.email || '—'}</div>
+          <div class="student-name">${name} <span class="badge ${statusClass}">${status}</span></div>
+          <div class="student-meta">${s.Plan || '—'} · ${s.Email || '—'}</div>
         </div>
         <div class="student-credits">
-          <div class="student-credits-num ${creditsLow ? 'low' : ''}">${s.credits || 0}</div>
+          <div class="student-credits-num ${creditsLow ? 'low' : ''}">${credits}</div>
           <div class="student-credits-label">CREDITS</div>
         </div>
       </div>`;
