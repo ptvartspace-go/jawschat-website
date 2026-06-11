@@ -608,7 +608,7 @@ function renderStudentList() {
       <div class="student-item">
         <div class="student-avatar">${initial}</div>
         <div class="student-info">
-          <div class="student-name">${name} <span class="badge ${statusClass}">${status}</span></div>
+          <div class="student-name">${s['Student name'] || '—'} ${s.Nickname ? '<span style="color:#666;font-weight:400;">· ' + s.Nickname + '</span>' : ''} <span class="badge ${statusClass}">${status}</span></div>
           <div class="student-meta">${s.Plan || '—'} · ${s.Email || '—'}</div>
         </div>
         <div class="student-credits">
