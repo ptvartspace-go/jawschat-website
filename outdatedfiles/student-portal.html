@@ -266,39 +266,6 @@
     font-family: 'Noto Sans JP', sans-serif; font-size: 0.85rem; color: #c0392b;
   }
 
-  /* ── BOOKING ── */
-  .booking-grid { display: flex; flex-direction: column; gap: 0.75rem; }
-  .booking-btn {
-    display: flex; align-items: center; justify-content: space-between;
-    background: var(--white); border: 1.5px solid var(--cream-border);
-    border-radius: 12px; padding: 1rem 1.25rem;
-    text-decoration: none; transition: all 0.15s; cursor: pointer;
-  }
-  .booking-btn:hover:not(.disabled) { border-color: var(--terra); background: var(--terra-pale); }
-  .booking-btn.disabled { opacity: 0.45; cursor: not-allowed; pointer-events: none; }
-  .booking-btn-left { display: flex; flex-direction: column; gap: 3px; }
-  .booking-btn-title { font-size: 0.95rem; font-weight: 700; color: var(--ink); }
-  .booking-btn-sub { font-size: 0.78rem; color: var(--ink-muted); font-family: 'Noto Sans JP', sans-serif; }
-  .booking-btn-badge {
-    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em;
-    padding: 0.25rem 0.6rem; border-radius: 6px;
-    background: var(--terra-pale); color: var(--terra);
-  }
-  .booking-btn-badge.double { background: #e8f0fe; color: #2a5298; }
-  .booking-no-credits {
-    background: var(--white); border: 1.5px dashed var(--cream-border);
-    border-radius: 12px; padding: 1.25rem;
-    text-align: center;
-  }
-  .booking-no-credits p {
-    font-family: 'Noto Sans JP', sans-serif;
-    font-size: 0.85rem; color: var(--ink-muted); margin-bottom: 0.75rem;
-  }
-  .booking-no-credits a {
-    font-size: 0.85rem; font-weight: 700; color: var(--terra);
-    text-decoration: none;
-  }
-
   footer {
     background: var(--ink); border-top: 1px solid rgba(255,255,255,0.08);
     padding: 2rem; text-align: center;
@@ -396,12 +363,6 @@
     <div class="section">
       <div class="section-title">過去のレッスン · Past Lessons</div>
       <div id="pastLessons"></div>
-    </div>
-
-    <!-- Booking -->
-    <div class="section">
-      <div class="section-title">レッスンを予約する · Book a Lesson</div>
-      <div id="bookingSection"></div>
     </div>
 
     <!-- Account -->
@@ -576,7 +537,6 @@ async function loadPortal(data, lessons) {
 
   // Lessons
   renderLessons(lessons);
-  renderBooking(data.credits || 0);
 
   showScreen('portal');
 }
@@ -657,43 +617,6 @@ function pastLessonCard(lesson) {
         <div class="lesson-status">完了 · Completed</div>
       </div>
       ${fathomLink ? `<a href="${fathomLink}" target="_blank" class="btn-fathom">録画 · Recording</a>` : ''}
-    </div>`;
-}
-
-// ── BOOKING ──
-function renderBooking(credits) {
-  const section = document.getElementById('bookingSection');
-  if (!section) return;
-
-  if (credits === 0) {
-    section.innerHTML = `
-      <div class="booking-no-credits">
-        <p>クレジットがありません。プランを更新してレッスンを予約してください。<br>No credits remaining — please renew your plan to book a lesson.</p>
-        <a href="https://jawschat.com/#pricing">プランを見る · View Plans →</a>
-      </div>`;
-    return;
-  }
-
-  const canDouble = credits >= 2;
-
-  section.innerHTML = `
-    <div class="booking-grid">
-      <a href="https://cal.com/jawschat/lesson" target="_blank" class="booking-btn">
-        <div class="booking-btn-left">
-          <div class="booking-btn-title">📅 レッスンを予約 · Book a Lesson</div>
-          <div class="booking-btn-sub">25分 · 1クレジット消化 / 25 min · Uses 1 credit</div>
-        </div>
-        <div class="booking-btn-badge">1 credit</div>
-      </a>
-      <a href="${canDouble ? 'https://cal.com/jawschat/double-lesson' : '#'}" 
-         target="_blank" 
-         class="booking-btn${canDouble ? '' : ' disabled'}">
-        <div class="booking-btn-left">
-          <div class="booking-btn-title">📅 ダブルレッスンを予約 · Book a Double Lesson</div>
-          <div class="booking-btn-sub">55分 · 2クレジット消化 / 55 min · Uses 2 credits${!canDouble ? ' · クレジット不足 / Not enough credits' : ''}</div>
-        </div>
-        <div class="booking-btn-badge double">2 credits</div>
-      </a>
     </div>`;
 }
 
