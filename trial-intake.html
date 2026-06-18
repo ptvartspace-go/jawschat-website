@@ -503,7 +503,7 @@
     <p>回答を受け取りました。レッスン当日を楽しみにしています！</p>
     <p>I've received your answers and I'm looking forward to meeting you!</p>
     <div class="success-card">
-      <p>✓ &nbsp;体験レッスンの時間になったら、予約確認メールの Google Meet リンクからご参加ください。<br><br>When it's time for your trial, join using the Google Meet link in your booking confirmation email.</p>
+      <p>✓ &nbsp;マイページへのログインリンクをメールでお送りしました。メールをご確認の上、リンクをクリックしてレッスンの予約にお進みください。<br><br>We've sent a login link to your email for My Portal. Please check your inbox and click the link to continue to booking your lesson.</p>
     </div>
   </div>
 
@@ -515,6 +515,7 @@
 
 <script>
 const FORM_ACTION = 'https://hook.eu1.make.com/yrlgecvymac1otsfe9iqdsodlyz6vsyd';
+const MAGIC_LINK_WEBHOOK = 'https://hook.eu1.make.com/5c45nbpvwgyul3hvlpmk50c4214h8u7w';
 const urlParams = new URLSearchParams(window.location.search);
 const studentEmail = urlParams.get('email') || '';
 
@@ -572,6 +573,14 @@ form.addEventListener('submit', async (e) => {
       body: JSON.stringify(formData)
     });
   } catch(err) { console.log('Submission error:', err); }
+
+  try {
+    await fetch(MAGIC_LINK_WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: studentEmail })
+    });
+  } catch(err) { console.log('Magic link request error:', err); }
 
   loading.classList.remove('visible');
   formSect.style.display = 'none';
