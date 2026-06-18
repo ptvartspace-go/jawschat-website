@@ -196,6 +196,7 @@
 
   /* ─── INPUTS ─── */
   input[type="text"],
+  input[type="email"],
   textarea {
     width: 100%;
     font-family: 'Nunito', 'Noto Sans JP', sans-serif;
@@ -210,6 +211,7 @@
     -webkit-appearance: none;
   }
   input[type="text"]:focus,
+  input[type="email"]:focus,
   textarea:focus {
     border-color: var(--terra);
     background: var(--white);
@@ -420,12 +422,20 @@
 
     <!-- Intro -->
     <div class="intro-card">
-      <p>はじめまして！体験レッスンのご予約ありがとうございます。レッスンをより充実したものにするために、事前にいくつか教えていただけますか？</p>
-      <p class="en">Hi! Thank you for booking a trial lesson. To make our time together as useful as possible, I'd love to know a little about you before we meet.</p>
+      <p>ご購入ありがとうございます！レシートはメールでお送りしております。<br>はじめまして！体験レッスンのご予約ありがとうございます。レッスンをより充実したものにするために、事前にいくつか教えていただけますか？</p>
+      <p class="en">Thank you so much for your purchase! A receipt has been emailed to you. Thank you for booking a trial lesson. To make our time together as useful as possible, I'd love to know a little about you before we meet.</p>
     </div>
 
     <!-- Form -->
     <form id="intakeForm" novalidate>
+
+      <!-- Q0 Email -->
+      <div class="q-card" id="card-email">
+        <label class="q-label" for="f-email">メールアドレス（ご購入時と同じもの）<br>Email Address <span style="font-weight:400;color:var(--ink-muted);">(same one used for purchase)</span> <span class="q-required">*</span></label>
+        <p class="q-hint">ご購入（お支払い）の際にご入力いただいたメールアドレスと同じものをご入力ください。 / Please enter the same email address you used when completing your purchase.</p>
+        <input type="email" id="f-email" name="email" placeholder="例：hanako@example.com / e.g. hanako@example.com" autocomplete="email">
+        <p class="error-msg">メールアドレスを入力してください。 / Please enter your email address.</p>
+      </div>
 
       <!-- Q1 Name -->
       <div class="q-card" id="card-name">
@@ -453,10 +463,10 @@
       <div class="q-card" id="card-level">
         <span class="q-label">現在のレベル / Your Current Level <span class="q-required">*</span></span>
         <ul class="options-list" style="margin-top:0.75rem;">
-          <li class="option-item"><input type="radio" name="level" id="l1" value="初級 / Beginner"><label for="l1">初級 / Beginner</label></li>
-          <li class="option-item"><input type="radio" name="level" id="l2" value="中級 / Intermediate"><label for="l2">中級 / Intermediate</label></li>
-          <li class="option-item"><input type="radio" name="level" id="l3" value="中上級 / Upper-Intermediate"><label for="l3">中上級 / Upper-Intermediate</label></li>
-          <li class="option-item"><input type="radio" name="level" id="l4" value="上級 / Advanced"><label for="l4">上級 / Advanced</label></li>
+          <li class="option-item"><input type="radio" name="level" id="l1" value="初級 / Beginner (CEFR A1–A2)"><label for="l1">初級 / Beginner <span style="color:var(--ink-muted);font-weight:400;">(CEFR A1–A2)</span></label></li>
+          <li class="option-item"><input type="radio" name="level" id="l2" value="中級 / Intermediate (CEFR B1)"><label for="l2">中級 / Intermediate <span style="color:var(--ink-muted);font-weight:400;">(CEFR B1)</span></label></li>
+          <li class="option-item"><input type="radio" name="level" id="l3" value="中上級 / Upper-Intermediate (CEFR B2)"><label for="l3">中上級 / Upper-Intermediate <span style="color:var(--ink-muted);font-weight:400;">(CEFR B2)</span></label></li>
+          <li class="option-item"><input type="radio" name="level" id="l4" value="上級 / Advanced (CEFR C1–C2)"><label for="l4">上級 / Advanced <span style="color:var(--ink-muted);font-weight:400;">(CEFR C1–C2)</span></label></li>
           <li class="option-item"><input type="radio" name="level" id="l5" value="わからない / I'm not sure"><label for="l5">わからない / I'm not sure</label></li>
         </ul>
         <p class="error-msg">レベルを選択してください。 / Please select your level.</p>
@@ -476,6 +486,8 @@
           <li class="option-item"><input type="checkbox" name="topics" id="t7" value="ニュース・時事 / News &amp; Current Events"><label for="t7">ニュース・時事 / News &amp; Current Events</label></li>
           <li class="option-item"><input type="checkbox" name="topics" id="t8" value="日常生活 / Daily Life"><label for="t8">日常生活 / Daily Life</label></li>
           <li class="option-item"><input type="checkbox" name="topics" id="t9" value="英検対策 / Eiken Preparation"><label for="t9">英検対策 / Eiken Preparation</label></li>
+          <li class="option-item"><input type="checkbox" name="topics" id="t11" value="アート・音楽 / Art &amp; Music"><label for="t11">アート・音楽 / Art &amp; Music</label></li>
+          <li class="option-item"><input type="checkbox" name="topics" id="t12" value="哲学・論理的思考 / Philosophy &amp; Logical Thought"><label for="t12">哲学・論理的思考 / Philosophy &amp; Logical Thought</label></li>
           <li class="option-item"><input type="checkbox" name="topics" id="t10" value="その他 / Other"><label for="t10">その他 / Other</label></li>
         </ul>
       </div>
@@ -518,6 +530,12 @@ const FORM_ACTION = 'https://hook.eu1.make.com/yrlgecvymac1otsfe9iqdsodlyz6vsyd'
 const MAGIC_LINK_WEBHOOK = 'https://hook.eu1.make.com/5c45nbpvwgyul3hvlpmk50c4214h8u7w';
 const urlParams = new URLSearchParams(window.location.search);
 const studentEmail = urlParams.get('email') || '';
+if (studentEmail) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const emailField = document.getElementById('f-email');
+    if (emailField) emailField.value = studentEmail;
+  });
+}
 
 
 const form     = document.getElementById('intakeForm');
@@ -527,19 +545,23 @@ const formSect = document.getElementById('formSection');
 
 function validate() {
   let ok = true;
+  const emailCard = document.getElementById('card-email');
   const nameCard  = document.getElementById('card-name');
   const goalsCard = document.getElementById('card-goals');
   const levelCard = document.getElementById('card-level');
 
+  const emailVal = document.getElementById('f-email').value.trim();
+  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal);
   const nameOk  = document.getElementById('f-name').value.trim();
   const goalsOk = document.getElementById('f-goals').value.trim();
   const levelOk = document.querySelector('input[name="level"]:checked');
 
+  emailCard.classList.toggle('error', !emailOk);
   nameCard.classList.toggle('error', !nameOk);
   goalsCard.classList.toggle('error', !goalsOk);
   levelCard.classList.toggle('error', !levelOk);
 
-  if (!nameOk || !goalsOk || !levelOk) ok = false;
+  if (!emailOk || !nameOk || !goalsOk || !levelOk) ok = false;
   return ok;
 }
 
@@ -556,7 +578,7 @@ form.addEventListener('submit', async (e) => {
 
 
   const formData = {
-    email:    studentEmail,
+    email:    document.getElementById('f-email').value.trim() || studentEmail,
     name:     document.getElementById('f-name').value.trim(),
     nickname: document.getElementById('f-nick').value.trim(),
     goals:    document.getElementById('f-goals').value.trim(),
@@ -578,7 +600,7 @@ form.addEventListener('submit', async (e) => {
     await fetch(MAGIC_LINK_WEBHOOK, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: studentEmail })
+      body: JSON.stringify({ email: formData.email })
     });
   } catch(err) { console.log('Magic link request error:', err); }
 
@@ -589,6 +611,7 @@ form.addEventListener('submit', async (e) => {
 });
 
 // Clear errors on input
+document.getElementById('f-email').addEventListener('input', () => document.getElementById('card-email').classList.remove('error'));
 document.getElementById('f-name').addEventListener('input',  () => document.getElementById('card-name').classList.remove('error'));
 document.getElementById('f-goals').addEventListener('input', () => document.getElementById('card-goals').classList.remove('error'));
 document.querySelectorAll('input[name="level"]').forEach(r =>
