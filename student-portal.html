@@ -543,7 +543,7 @@ async function loadPortal(data, lessons) {
   // Credits
   const credits = data.credits || 0;
   const plan = data.plan || '';
-  const cap = { 'Super Light': 3, 'Light': 6, 'Regular': 12, 'Intensive': 18 }[plan] || 12;
+  const cap = { 'Trial': 1, 'Super Light': 3, 'Light': 6, 'Regular': 12, 'Intensive': 18 }[plan] || 12;
   document.getElementById('creditsNumber').innerHTML =
     `${credits}<span>/ ${cap}</span>`;
 
