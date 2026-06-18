@@ -571,7 +571,7 @@ function renderNeedsAction() {
   const list = document.getElementById('needsActionList');
 
   const overdue = allLessons
-    .filter(l => (l.Status || '') === 'Upcoming')
+    .filter(l => (l.Select || '') === 'Upcoming')
     .filter(l => { const e = lessonEnd(l); return e && e < now; })
     .sort((a, b) => lessonEnd(b) - lessonEnd(a));
 
@@ -606,7 +606,7 @@ function renderNowNext() {
   const nowCard = document.getElementById('nowCard');
 
   const upcoming = allLessons
-    .filter(l => (l.Status || '') === 'Upcoming')
+    .filter(l => (l.Select || '') === 'Upcoming')
     .filter(l => { const e = lessonEnd(l); return e && e >= now; })
     .sort((a, b) => lessonStart(a) - lessonStart(b));
 
@@ -668,7 +668,7 @@ function renderUpcoming() {
   const now = new Date();
   const list = document.getElementById('upcomingList');
   const upcoming = allLessons
-    .filter(l => (l.Status || '') === 'Upcoming')
+    .filter(l => (l.Select || '') === 'Upcoming')
     .filter(l => { const e = lessonEnd(l); return e && e >= now; })
     .sort((a, b) => lessonStart(a) - lessonStart(b))
     .slice(1, 8);
