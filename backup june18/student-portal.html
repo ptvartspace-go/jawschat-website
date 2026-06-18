@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JawsChat — マイページ · My Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@300;400;500;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f5f0e6;
+    --cream-dark: #ede8dc;
+    --cream-border: #ddd8cc;
+    --ink: #1a1a1a;
+    --ink-soft: #444;
+    --ink-muted: #888;
+    --terra: #c04a2a;
+    --terra-light: #d4603e;
+    --terra-pale: #f9ede9;
+    --white: #ffffff;
+    --green: #2d7a5f;
+    --green-pale: #edf7f1;
+    --green-border: #b2d8c0;
+    --amber: #b86a00;
+    --amber-pale: #fff8ed;
+    --amber-border: #f0d090;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Nunito', 'Noto Sans JP', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(245,240,230,0.98);
+    border-bottom: 1px solid var(--cream-border);
+    padding: 0 1.5rem;
+    height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-logo img { width: 36px; height: 36px; object-fit: contain; }
+  .nav-logo-text { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+  .nav-logo-text span { color: var(--terra); }
+  .nav-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); }
+
+  /* ── SCREENS ── */
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  /* ── LOGIN SCREEN ── */
+  .login-wrap {
+    min-height: calc(100vh - 64px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 2rem 1.25rem;
+  }
+  .login-card {
+    background: var(--white);
+    border: 1.5px solid var(--cream-border);
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    width: 100%; max-width: 420px;
+    text-align: center;
+    box-shadow: 0 8px 40px rgba(100,80,60,0.10);
+  }
+  .login-shark { width: 72px; height: 72px; object-fit: contain; margin-bottom: 1rem; }
+  .login-card h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem; letter-spacing: 0.06em;
+    color: var(--ink); margin-bottom: 0.25rem;
+  }
+  .login-card h1 span { color: var(--terra); }
+  .login-card .sub {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 0.85rem; color: var(--ink-muted);
+    margin-bottom: 2rem; line-height: 1.7;
+  }
+  .login-input {
+    width: 100%;
+    font-family: 'Nunito', sans-serif; font-size: 1rem;
+    color: var(--ink); background: var(--cream);
+    border: 1.5px solid var(--cream-border); border-radius: 10px;
+    padding: 0.8rem 1rem; outline: none;
+    transition: border-color 0.15s, background 0.15s;
+    margin-bottom: 0.75rem;
+  }
+  .login-input:focus { border-color: var(--terra); background: var(--white); }
+  .btn-primary {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem; letter-spacing: 0.1em;
+    color: var(--white); background: var(--terra);
+    border: none; border-radius: 10px;
+    padding: 0.8rem 2rem; cursor: pointer;
+    width: 100%; transition: background 0.15s, transform 0.1s;
+  }
+  .btn-primary:hover { background: var(--terra-light); }
+  .btn-primary:active { transform: scale(0.98); }
+  .btn-primary:disabled { background: var(--ink-muted); cursor: not-allowed; }
+  .login-note { font-size: 0.78rem; color: var(--ink-muted); margin-top: 1rem; font-family: 'Noto Sans JP', sans-serif; line-height: 1.7; }
+
+  /* ── SENT SCREEN ── */
+  .sent-wrap {
+    min-height: calc(100vh - 64px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 2rem 1.25rem;
+  }
+  .sent-card {
+    background: var(--green-pale);
+    border: 1.5px solid var(--green-border);
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    width: 100%; max-width: 420px;
+    text-align: center;
+  }
+  .sent-icon { font-size: 3rem; margin-bottom: 1rem; display: block; }
+  .sent-card h2 { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; color: var(--green); margin-bottom: 0.5rem; letter-spacing: 0.06em; }
+  .sent-card p { font-family: 'Noto Sans JP', sans-serif; font-size: 0.9rem; color: var(--ink-soft); line-height: 1.85; }
+
+  /* ── PORTAL SCREEN ── */
+  .portal-wrap { max-width: 700px; margin: 0 auto; padding: 2rem 1.25rem 5rem; }
+
+  /* greeting */
+  .greeting { margin-bottom: 2rem; }
+  .greeting-name { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+  .greeting-name span { color: var(--terra); }
+  .greeting-sub { font-family: 'Noto Sans JP', sans-serif; font-size: 0.85rem; color: var(--ink-muted); margin-top: 0.25rem; }
+
+  /* credits hero */
+  .credits-hero {
+    background: var(--ink);
+    border-radius: 18px;
+    padding: 1.8rem 2rem;
+    margin-bottom: 1rem;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 1rem;
+  }
+  .credits-left { flex: 1; }
+  .credits-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 0.25rem; }
+  .credits-number { font-family: 'Bebas Neue', sans-serif; font-size: 4rem; color: var(--white); line-height: 1; }
+  .credits-number span { font-size: 1.4rem; color: rgba(255,255,255,0.5); margin-left: 4px; }
+  .credits-dots { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 0.75rem; }
+  .credit-dot {
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--terra); flex-shrink: 0;
+  }
+  .credit-dot.empty { background: rgba(255,255,255,0.15); }
+
+  /* expiry badge */
+  .expiry-badge {
+    background: var(--amber-pale);
+    border: 1px solid var(--amber-border);
+    border-radius: 10px;
+    padding: 0.7rem 1rem;
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .expiry-badge .icon { font-size: 1.2rem; flex-shrink: 0; }
+  .expiry-text { font-size: 0.83rem; color: var(--amber); font-weight: 700; font-family: 'Noto Sans JP', sans-serif; line-height: 1.5; }
+
+  /* section */
+  .section { margin-bottom: 2rem; }
+  .section-title {
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--terra);
+    margin-bottom: 0.75rem; padding-bottom: 0.5rem;
+    border-bottom: 1.5px solid var(--cream-border);
+  }
+
+  /* lesson cards */
+  .lesson-card {
+    background: var(--white);
+    border: 1.5px solid var(--cream-border);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 0.75rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .lesson-card.next { border-color: var(--terra); background: var(--terra-pale); }
+  .lesson-date-block { text-align: center; flex-shrink: 0; min-width: 52px; }
+  .lesson-day { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; color: var(--terra); line-height: 1; }
+  .lesson-month { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); }
+  .lesson-info { flex: 1; }
+  .lesson-time { font-size: 0.88rem; font-weight: 700; color: var(--ink); }
+  .lesson-status { font-size: 0.75rem; color: var(--ink-muted); font-family: 'Noto Sans JP', sans-serif; }
+  .btn-meet {
+    font-family: 'Nunito', sans-serif; font-size: 0.78rem; font-weight: 700;
+    color: var(--white); background: var(--terra);
+    border: none; border-radius: 8px;
+    padding: 0.45rem 0.9rem; cursor: pointer;
+    text-decoration: none; white-space: nowrap;
+    transition: background 0.15s;
+  }
+  .btn-meet:hover { background: var(--terra-light); }
+  .btn-fathom {
+    font-family: 'Nunito', sans-serif; font-size: 0.78rem; font-weight: 700;
+    color: var(--terra); background: transparent;
+    border: 1.5px solid var(--terra); border-radius: 8px;
+    padding: 0.45rem 0.9rem; cursor: pointer;
+    text-decoration: none; white-space: nowrap;
+    transition: all 0.15s;
+  }
+  .btn-fathom:hover { background: var(--terra-pale); }
+
+  .empty-state {
+    text-align: center; padding: 2rem 1rem;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 0.85rem; color: var(--ink-muted);
+    background: var(--white); border: 1.5px dashed var(--cream-border);
+    border-radius: 12px;
+  }
+
+  /* account section */
+  .account-card {
+    background: var(--white);
+    border: 1.5px solid var(--cream-border);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+  .account-row { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; border-bottom: 1px solid var(--cream-border); font-size: 0.88rem; }
+  .account-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .account-row-label { color: var(--ink-muted); font-family: 'Noto Sans JP', sans-serif; }
+  .account-row-value { font-weight: 700; color: var(--ink); }
+
+  .btn-cancel {
+    width: 100%; font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 700;
+    color: var(--ink-muted); background: transparent;
+    border: 1.5px solid var(--cream-border); border-radius: 10px;
+    padding: 0.75rem; cursor: pointer; margin-top: 0.75rem;
+    transition: all 0.15s;
+  }
+  .btn-cancel:hover { border-color: #c0392b; color: #c0392b; }
+
+  .btn-logout {
+    width: 100%; font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 700;
+    color: var(--ink-muted); background: transparent;
+    border: none; padding: 0.5rem; cursor: pointer; margin-top: 0.5rem;
+    text-decoration: underline;
+  }
+
+  /* loading */
+  .loading-wrap {
+    min-height: calc(100vh - 64px);
+    display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 1rem;
+  }
+  .spinner {
+    width: 36px; height: 36px;
+    border: 3px solid var(--cream-border);
+    border-top-color: var(--terra);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-wrap p { font-family: 'Noto Sans JP', sans-serif; font-size: 0.85rem; color: var(--ink-muted); }
+
+  /* error */
+  .error-banner {
+    background: #fdf0f0; border: 1px solid #f5c6c6; border-radius: 10px;
+    padding: 1rem 1.25rem; margin-bottom: 1rem;
+    font-family: 'Noto Sans JP', sans-serif; font-size: 0.85rem; color: #c0392b;
+  }
+
+  /* ── BOOKING ── */
+  .booking-grid { display: flex; flex-direction: column; gap: 0.75rem; }
+  .booking-btn {
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--white); border: 1.5px solid var(--cream-border);
+    border-radius: 12px; padding: 1rem 1.25rem;
+    text-decoration: none; transition: all 0.15s; cursor: pointer;
+  }
+  .booking-btn:hover:not(.disabled) { border-color: var(--terra); background: var(--terra-pale); }
+  .booking-btn.disabled { opacity: 0.45; cursor: not-allowed; pointer-events: none; }
+  .booking-btn-left { display: flex; flex-direction: column; gap: 3px; }
+  .booking-btn-title { font-size: 0.95rem; font-weight: 700; color: var(--ink); }
+  .booking-btn-sub { font-size: 0.78rem; color: var(--ink-muted); font-family: 'Noto Sans JP', sans-serif; }
+  .booking-btn-badge {
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em;
+    padding: 0.25rem 0.6rem; border-radius: 6px;
+    background: var(--terra-pale); color: var(--terra);
+  }
+  .booking-btn-badge.double { background: #e8f0fe; color: #2a5298; }
+  .booking-no-credits {
+    background: var(--white); border: 1.5px dashed var(--cream-border);
+    border-radius: 12px; padding: 1.25rem;
+    text-align: center;
+  }
+  .booking-no-credits p {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 0.85rem; color: var(--ink-muted); margin-bottom: 0.75rem;
+  }
+  .booking-no-credits a {
+    font-size: 0.85rem; font-weight: 700; color: var(--terra);
+    text-decoration: none;
+  }
+
+  footer {
+    background: var(--ink); border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 2rem; text-align: center;
+    font-size: 0.78rem; color: rgba(255,255,255,0.3); letter-spacing: 0.04em;
+  }
+  footer span { color: var(--terra); }
+
+  @media (max-width: 480px) {
+    .credits-hero { flex-direction: column; align-items: flex-start; }
+    .credits-number { font-size: 3rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-text">JAWS<span>Chat</span></div>
+  </a>
+  <div class="nav-label">マイページ · My Portal</div>
+</nav>
+
+<!-- LOADING -->
+<div class="screen active" id="screen-loading">
+  <div class="loading-wrap">
+    <div class="spinner"></div>
+    <p>読み込み中… / Loading…</p>
+  </div>
+</div>
+
+<!-- LOGIN -->
+<div class="screen" id="screen-login">
+  <div class="login-wrap">
+    <div class="login-card">
+      <h1>JAWS<span>Chat</span></h1>
+      <p class="sub">メールアドレスを入力してください。<br>ログインリンクをお送りします。<br><br>Enter your email address and we'll send you a login link.</p>
+      <input type="email" class="login-input" id="loginEmail" placeholder="your@email.com" autocomplete="email">
+      <button class="btn-primary" id="loginBtn" onclick="requestMagicLink()">ログインリンクを送る · Send Login Link</button>
+      <p class="login-note">リンクは30秒以内に届きます。迷惑メールフォルダもご確認ください。<br>The link will arrive within 30 seconds. Check your spam folder if it doesn't appear.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SENT -->
+<div class="screen" id="screen-sent">
+  <div class="sent-wrap">
+    <div class="sent-card">
+      <span class="sent-icon">📬</span>
+      <h2>メールを確認してください</h2>
+      <p>ログインリンクをお送りしました。メールを開き、リンクをクリックしてください。<br><br>We've sent a login link to your email. Open it and click the link to access your portal.<br><br>リンクは24時間有効です。 / The link is valid for 24 hours.</p>
+    </div>
+  </div>
+</div>
+
+<!-- PORTAL -->
+<div class="screen" id="screen-portal">
+  <div class="portal-wrap">
+
+    <div id="errorBanner" class="error-banner" style="display:none;"></div>
+
+    <!-- Greeting -->
+    <div class="greeting">
+      <div class="greeting-name" id="greetingName">こんにちは！</div>
+      <div class="greeting-sub" id="greetingPlan"></div>
+    </div>
+
+    <!-- Credits -->
+    <div class="credits-hero">
+      <div class="credits-left">
+        <div class="credits-label">残りクレジット · Credits Remaining</div>
+        <div class="credits-number" id="creditsNumber">—<span>credits</span></div>
+        <div class="credits-dots" id="creditsDots"></div>
+      </div>
+    </div>
+
+    <!-- Expiry -->
+    <div class="expiry-badge" id="expiryBadge">
+      <span class="icon">⏰</span>
+      <div class="expiry-text" id="expiryText">—</div>
+    </div>
+
+    <!-- Next Lesson -->
+    <div class="section">
+      <div class="section-title">次のレッスン · Next Lesson</div>
+      <div id="nextLesson"></div>
+    </div>
+
+    <!-- Upcoming -->
+    <div class="section">
+      <div class="section-title">予定レッスン · Upcoming Lessons</div>
+      <div id="upcomingLessons"></div>
+    </div>
+
+    <!-- Past -->
+    <div class="section">
+      <div class="section-title">過去のレッスン · Past Lessons</div>
+      <div id="pastLessons"></div>
+    </div>
+
+    <!-- Booking -->
+    <div class="section">
+      <div class="section-title">レッスンを予約する · Book a Lesson</div>
+      <div id="bookingSection"></div>
+    </div>
+
+    <!-- Account -->
+    <div class="section">
+      <div class="section-title">アカウント · Account</div>
+      <div class="account-card">
+        <div class="account-row">
+          <span class="account-row-label">プラン · Plan</span>
+          <span class="account-row-value" id="accountPlan">—</span>
+        </div>
+        <div class="account-row">
+          <span class="account-row-label">次回請求日 · Next Billing Date</span>
+          <span class="account-row-value" id="accountBilling">—</span>
+        </div>
+        <div class="account-row">
+          <span class="account-row-label">ステータス · Status</span>
+          <span class="account-row-value" id="accountStatus">—</span>
+        </div>
+      </div>
+      <button class="btn-cancel" onclick="confirmCancel()">解約する · Cancel Subscription</button>
+      <button class="btn-logout" onclick="logout()">ログアウト · Log out</button>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  © 2026 JawsChat · <span>PTV</span> — Polmeartagami Ventures · jawschat.com
+</footer>
+
+<script>
+// ── CONFIG ──
+const MAGIC_LINK_WEBHOOK = 'https://hook.eu1.make.com/5c45nbpvwgyul3hvlpmk50c4214h8u7w';
+const DATA_WEBHOOK = 'https://hook.eu1.make.com/3uxpu1otpmbd69lch4769c80n5hbzt1o';
+const TOKEN_EXPIRY_DAYS = 30;
+
+// ── INIT ──
+window.addEventListener('DOMContentLoaded', async () => {
+  const params = new URLSearchParams(window.location.search);
+  const token = params.get('token');
+
+  if (token) {
+    // Validate token from URL
+    await validateToken(token);
+    // Clean URL
+    window.history.replaceState({}, '', window.location.pathname);
+  } else {
+    // Check localStorage
+    const stored = localStorage.getItem('jawschat_token');
+    const expiry = localStorage.getItem('jawschat_token_expiry');
+    if (stored && expiry && new Date() < new Date(expiry)) {
+      await validateToken(stored);
+    } else {
+      showScreen('login');
+    }
+  }
+});
+
+// ── SCREENS ──
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + name).classList.add('active');
+}
+
+// ── MAGIC LINK REQUEST ──
+async function requestMagicLink() {
+  const email = document.getElementById('loginEmail').value.trim();
+  if (!email || !email.includes('@')) {
+    document.getElementById('loginEmail').style.borderColor = 'var(--terra)';
+    return;
+  }
+  const btn = document.getElementById('loginBtn');
+  btn.disabled = true;
+  btn.textContent = '送信中… / Sending…';
+
+  try {
+    await fetch(MAGIC_LINK_WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    });
+    showScreen('sent');
+  } catch(err) {
+    btn.disabled = false;
+    btn.textContent = 'ログインリンクを送る · Send Login Link';
+    alert('エラーが発生しました。もう一度お試しください。\nSomething went wrong. Please try again.');
+  }
+}
+
+// ── TOKEN VALIDATION ──
+async function validateToken(token) {
+  showScreen('loading');
+  try {
+    const res = await fetch(DATA_WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token })
+    });
+
+    if (!res.ok) {
+      localStorage.removeItem('jawschat_token');
+      localStorage.removeItem('jawschat_token_expiry');
+      showScreen('login');
+      return;
+    }
+
+    const data = await res.json();
+
+    if (!data.id) {
+      localStorage.removeItem('jawschat_token');
+      localStorage.removeItem('jawschat_token_expiry');
+      showScreen('login');
+      return;
+    }
+
+    // Store token locally for 30 days
+    const localExpiry = new Date();
+    localExpiry.setDate(localExpiry.getDate() + TOKEN_EXPIRY_DAYS);
+    localStorage.setItem('jawschat_token', token);
+    localStorage.setItem('jawschat_token_expiry', localExpiry.toISOString());
+
+    await loadPortal(data, data.lessons || []);
+
+  } catch(err) {
+    console.error(err);
+    showScreen('login');
+  }
+}
+
+// ── LOAD PORTAL ──
+async function loadPortal(data, lessons) {
+  // Greeting
+  const name = data.nickname || data.name || '';
+  document.getElementById('greetingName').innerHTML =
+    `こんにちは、<span style="color:var(--terra)">${name}</span>さん！`;
+  document.getElementById('greetingPlan').textContent =
+    `${data.plan || '—'} プラン`;
+
+  // Credits
+  const credits = data.credits || 0;
+  const plan = data.plan || '';
+  const cap = { 'Super Light': 3, 'Light': 6, 'Regular': 12, 'Intensive': 18 }[plan] || 12;
+  document.getElementById('creditsNumber').innerHTML =
+    `${credits}<span>/ ${cap}</span>`;
+
+  // Dots
+  const dotsEl = document.getElementById('creditsDots');
+  dotsEl.innerHTML = '';
+  for (let i = 0; i < cap; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'credit-dot' + (i >= credits ? ' empty' : '');
+    dotsEl.appendChild(dot);
+  }
+
+  // Expiry
+  const billing = data.billing;
+  if (billing) {
+    const billingDate = new Date(billing);
+    const today = new Date();
+    const diffDays = Math.ceil((billingDate - today) / (1000 * 60 * 60 * 24));
+    const dateStr = billingDate.toLocaleDateString('ja-JP', { month: 'long', day: 'numeric' });
+    document.getElementById('expiryText').innerHTML =
+      `クレジット有効期限：${dateStr}（あと${diffDays}日）<br>Credits expire: ${dateStr} (in ${diffDays} days)`;
+  }
+
+  // Account
+  document.getElementById('accountPlan').textContent = data.plan || '—';
+  document.getElementById('accountBilling').textContent = billing
+    ? new Date(billing).toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' })
+    : '—';
+  document.getElementById('accountStatus').textContent = data.status || '—';
+
+  // Lessons
+  renderLessons(lessons);
+  renderBooking(data.credits || 0);
+
+  showScreen('portal');
+}
+
+// ── RENDER LESSONS ──
+function renderLessons(lessonData) {
+  const lessons = Array.isArray(lessonData) ? lessonData : (lessonData.records || []);
+  const now = new Date();
+
+  const upcoming = lessons.filter(l => l.fields['Status'] === 'Upcoming' && new Date(l.fields['Start time']) > now);
+  const past = lessons.filter(l => l.fields['Status'] === 'Completed' || new Date(l.fields['Start time']) <= now);
+
+  // Next lesson
+  const nextEl = document.getElementById('nextLesson');
+  if (upcoming.length > 0) {
+    nextEl.innerHTML = lessonCard(upcoming[0], true);
+  } else {
+    nextEl.innerHTML = `<div class="empty-state">予約中のレッスンはありません。<br>No upcoming lessons booked.</div>`;
+  }
+
+  // Upcoming (rest)
+  const upcomingEl = document.getElementById('upcomingLessons');
+  if (upcoming.length > 1) {
+    upcomingEl.innerHTML = upcoming.slice(1).map(l => lessonCard(l, false)).join('');
+  } else {
+    upcomingEl.innerHTML = `<div class="empty-state">その他の予約はありません。<br>No other upcoming lessons.</div>`;
+  }
+
+  // Past
+  const pastEl = document.getElementById('pastLessons');
+  if (past.length > 0) {
+    pastEl.innerHTML = [...past].reverse().map(l => pastLessonCard(l)).join('');
+  } else {
+    pastEl.innerHTML = `<div class="empty-state">過去のレッスン記録はまだありません。<br>No past lessons yet.</div>`;
+  }
+}
+
+// ── LESSON CARD ──
+function lessonCard(lesson, isNext) {
+  const f = lesson.fields;
+  const start = new Date(f['Start time']);
+  const day = start.getDate();
+  const month = start.toLocaleDateString('en-US', { month: 'short' }).toUpperCase();
+  const time = start.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' });
+  const meetLink = f['Google Meet link'] || '#';
+
+  return `
+    <div class="lesson-card${isNext ? ' next' : ''}">
+      <div class="lesson-date-block">
+        <div class="lesson-day">${day}</div>
+        <div class="lesson-month">${month}</div>
+      </div>
+      <div class="lesson-info">
+        <div class="lesson-time">${time}</div>
+        <div class="lesson-status">${isNext ? '次のレッスン · Next lesson' : '予約済み · Booked'}</div>
+      </div>
+      <a href="${meetLink}" target="_blank" class="btn-meet">Join Meet</a>
+    </div>`;
+}
+
+// ── PAST LESSON CARD ──
+function pastLessonCard(lesson) {
+  const f = lesson.fields;
+  const start = new Date(f['Start time'] || f['Lesson date']);
+  const day = start.getDate();
+  const month = start.toLocaleDateString('en-US', { month: 'short' }).toUpperCase();
+  const time = f['Start time'] ? start.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' }) : '';
+  const fathomLink = f['Fathom link'];
+
+  return `
+    <div class="lesson-card">
+      <div class="lesson-date-block">
+        <div class="lesson-day">${day}</div>
+        <div class="lesson-month">${month}</div>
+      </div>
+      <div class="lesson-info">
+        <div class="lesson-time">${time}</div>
+        <div class="lesson-status">完了 · Completed</div>
+      </div>
+      ${fathomLink ? `<a href="${fathomLink}" target="_blank" class="btn-fathom">録画 · Recording</a>` : ''}
+    </div>`;
+}
+
+// ── BOOKING ──
+function renderBooking(credits) {
+  const section = document.getElementById('bookingSection');
+  if (!section) return;
+
+  if (credits === 0) {
+    section.innerHTML = `
+      <div class="booking-no-credits">
+        <p>クレジットがありません。プランを更新してレッスンを予約してください。<br>No credits remaining — please renew your plan to book a lesson.</p>
+        <a href="https://jawschat.com/#pricing">プランを見る · View Plans →</a>
+      </div>`;
+    return;
+  }
+
+  const canDouble = credits >= 2;
+
+  section.innerHTML = `
+    <div class="booking-grid">
+      <a href="https://cal.com/jawschat/lesson" target="_blank" class="booking-btn">
+        <div class="booking-btn-left">
+          <div class="booking-btn-title">📅 レッスンを予約 · Book a Lesson</div>
+          <div class="booking-btn-sub">25分 · 1クレジット消化 / 25 min · Uses 1 credit</div>
+        </div>
+        <div class="booking-btn-badge">1 credit</div>
+      </a>
+      <a href="${canDouble ? 'https://cal.com/jawschat/double-lesson' : '#'}" 
+         target="_blank" 
+         class="booking-btn${canDouble ? '' : ' disabled'}">
+        <div class="booking-btn-left">
+          <div class="booking-btn-title">📅 ダブルレッスンを予約 · Book a Double Lesson</div>
+          <div class="booking-btn-sub">55分 · 2クレジット消化 / 55 min · Uses 2 credits${!canDouble ? ' · クレジット不足 / Not enough credits' : ''}</div>
+        </div>
+        <div class="booking-btn-badge double">2 credits</div>
+      </a>
+    </div>`;
+}
+
+// ── CANCEL ──
+function confirmCancel() {
+  const confirmed = confirm(
+    '本当に解約しますか？\nクレジットは現在の期間終了まで有効です。\n\nAre you sure you want to cancel?\nYour credits remain valid until the end of your current period.'
+  );
+  if (confirmed) {
+    window.location.href = 'mailto:jawschat1@gmail.com?subject=解約のご連絡&body=解約を希望します。';
+  }
+}
+
+// ── LOGOUT ──
+function logout() {
+  localStorage.removeItem('jawschat_token');
+  localStorage.removeItem('jawschat_token_expiry');
+  localStorage.removeItem('jawschat_record_id');
+  showScreen('login');
+}
+</script>
+</body>
+</html>
