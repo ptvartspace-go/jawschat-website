@@ -586,8 +586,8 @@ function renderLessons(lessonData) {
   const lessons = Array.isArray(lessonData) ? lessonData : (lessonData.records || []);
   const now = new Date();
 
-  const upcoming = lessons.filter(l => l.fields['Status'] === 'Upcoming' && new Date(l.fields['Start time']) > now);
-  const past = lessons.filter(l => l.fields['Status'] === 'Completed' || new Date(l.fields['Start time']) <= now);
+  const upcoming = lessons.filter(l => l.Select === 'Upcoming' && new Date(l['Start time']) > now);
+  const past = lessons.filter(l => l.Select === 'Completed' || new Date(l['Start time']) <= now);
 
   // Next lesson
   const nextEl = document.getElementById('nextLesson');
@@ -616,12 +616,12 @@ function renderLessons(lessonData) {
 
 // ── LESSON CARD ──
 function lessonCard(lesson, isNext) {
-  const f = lesson.fields;
+  const f = lesson;
   const start = new Date(f['Start time']);
   const day = start.getDate();
   const month = start.toLocaleDateString('en-US', { month: 'short' }).toUpperCase();
   const time = start.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' });
-  const meetLink = f['Google Meet link'] || '#';
+  const meetLink = f['Google meet link'] || '#';
 
   return `
     <div class="lesson-card${isNext ? ' next' : ''}">
@@ -639,7 +639,7 @@ function lessonCard(lesson, isNext) {
 
 // ── PAST LESSON CARD ──
 function pastLessonCard(lesson) {
-  const f = lesson.fields;
+  const f = lesson;
   const start = new Date(f['Start time'] || f['Lesson date']);
   const day = start.getDate();
   const month = start.toLocaleDateString('en-US', { month: 'short' }).toUpperCase();
