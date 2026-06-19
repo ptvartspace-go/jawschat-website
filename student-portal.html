@@ -197,6 +197,41 @@
     transition: background 0.15s;
   }
   .btn-meet:hover { background: var(--terra-light); }
+  .btn-cancel-lesson {
+    font-family: 'Nunito', sans-serif; font-size: 0.78rem; font-weight: 700;
+    color: var(--ink-muted); background: transparent;
+    border: 1.5px solid var(--cream-border); border-radius: 8px;
+    padding: 0.45rem 0.9rem; cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s;
+  }
+  .btn-cancel-lesson:hover { border-color: var(--terra); color: var(--terra); background: var(--terra-pale); }
+  .lesson-actions { display: flex; gap: 0.5rem; flex-shrink: 0; }
+
+  /* cancel modal */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 200;
+    background: rgba(26,26,26,0.5);
+    align-items: center; justify-content: center;
+    padding: 1.25rem;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal-box {
+    background: var(--white); border-radius: 14px;
+    max-width: 380px; width: 100%;
+    padding: 1.5rem; text-align: center;
+  }
+  .modal-title { font-size: 1.05rem; font-weight: 800; color: var(--ink); margin-bottom: 0.6rem; }
+  .modal-text { font-size: 0.85rem; color: var(--ink-soft); font-family: 'Noto Sans JP', sans-serif; margin-bottom: 1.25rem; line-height: 1.6; }
+  .modal-text.warn { color: var(--terra); font-weight: 700; }
+  .modal-buttons { display: flex; gap: 0.6rem; }
+  .modal-btn {
+    flex: 1; font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 700;
+    border-radius: 10px; padding: 0.7rem; cursor: pointer; border: none;
+  }
+  .modal-btn-keep { background: var(--cream-dark); color: var(--ink); }
+  .modal-btn-confirm { background: var(--terra); color: var(--white); }
+  .modal-btn-confirm:disabled { opacity: 0.6; cursor: not-allowed; }
   .btn-fathom {
     font-family: 'Nunito', sans-serif; font-size: 0.78rem; font-weight: 700;
     color: var(--terra); background: transparent;
@@ -436,6 +471,7 @@
 // ── CONFIG ──
 const MAGIC_LINK_WEBHOOK = 'https://hook.eu1.make.com/5c45nbpvwgyul3hvlpmk50c4214h8u7w';
 const DATA_WEBHOOK = 'https://hook.eu1.make.com/3uxpu1otpmbd69lch4769c80n5hbzt1o';
+const CANCEL_WEBHOOK = 'https://hook.eu1.make.com/qgdmcx3xqgpachf5l7dmhu7heu14pa6t';
 const TOKEN_EXPIRY_DAYS = 30;
 
 // ── INIT ──
@@ -633,7 +669,10 @@ function lessonCard(lesson, isNext) {
         <div class="lesson-time">${time}</div>
         <div class="lesson-status">${isNext ? '次のレッスン · Next lesson' : '予約済み · Booked'}</div>
       </div>
-      <a href="${meetLink}" target="_blank" class="btn-meet">Join Meet</a>
+      <div class="lesson-actions">
+        <a href="${meetLink}" target="_blank" class="btn-meet">Join Meet</a>
+        <button class="btn-cancel-lesson" onclick="openCancelModal('${f.ID}', '${f['Start time']}')">キャンセル · Cancel</button>
+      </div>
     </div>`;
 }
 
@@ -660,7 +699,64 @@ function pastLessonCard(lesson) {
     </div>`;
 }
 
-// ── BOOKING ──
+// ── CANCEL LESSON ──
+let cancelTargetId = null;
+
+function openCancelModal(lessonId, startTimeStr) {
+  cancelTargetId = lessonId;
+  const start = new Date(startTimeStr);
+  const hoursAway = (start - new Date()) / (1000 * 60 * 60);
+  const textEl = document.getElementById('cancelModalText');
+  const confirmBtn = document.getElementById('cancelConfirmBtn');
+
+  if (hoursAway > 24) {
+    textEl.innerHTML = '24時間以上前のキャンセルです。クレジットは残高に返還されます。<br>This is more than 24 hours away. Your credit will be returned.';
+    textEl.classList.remove('warn');
+  } else {
+    textEl.innerHTML = '24時間以内のキャンセルです。このクレジットは返還されません。<br>Cancelling now will forfeit this credit.';
+    textEl.classList.add('warn');
+  }
+
+  confirmBtn.disabled = false;
+  confirmBtn.textContent = 'キャンセルする · Cancel it';
+  document.getElementById('cancelModal').classList.add('active');
+}
+
+function closeCancelModal() {
+  cancelTargetId = null;
+  document.getElementById('cancelModal').classList.remove('active');
+}
+
+async function confirmLessonCancel() {
+  if (!cancelTargetId) return;
+  const confirmBtn = document.getElementById('cancelConfirmBtn');
+  confirmBtn.disabled = true;
+  confirmBtn.textContent = '処理中... · Processing...';
+
+  const token = localStorage.getItem('jawschat_token');
+
+  try {
+    const res = await fetch(CANCEL_WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token, lessonId: cancelTargetId })
+    });
+
+    if (!res.ok) throw new Error('Cancel request failed');
+
+    closeCancelModal();
+    // Reload portal data to reflect the cancellation and any credit change
+    await validateToken(token);
+
+  } catch (err) {
+    console.error(err);
+    confirmBtn.disabled = false;
+    confirmBtn.textContent = 'キャンセルする · Cancel it';
+    alert('エラーが発生しました。もう一度お試しください。\nSomething went wrong. Please try again.');
+  }
+}
+
+
 function renderBooking(credits) {
   const section = document.getElementById('bookingSection');
   if (!section) return;
@@ -715,5 +811,17 @@ function logout() {
   showScreen('login');
 }
 </script>
+<!-- CANCEL CONFIRM MODAL -->
+<div class="modal-overlay" id="cancelModal">
+  <div class="modal-box">
+    <div class="modal-title">レッスンをキャンセルしますか？<br>Cancel this lesson?</div>
+    <div class="modal-text" id="cancelModalText"></div>
+    <div class="modal-buttons">
+      <button class="modal-btn modal-btn-keep" onclick="closeCancelModal()">レッスンを残す · Keep lesson</button>
+      <button class="modal-btn modal-btn-confirm" id="cancelConfirmBtn" onclick="confirmLessonCancel()">キャンセルする · Cancel it</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
