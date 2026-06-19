@@ -622,7 +622,9 @@ function renderLessons(lessonData) {
   const lessons = Array.isArray(lessonData) ? lessonData : (lessonData.records || []);
   const now = new Date();
 
-  const upcoming = lessons.filter(l => l.Select === 'Upcoming' && new Date(l['Start time']) > now);
+  const upcoming = lessons
+    .filter(l => l.Select === 'Upcoming' && new Date(l['Start time']) > now)
+    .sort((a, b) => new Date(a['Start time']) - new Date(b['Start time']));
   const past = lessons.filter(l => l.Select === 'Completed' || new Date(l['Start time']) <= now);
 
   // Next lesson
