@@ -567,6 +567,38 @@ async function validateToken(token) {
   }
 }
 
+// ── SILENT REFRESH (on returning to the tab) ──
+async function silentRefresh() {
+  // Only refresh if the portal itself is currently showing — skip during login/loading/sent screens
+  const portalScreen = document.getElementById('screen-portal');
+  if (!portalScreen.classList.contains('active')) return;
+
+  const token = localStorage.getItem('jawschat_token');
+  if (!token) return;
+
+  try {
+    const res = await fetch(DATA_WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token })
+    });
+    if (!res.ok) return; // fail quietly — a transient hiccup shouldn't disrupt the page
+    const data = await res.json();
+    if (!data.id) return;
+    await loadPortal(data, data.lessons || []);
+  } catch (err) {
+    console.error('Silent refresh failed:', err);
+    // fail quietly — don't boot the student to login over a background refresh error
+  }
+}
+
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') {
+    silentRefresh();
+  }
+});
+
+
 // ── LOAD PORTAL ──
 async function loadPortal(data, lessons) {
   // Greeting
