@@ -25,6 +25,41 @@
     --amber-pale: #fff8ed;
     --amber-border: #f0d090;
   }
+
+  /* ── DARK THEME (borrows teacher-portal palette) ── */
+  [data-theme="dark"] {
+    --cream: #1a1a1a;
+    --cream-dark: #161616;
+    --cream-border: #2a2a2a;
+    --ink: #ffffff;
+    --ink-soft: #cccccc;
+    --ink-muted: #888888;
+    --terra: #d4603e;
+    --terra-light: #e07550;
+    --terra-pale: #2a1a14;
+    --white: #222222;
+    --green: #3a9a72;
+    --green-pale: #16241e;
+    --green-border: #2a5a44;
+    --amber: #d18a20;
+    --amber-pale: #2a2010;
+    --amber-border: #5a4520;
+  }
+  /* nav hardcoded cream rgba → dark equivalent */
+  [data-theme="dark"] nav { background: rgba(22,22,22,0.98) !important; }
+  /* straggler hardcoded colors that bypass variables */
+  [data-theme="dark"] .error-banner { background: #2a1414; border-color: #5a2424; color: #f0a0a0; }
+  [data-theme="dark"] .booking-btn-badge.double { background: #1a2438; color: #7aa0e0; }
+
+  /* ── THEME TOGGLE ── */
+  .theme-toggle {
+    background: none; border: 1.5px solid var(--cream-border);
+    border-radius: 999px; width: 38px; height: 38px;
+    cursor: pointer; font-size: 1.05rem; line-height: 1;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--ink); transition: all 0.15s; flex-shrink: 0;
+  }
+  .theme-toggle:hover { border-color: var(--terra); color: var(--terra); }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
   body {
@@ -45,7 +80,7 @@
     display: flex; align-items: center; justify-content: space-between;
   }
   .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-  .nav-logo img { width: 36px; height: 36px; object-fit: contain; }
+  .nav-logo img { width: 36px; height: 36px; object-fit: contain; border-radius: 8px; }
   .nav-logo-text { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
   .nav-logo-text span { color: var(--terra); }
   .nav-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); }
@@ -352,9 +387,13 @@
 
 <nav>
   <a href="index.html" class="nav-logo">
+    <img src="https://jawschat.com/shark.gif" alt="JawsChat">
     <div class="nav-logo-text">JAWS<span>Chat</span></div>
   </a>
-  <div class="nav-label">マイページ · My Portal</div>
+  <div style="display:flex; align-items:center; gap:1rem;">
+    <div class="nav-label">マイページ · My Portal</div>
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="ダークモード / Dark mode" aria-label="Toggle dark mode">🌙</button>
+  </div>
 </nav>
 
 <!-- LOADING -->
@@ -474,6 +513,25 @@ const MAGIC_LINK_WEBHOOK = 'https://hook.eu1.make.com/5c45nbpvwgyul3hvlpmk50c421
 const DATA_WEBHOOK = 'https://hook.eu1.make.com/3uxpu1otpmbd69lch4769c80n5hbzt1o';
 const CANCEL_WEBHOOK = 'https://hook.eu1.make.com/qgdmcx3xqgpachf5l7dmhu7heu14pa6t';
 const TOKEN_EXPIRY_DAYS = 30;
+
+// ── THEME ──
+const THEME_KEY = 'jawschat_theme';
+function applyTheme(theme) {
+  if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+  else document.documentElement.removeAttribute('data-theme');
+  const btn = document.getElementById('themeToggle');
+  if (btn) {
+    btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+    btn.title = theme === 'dark' ? 'ライトモード / Light mode' : 'ダークモード / Dark mode';
+  }
+}
+function toggleTheme() {
+  const cur = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+  const next = cur === 'dark' ? 'light' : 'dark';
+  localStorage.setItem(THEME_KEY, next);
+  applyTheme(next);
+}
+applyTheme(localStorage.getItem(THEME_KEY) || 'light');
 
 // ── INIT ──
 window.addEventListener('DOMContentLoaded', async () => {
@@ -708,7 +766,7 @@ function lessonCard(lesson, isNext) {
       </div>
       <div class="lesson-actions">
         <a href="${meetLink}" target="_blank" class="btn-meet">Join Meet</a>
-        <button class="btn-cancel-lesson" onclick="openCancelModal('${f.id}', '${f['Start time']}')">キャンセル · Cancel</button>
+        <button class="btn-cancel-lesson" onclick="openCancelModal('${f.ID}', '${f['Start time']}')">キャンセル · Cancel</button>
       </div>
     </div>`;
 }
