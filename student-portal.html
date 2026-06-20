@@ -28,16 +28,16 @@
 
   /* ── DARK THEME (borrows teacher-portal palette) ── */
   [data-theme="dark"] {
-    --cream: #1a1a1a;
-    --cream-dark: #161616;
-    --cream-border: #2a2a2a;
-    --ink: #ffffff;
-    --ink-soft: #cccccc;
-    --ink-muted: #888888;
+    --cream: #1c1c1e;
+    --cream-dark: #18181a;
+    --cream-border: #303034;
+    --ink: #ededed;
+    --ink-soft: #c4c4c4;
+    --ink-muted: #8a8a8a;
     --terra: #d4603e;
     --terra-light: #e07550;
     --terra-pale: #2a1a14;
-    --white: #222222;
+    --white: #242428;
     --green: #3a9a72;
     --green-pale: #16241e;
     --green-border: #2a5a44;
@@ -46,7 +46,7 @@
     --amber-border: #5a4520;
   }
   /* nav hardcoded cream rgba → dark equivalent */
-  [data-theme="dark"] nav { background: rgba(22,22,22,0.98) !important; }
+  [data-theme="dark"] nav { background: rgba(28,28,30,0.98) !important; }
   /* straggler hardcoded colors that bypass variables */
   [data-theme="dark"] .error-banner { background: #2a1414; border-color: #5a2424; color: #f0a0a0; }
   [data-theme="dark"] .booking-btn-badge.double { background: #1a2438; color: #7aa0e0; }
@@ -168,7 +168,7 @@
 
   /* credits hero */
   .credits-hero {
-    background: var(--ink);
+    background: #1a1a1a;
     border-radius: 18px;
     padding: 1.8rem 2rem;
     margin-bottom: 1rem;
@@ -177,7 +177,7 @@
   }
   .credits-left { flex: 1; }
   .credits-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 0.25rem; }
-  .credits-number { font-family: 'Bebas Neue', sans-serif; font-size: 4rem; color: var(--white); line-height: 1; }
+  .credits-number { font-family: 'Bebas Neue', sans-serif; font-size: 4rem; color: #ffffff; line-height: 1; }
   .credits-number span { font-size: 1.4rem; color: rgba(255,255,255,0.5); margin-left: 4px; }
   .credits-dots { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 0.75rem; }
   .credit-dot {
@@ -371,7 +371,7 @@
   }
 
   footer {
-    background: var(--ink); border-top: 1px solid rgba(255,255,255,0.08);
+    background: #1a1a1a; border-top: 1px solid rgba(255,255,255,0.08);
     padding: 2rem; text-align: center;
     font-size: 0.78rem; color: rgba(255,255,255,0.3); letter-spacing: 0.04em;
   }
