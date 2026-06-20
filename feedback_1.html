@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JawsChat — レッスンフィードバック / Lesson Feedback</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@300;400;500;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f5f0e6;
+    --cream-dark: #ede8dc;
+    --cream-border: #ddd8cc;
+    --ink: #1a1a1a;
+    --ink-soft: #444;
+    --ink-muted: #888;
+    --terra: #c04a2a;
+    --terra-light: #d4603e;
+    --terra-pale: #f9ede9;
+    --white: #ffffff;
+    --green: #2d7a5f;
+    --green-pale: #edf7f1;
+    --green-border: #b2d8c0;
+    --amber: #b86a00;
+    --amber-pale: #fff8ed;
+    --amber-border: #f0d090;
+  }
+
+  /* ── DARK THEME ── */
+  [data-theme="dark"] {
+    --cream: #1c1c1e;
+    --cream-dark: #18181a;
+    --cream-border: #303034;
+    --ink: #ededed;
+    --ink-soft: #c4c4c4;
+    --ink-muted: #8a8a8a;
+    --terra: #d4603e;
+    --terra-light: #e07550;
+    --terra-pale: #2a1a14;
+    --white: #242428;
+    --green: #3a9a72;
+    --green-pale: #16241e;
+    --green-border: #2a5a44;
+    --amber: #d18a20;
+    --amber-pale: #2a2010;
+    --amber-border: #5a4520;
+  }
+  [data-theme="dark"] nav { background: rgba(28,28,30,0.98) !important; }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Nunito', 'Noto Sans JP', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(245,240,230,0.98);
+    border-bottom: 1px solid var(--cream-border);
+    padding: 0 1.5rem;
+    height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-logo img { width: 36px; height: 36px; object-fit: contain; border-radius: 8px; }
+  .nav-logo-text { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+  .nav-logo-text span { color: var(--terra); }
+  .theme-toggle {
+    background: none; border: 1.5px solid var(--cream-border);
+    border-radius: 999px; width: 38px; height: 38px;
+    cursor: pointer; font-size: 1.05rem; line-height: 1;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--ink); transition: all 0.15s; flex-shrink: 0;
+  }
+  .theme-toggle:hover { border-color: var(--terra); color: var(--terra); }
+
+  /* ── LAYOUT ── */
+  .wrap { max-width: 560px; margin: 0 auto; padding: 1.75rem 1.25rem 4rem; }
+
+  .intro { margin-bottom: 1.75rem; }
+  .intro h1 {
+    font-family: 'Bebas Neue', sans-serif; font-size: 2rem;
+    letter-spacing: 0.04em; color: var(--ink); line-height: 1.1;
+    margin-bottom: 0.35rem;
+  }
+  .intro .en { font-size: 1rem; color: var(--terra); font-weight: 700; }
+  .intro p {
+    font-family: 'Noto Sans JP', sans-serif; font-size: 0.88rem;
+    color: var(--ink-muted); margin-top: 0.5rem;
+  }
+
+  /* ── QUESTION BLOCK ── */
+  .q {
+    background: var(--white);
+    border: 1.5px solid var(--cream-border);
+    border-radius: 14px;
+    padding: 1.4rem 1.4rem 1.5rem;
+    margin-bottom: 1.1rem;
+  }
+  .q-label {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 1rem; font-weight: 700; color: var(--ink);
+    margin-bottom: 0.2rem;
+  }
+  .q-label-en {
+    font-size: 0.82rem; color: var(--ink-muted); font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  /* ── SCALE (enjoyment / difficulty) ── */
+  .scale { display: flex; flex-direction: column; gap: 0.5rem; }
+  .scale-btn {
+    display: flex; align-items: center; gap: 0.75rem;
+    background: var(--cream); border: 1.5px solid var(--cream-border);
+    border-radius: 10px; padding: 0.7rem 1rem;
+    cursor: pointer; transition: all 0.15s; text-align: left;
+    font-family: 'Noto Sans JP', sans-serif; color: var(--ink);
+    width: 100%;
+  }
+  .scale-btn:hover { border-color: var(--terra); }
+  .scale-btn.selected {
+    border-color: var(--terra); background: var(--terra-pale);
+  }
+  .scale-btn .emoji { font-size: 1.25rem; flex-shrink: 0; line-height: 1; }
+  .scale-btn .txt { display: flex; flex-direction: column; gap: 1px; }
+  .scale-btn .ja { font-size: 0.92rem; font-weight: 700; }
+  .scale-btn .en { font-size: 0.75rem; color: var(--ink-muted); }
+  .scale-btn.selected .en { color: var(--terra-light); }
+
+  /* ── CHIPS (next request, multi-select) ── */
+  .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .chip {
+    background: var(--cream); border: 1.5px solid var(--cream-border);
+    border-radius: 999px; padding: 0.5rem 0.9rem;
+    cursor: pointer; transition: all 0.15s;
+    font-family: 'Noto Sans JP', sans-serif; color: var(--ink);
+    display: flex; flex-direction: column; line-height: 1.25;
+  }
+  .chip:hover { border-color: var(--terra); }
+  .chip.selected { border-color: var(--terra); background: var(--terra-pale); }
+  .chip .ja { font-size: 0.85rem; font-weight: 700; }
+  .chip .en { font-size: 0.68rem; color: var(--ink-muted); }
+  .chip.selected .en { color: var(--terra-light); }
+
+  /* ── COMMENT ── */
+  .comment-box {
+    width: 100%; min-height: 90px; resize: vertical;
+    background: var(--cream); border: 1.5px solid var(--cream-border);
+    border-radius: 10px; padding: 0.8rem 1rem;
+    font-family: 'Noto Sans JP', 'Nunito', sans-serif;
+    font-size: 0.92rem; color: var(--ink); outline: none;
+    transition: border-color 0.15s; line-height: 1.6;
+  }
+  .comment-box:focus { border-color: var(--terra); }
+  .comment-box::placeholder { color: var(--ink-muted); }
+
+  /* ── SUBMIT ── */
+  .submit-btn {
+    width: 100%; font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.35rem; letter-spacing: 0.08em;
+    color: var(--white); background: var(--terra);
+    border: none; border-radius: 12px; padding: 0.9rem;
+    cursor: pointer; transition: opacity 0.15s; margin-top: 0.5rem;
+  }
+  .submit-btn:hover:not(:disabled) { opacity: 0.88; }
+  .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  /* ── STATES (loading / done / error) ── */
+  .state-screen {
+    min-height: 60vh; display: none;
+    flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; gap: 1rem; padding: 2rem;
+  }
+  .state-screen.active { display: flex; }
+  .state-screen .big-emoji { font-size: 3rem; }
+  .state-screen h2 {
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem;
+    letter-spacing: 0.04em; color: var(--ink);
+  }
+  .state-screen p {
+    font-family: 'Noto Sans JP', sans-serif; font-size: 0.9rem;
+    color: var(--ink-muted); max-width: 340px;
+  }
+  .spinner {
+    width: 34px; height: 34px;
+    border: 3px solid var(--cream-border); border-top-color: var(--terra);
+    border-radius: 50%; animation: spin 0.7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #1a1a1a; border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 2rem; text-align: center;
+    font-size: 0.78rem; color: rgba(255,255,255,0.3); letter-spacing: 0.04em;
+  }
+  footer span { color: var(--terra); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="https://jawschat.com/shark.gif" alt="JawsChat">
+    <div class="nav-logo-text">JAWS<span>Chat</span></div>
+  </a>
+  <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="ダークモード / Dark mode" aria-label="Toggle dark mode">🌙</button>
+</nav>
+
+<!-- FORM -->
+<div class="wrap" id="formWrap">
+  <div class="intro">
+    <h1>レッスンはどうでしたか？</h1>
+    <div class="en">How was your lesson?</div>
+    <p>フィードバックは次のレッスンをより良くするために使われます。<br>Your feedback helps make your next lesson even better.</p>
+  </div>
+
+  <!-- Q1: Enjoyment -->
+  <div class="q">
+    <div class="q-label">レッスンは楽しかったですか？</div>
+    <div class="q-label-en">Did you enjoy the lesson?</div>
+    <div class="scale" id="enjoyment">
+      <button class="scale-btn" data-value="5" onclick="selectScale('enjoyment', this)"><span class="emoji">😄</span><span class="txt"><span class="ja">とても楽しかった</span><span class="en">Loved it</span></span></button>
+      <button class="scale-btn" data-value="4" onclick="selectScale('enjoyment', this)"><span class="emoji">🙂</span><span class="txt"><span class="ja">楽しかった</span><span class="en">Enjoyed it</span></span></button>
+      <button class="scale-btn" data-value="3" onclick="selectScale('enjoyment', this)"><span class="emoji">😐</span><span class="txt"><span class="ja">ふつう</span><span class="en">Okay</span></span></button>
+      <button class="scale-btn" data-value="2" onclick="selectScale('enjoyment', this)"><span class="emoji">😕</span><span class="txt"><span class="ja">あまり</span><span class="en">Not really</span></span></button>
+      <button class="scale-btn" data-value="1" onclick="selectScale('enjoyment', this)"><span class="emoji">😞</span><span class="txt"><span class="ja">楽しくなかった</span><span class="en">Didn't enjoy it</span></span></button>
+    </div>
+  </div>
+
+  <!-- Q2: Difficulty -->
+  <div class="q">
+    <div class="q-label">レッスンの難しさはどうでしたか？</div>
+    <div class="q-label-en">How was the difficulty?</div>
+    <div class="scale" id="difficulty">
+      <button class="scale-btn" data-value="1" onclick="selectScale('difficulty', this)"><span class="emoji">🟢</span><span class="txt"><span class="ja">簡単すぎた</span><span class="en">Too easy</span></span></button>
+      <button class="scale-btn" data-value="2" onclick="selectScale('difficulty', this)"><span class="emoji">🟢</span><span class="txt"><span class="ja">少し簡単</span><span class="en">A bit easy</span></span></button>
+      <button class="scale-btn" data-value="3" onclick="selectScale('difficulty', this)"><span class="emoji">⭐</span><span class="txt"><span class="ja">ちょうどよかった</span><span class="en">Just right</span></span></button>
+      <button class="scale-btn" data-value="4" onclick="selectScale('difficulty', this)"><span class="emoji">🔴</span><span class="txt"><span class="ja">少し難しい</span><span class="en">A bit hard</span></span></button>
+      <button class="scale-btn" data-value="5" onclick="selectScale('difficulty', this)"><span class="emoji">🔴</span><span class="txt"><span class="ja">難しすぎた</span><span class="en">Too hard</span></span></button>
+    </div>
+  </div>
+
+  <!-- Q3: Next request (multi) -->
+  <div class="q">
+    <div class="q-label">次回はどうしたいですか？（複数選択可）</div>
+    <div class="q-label-en">What would you like next time? (choose any)</div>
+    <div class="chips" id="nextRequest">
+      <button class="chip" data-value="same_topic" onclick="toggleChip(this)"><span class="ja">同じトピックをもっと</span><span class="en">More of the same topic</span></button>
+      <button class="chip" data-value="new_topic" onclick="toggleChip(this)"><span class="ja">新しいトピック</span><span class="en">Something new</span></button>
+      <button class="chip" data-value="more_free_conv" onclick="toggleChip(this)"><span class="ja">もっと自由会話</span><span class="en">More free conversation</span></button>
+      <button class="chip" data-value="more_correction" onclick="toggleChip(this)"><span class="ja">もっと間違いを直してほしい</span><span class="en">Correct my mistakes more</span></button>
+      <button class="chip" data-value="less_correction" onclick="toggleChip(this)"><span class="ja">間違いを直すのは少なめに</span><span class="en">Correct my mistakes less</span></button>
+      <button class="chip" data-value="pronunciation" onclick="toggleChip(this)"><span class="ja">発音の練習</span><span class="en">Pronunciation practice</span></button>
+    </div>
+  </div>
+
+  <!-- Q4: Comment -->
+  <div class="q">
+    <div class="q-label">先生に伝えたいことはありますか？（任意）</div>
+    <div class="q-label-en">Anything you'd like to tell your teacher? (optional)</div>
+    <textarea class="comment-box" id="comment" placeholder="日本語でも英語でもOKです / Japanese or English is fine"></textarea>
+  </div>
+
+  <button class="submit-btn" id="submitBtn" onclick="submitFeedback()">送信 · SUBMIT</button>
+</div>
+
+<!-- LOADING -->
+<div class="state-screen" id="loadingState">
+  <div class="spinner"></div>
+  <p>送信中... / Sending...</p>
+</div>
+
+<!-- DONE -->
+<div class="state-screen" id="doneState">
+  <div class="big-emoji">🦈</div>
+  <h2>ありがとうございました！</h2>
+  <p>フィードバックを受け取りました。次のレッスンでお会いしましょう！<br>Thank you! Your feedback has been received. See you next lesson!</p>
+</div>
+
+<!-- ERROR -->
+<div class="state-screen" id="errorState">
+  <div class="big-emoji">⚠️</div>
+  <h2>エラー / Something went wrong</h2>
+  <p>送信できませんでした。もう一度お試しください。<br>We couldn't send your feedback. Please try again.</p>
+  <button class="submit-btn" style="max-width:260px;" onclick="showForm()">もう一度 · TRY AGAIN</button>
+</div>
+
+<!-- INVALID LINK -->
+<div class="state-screen" id="invalidState">
+  <div class="big-emoji">🔗</div>
+  <h2>リンクが無効です / Invalid link</h2>
+  <p>このフィードバックリンクは無効です。レッスン後のメールまたはLINEのリンクからアクセスしてください。<br>This feedback link isn't valid. Please use the link from your post-lesson email or LINE message.</p>
+</div>
+
+<footer>
+  © 2026 JawsChat · <span>PTV</span> — Polmeartagami Ventures · jawschat.com
+</footer>
+
+<script>
+// ── CONFIG ──
+const FEEDBACK_WEBHOOK = 'REPLACE_WITH_FEEDBACK_WEBHOOK_URL';
+const THEME_KEY = 'jawschat_theme';
+
+// ── THEME ──
+function applyTheme(theme) {
+  if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+  else document.documentElement.removeAttribute('data-theme');
+  const btn = document.getElementById('themeToggle');
+  if (btn) {
+    btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+    btn.title = theme === 'dark' ? 'ライトモード / Light mode' : 'ダークモード / Dark mode';
+  }
+}
+function toggleTheme() {
+  const cur = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+  const next = cur === 'dark' ? 'light' : 'dark';
+  localStorage.setItem(THEME_KEY, next);
+  applyTheme(next);
+}
+applyTheme(localStorage.getItem(THEME_KEY) || 'light');
+
+// ── STATE ──
+let lessonId = null;
+const selections = { enjoyment: null, difficulty: null };
+
+// ── INIT: read lesson id from URL ──
+window.addEventListener('DOMContentLoaded', () => {
+  const params = new URLSearchParams(window.location.search);
+  lessonId = params.get('lesson') || params.get('lessonId');
+  if (!lessonId) {
+    showState('invalidState');
+  }
+});
+
+// ── SCALE SELECT (single) ──
+function selectScale(group, btn) {
+  const container = document.getElementById(group);
+  container.querySelectorAll('.scale-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  selections[group] = btn.dataset.value;
+}
+
+// ── CHIP TOGGLE (multi) ──
+function toggleChip(btn) {
+  btn.classList.toggle('selected');
+}
+
+// ── SHOW STATE HELPERS ──
+function showState(id) {
+  ['formWrap','loadingState','doneState','errorState','invalidState'].forEach(s => {
+    const el = document.getElementById(s);
+    if (!el) return;
+    if (s === 'formWrap') el.style.display = (id === 'formWrap') ? 'block' : 'none';
+    else el.classList.toggle('active', s === id);
+  });
+}
+function showForm() { showState('formWrap'); }
+
+// ── SUBMIT ──
+async function submitFeedback() {
+  if (!lessonId) { showState('invalidState'); return; }
+
+  const nextRequest = Array.from(document.querySelectorAll('#nextRequest .chip.selected'))
+    .map(c => c.dataset.value);
+  const comment = document.getElementById('comment').value.trim();
+
+  const payload = {
+    lessonId: lessonId,
+    enjoyment: selections.enjoyment,   // "1".."5" or null
+    difficulty: selections.difficulty, // "1".."5" or null
+    nextRequest: nextRequest,          // array of value strings
+    comment: comment                   // string (may be empty)
+  };
+
+  showState('loadingState');
+
+  try {
+    const res = await fetch(FEEDBACK_WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (res.ok) showState('doneState');
+    else showState('errorState');
+  } catch (err) {
+    console.error(err);
+    showState('errorState');
+  }
+}
+</script>
+</body>
+</html>
