@@ -117,6 +117,41 @@
     display: flex; flex-direction: column; gap: 1.5rem;
   }
 
+  /* ── SECTION NAV BAR ── */
+  .section-nav {
+    position: sticky; top: 56px; z-index: 90;
+    display: flex; gap: 0.5rem; flex-wrap: wrap;
+    background: rgba(17,17,17,0.95); backdrop-filter: blur(8px);
+    padding: 0.6rem 0.25rem; margin: -0.5rem 0 0.25rem;
+    border-bottom: 1px solid #222;
+  }
+  .section-nav-link {
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em;
+    color: #888; text-decoration: none;
+    padding: 0.35rem 0.85rem; border-radius: 999px;
+    background: #1c1c1c; border: 1px solid #2a2a2a;
+    transition: all 0.15s; white-space: nowrap;
+  }
+  .section-nav-link:hover { color: var(--white); border-color: #444; }
+  .section-nav-link.has-items {
+    color: var(--terra); border-color: rgba(192,74,42,0.5);
+    background: rgba(192,74,42,0.1);
+  }
+
+  /* ── COUNTDOWN ── */
+  .now-countdown { margin-bottom: 0.85rem; min-height: 1.4rem; }
+  .cd-count {
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem;
+    letter-spacing: 0.06em; color: var(--green);
+  }
+  .cd-count.urgent { color: var(--terra); animation: pulse 1s ease-in-out infinite; }
+  .cd-live {
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem;
+    letter-spacing: 0.06em; color: var(--terra);
+  }
+  .cd-ended { font-size: 0.85rem; color: #666; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.55; } }
+
   /* ── NOW/NEXT CARD ── */
   .now-card {
     background: #161616;
@@ -398,26 +433,34 @@
 
   <div class="portal-body">
 
-    <!-- NEEDS ACTION -->
-    <div id="needsActionSection" style="display:none;">
-      <div class="section-title" style="color:var(--terra);">⚡ Needs Action — Unmarked Lessons</div>
-      <div class="action-list" id="needsActionList"></div>
-    </div>
+    <!-- SECTION MENU BAR -->
+    <nav class="section-nav" id="sectionNav">
+      <a href="#nowSection" class="section-nav-link">Now · Next</a>
+      <a href="#upcomingSection" class="section-nav-link">Upcoming</a>
+      <a href="#completedSection" class="section-nav-link" id="navCompleted">To Mark</a>
+      <a href="#studentsSection" class="section-nav-link">Students</a>
+    </nav>
 
     <!-- NOW/NEXT -->
-    <div>
+    <div id="nowSection">
       <div class="section-title">Now · Next Lesson</div>
       <div id="nowCard"></div>
     </div>
 
     <!-- UPCOMING -->
-    <div>
-      <div class="section-title">Upcoming Today</div>
+    <div id="upcomingSection">
+      <div class="section-title">Upcoming</div>
       <div class="upcoming-list" id="upcomingList"></div>
     </div>
 
+    <!-- COMPLETED / NEEDS ACTION: past lessons still unmarked -->
+    <div id="completedSection" style="display:none;">
+      <div class="section-title" style="color:var(--terra);">⚡ To Mark — Completed Lessons Awaiting Action</div>
+      <div class="action-list" id="needsActionList"></div>
+    </div>
+
     <!-- ALL STUDENTS -->
-    <div>
+    <div id="studentsSection">
       <div class="section-title">All Students</div>
       <div class="student-list" id="studentList"></div>
     </div>
@@ -564,11 +607,12 @@ function renderPortal() {
   renderStudentList();
 }
 
-// ── NEEDS ACTION: past lessons still marked Upcoming ──
+// ── COMPLETED / NEEDS ACTION: past lessons still marked Upcoming ──
 function renderNeedsAction() {
   const now = new Date();
-  const container = document.getElementById('needsActionSection');
+  const container = document.getElementById('completedSection');
   const list = document.getElementById('needsActionList');
+  const navBtn = document.getElementById('navCompleted');
 
   const overdue = allLessons
     .filter(l => (l.Select || '') === 'Upcoming')
@@ -577,7 +621,13 @@ function renderNeedsAction() {
 
   if (overdue.length === 0) {
     container.style.display = 'none';
+    if (navBtn) { navBtn.textContent = 'To Mark'; navBtn.classList.remove('has-items'); }
     return;
+  }
+
+  if (navBtn) {
+    navBtn.textContent = `To Mark (${overdue.length})`;
+    navBtn.classList.add('has-items');
   }
 
   container.style.display = 'block';
@@ -586,15 +636,16 @@ function renderNeedsAction() {
     const name = student.Nickname || student['Student name'] || '—';
     const start = lessonStart(lesson);
     const dateStr = start ? `${fmtDay(start)} ${fmtMonth(start)} · ${fmtTime(start)}` : '—';
+    const hasFathom = !!(lesson['Fathom link']);
     return `
       <div class="action-item">
         <div class="action-info">
           <div class="action-name">${name}</div>
-          <div class="action-meta">${dateStr} · awaiting completion</div>
+          <div class="action-meta">${dateStr} · awaiting completion${hasFathom ? ' · 🎬 recording ready' : ''}</div>
         </div>
         <div class="action-buttons">
-          <button class="btn-action-complete" onclick="openCompleteModal('${lesson.ID}', '${esc(name)}')">✓ Complete</button>
-          <button class="btn-action-noshow" onclick="markNoShow('${lesson.ID}', '${esc(name)}')">✗ No-show</button>
+          <button class="btn-action-complete" onclick="openCompleteModal('${lesson.id}', '${esc(name)}')">✓ Complete</button>
+          <button class="btn-action-noshow" onclick="markNoShow('${lesson.id}', '${esc(name)}')">✗ No-show</button>
         </div>
       </div>`;
   }).join('');
@@ -623,6 +674,7 @@ function renderNowNext() {
   const isNow = start && end && start <= now && end >= now;
   const credits = student['Credits remaining'] ?? '—';
   const creditsLow = credits !== '—' && credits <= 1;
+  const lastFeedback = lesson['Last feedback'] || lesson.lastFeedback || '';
 
   nowCard.innerHTML = `
     <div class="now-card">
@@ -631,6 +683,7 @@ function renderNowNext() {
         <span class="now-header-time">${start ? `${fmtDay(start)} ${fmtMonth(start)} · ${fmtTime(start)}` : '—'}</span>
       </div>
       <div class="now-body">
+        <div class="now-countdown" id="nowCountdown" data-start="${start ? start.getTime() : ''}" data-end="${end ? end.getTime() : ''}"></div>
         <div class="now-student-name">${sName}</div>
         <div class="now-plan-credits">
           ${student['Student name'] || ''} · ${student.Plan || '—'} · <span class="${creditsLow ? 'low' : ''}">${credits} credits remaining</span>
@@ -646,8 +699,8 @@ function renderNowNext() {
             <div class="info-block-value" style="margin-top:4px;font-size:0.78rem;">${student['Topics of interest'] || '—'}</div>
           </div>
           <div class="info-block">
-            <div class="info-block-label">Last Feedback</div>
-            <div class="info-block-value">${lesson.lastFeedback || 'No feedback yet'}</div>
+            <div class="info-block-label">Last Feedback / Request</div>
+            <div class="info-block-value">${lastFeedback || 'No feedback yet'}</div>
           </div>
           <div class="info-block">
             <div class="info-block-label">Teacher Notes</div>
@@ -655,12 +708,58 @@ function renderNowNext() {
           </div>
         </div>
         <div class="now-actions">
-          <a href="${lesson['Google Meet link'] || '#'}" target="_blank" class="btn-meet">🎥 Join Meet</a>
-          <button class="btn-complete" onclick="openCompleteModal('${lesson.ID}', '${esc(sName)}')">✓ Complete</button>
-          <button class="btn-noshow" onclick="markNoShow('${lesson.ID}', '${esc(sName)}')">✗ No-show</button>
+          <a href="${lesson['Google meet link'] || '#'}" target="_blank" class="btn-meet">🎥 Join Meet</a>
         </div>
       </div>
     </div>`;
+
+  startCountdown();
+}
+
+// ── COUNTDOWN TIMER ──
+let countdownInterval = null;
+function startCountdown() {
+  if (countdownInterval) clearInterval(countdownInterval);
+  const el = document.getElementById('nowCountdown');
+  if (!el || !el.dataset.start) return;
+
+  const tick = () => {
+    const node = document.getElementById('nowCountdown');
+    if (!node) { clearInterval(countdownInterval); return; }
+    const startMs = Number(node.dataset.start);
+    const endMs = Number(node.dataset.end);
+    const now = Date.now();
+
+    if (endMs && now >= startMs && now <= endMs) {
+      node.innerHTML = `<span class="cd-live">🔴 IN PROGRESS</span>`;
+      return;
+    }
+    if (endMs && now > endMs) {
+      node.innerHTML = `<span class="cd-ended">Lesson ended</span>`;
+      clearInterval(countdownInterval);
+      return;
+    }
+
+    let diff = Math.max(0, startMs - now);
+    const days = Math.floor(diff / 86400000); diff -= days * 86400000;
+    const hrs  = Math.floor(diff / 3600000);  diff -= hrs * 3600000;
+    const mins = Math.floor(diff / 60000);    diff -= mins * 60000;
+    const secs = Math.floor(diff / 1000);
+
+    let label, urgent = false;
+    if (days > 0) {
+      label = `starts in ${days}d ${hrs}h`;
+    } else if (hrs >= 1) {
+      label = `starts in ${hrs}h ${String(mins).padStart(2,'0')}m`;
+    } else {
+      label = `starts in ${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
+      if (startMs - now <= 5 * 60000) urgent = true;
+    }
+    node.innerHTML = `<span class="cd-count ${urgent ? 'urgent' : ''}">${label}</span>`;
+  };
+
+  tick();
+  countdownInterval = setInterval(tick, 1000);
 }
 
 // ── UPCOMING ──
@@ -754,7 +853,7 @@ async function confirmComplete() {
 }
 
 async function markNoShow(lessonId, studentName) {
-  if (!confirm(`Mark ${studentName}'s lesson as a no-show? The credit WILL still be deducted (per policy).`)) return;
+  if (!confirm(`Mark ${studentName}'s lesson as a no-show? The credit stays consumed (no refund) per policy.`)) return;
   await sendLessonAction('noshow', lessonId, '');
 }
 
