@@ -97,7 +97,9 @@
   .topbar-logo {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 1.4rem; letter-spacing: 0.08em; color: var(--white);
+    display: flex; align-items: center; gap: 9px;
   }
+  .topbar-logo img { width: 30px; height: 30px; object-fit: contain; border-radius: 7px; }
   .topbar-logo span { color: var(--terra); }
   .topbar-label {
     font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase;
@@ -426,7 +428,7 @@
 <div class="portal" id="portal">
 
   <div class="topbar">
-    <div class="topbar-logo">JAWS<span>Chat</span></div>
+    <div class="topbar-logo"><img src="https://jawschat.com/shark.gif" alt="JawsChat">JAWS<span>Chat</span></div>
     <div class="topbar-label">Teacher Portal</div>
     <button class="btn-logout" onclick="logout()">Log out</button>
   </div>
