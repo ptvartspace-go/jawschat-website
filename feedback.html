@@ -22,6 +22,36 @@
     --green-pale: #edf7f1;
     --green-border: #b2d8c0;
   }
+
+  /* ── DARK THEME ── */
+  [data-theme="dark"] {
+    --cream: #1c1c1e;
+    --cream-dark: #18181a;
+    --cream-border: #303034;
+    --ink: #ededed;
+    --ink-soft: #c4c4c4;
+    --ink-muted: #8a8a8a;
+    --terra: #d4603e;
+    --terra-light: #e07550;
+    --terra-pale: #2a1a14;
+    --white: #242428;
+    --green: #3a9a72;
+    --green-pale: #16241e;
+    --green-border: #2a5a44;
+  }
+  [data-theme="dark"] nav { background: rgba(28,28,30,0.98) !important; }
+
+  /* ── THEME TOGGLE ── */
+  .theme-toggle {
+    background: none; border: 1.5px solid var(--cream-border);
+    border-radius: 999px; width: 38px; height: 38px;
+    cursor: pointer; font-size: 1.05rem; line-height: 1;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--ink); transition: all 0.15s; flex-shrink: 0;
+  }
+  .theme-toggle:hover { border-color: var(--terra); color: var(--terra); }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-logo img { width: 36px; height: 36px; object-fit: contain; border-radius: 8px; }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: 'Nunito', 'Noto Sans JP', sans-serif;
@@ -194,7 +224,7 @@
   @keyframes spin { to { transform: rotate(360deg); } }
 
   footer {
-    background: var(--ink);
+    background: #1a1a1a;
     border-top: 1px solid rgba(255,255,255,0.08);
     padding: 1.5rem;
     text-align: center;
@@ -208,7 +238,11 @@
 <body>
 
 <nav>
-  <div class="nav-logo-text">JAWS<span>Chat</span></div>
+  <a href="index.html" class="nav-logo">
+    <img src="https://jawschat.com/shark.gif" alt="JawsChat">
+    <div class="nav-logo-text">JAWS<span>Chat</span></div>
+  </a>
+  <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="ダークモード / Dark mode" aria-label="Toggle dark mode">🌙</button>
 </nav>
 
 <div class="main">
@@ -309,6 +343,25 @@
 
 <script>
 const FEEDBACK_WEBHOOK = 'https://hook.eu1.make.com/ljs2i4xufxu0i0vto23p8i72jtaqeg8a';
+
+// ── THEME ──
+const THEME_KEY = 'jawschat_theme';
+function applyTheme(theme) {
+  if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+  else document.documentElement.removeAttribute('data-theme');
+  const btn = document.getElementById('themeToggle');
+  if (btn) {
+    btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+    btn.title = theme === 'dark' ? 'ライトモード / Light mode' : 'ダークモード / Dark mode';
+  }
+}
+function toggleTheme() {
+  const cur = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+  const next = cur === 'dark' ? 'light' : 'dark';
+  localStorage.setItem(THEME_KEY, next);
+  applyTheme(next);
+}
+applyTheme(localStorage.getItem(THEME_KEY) || 'light');
 const params = new URLSearchParams(window.location.search);
 const lessonId = params.get('lesson') || '';
 const urlRating = params.get('rating');
