@@ -979,7 +979,7 @@ function renderBooking(credits) {
 
   section.innerHTML = `
     <div class="booking-grid">
-      <a href="${lessonUrl}" target="_blank" onclick="openCalModal('jawschat/lesson'); return false;" class="booking-btn">
+      <a href="${lessonUrl}" target="_blank" class="booking-btn">
         <div class="booking-btn-left">
           <div class="booking-btn-title">📅 レッスンを予約 · Book a Lesson</div>
           <div class="booking-btn-sub">25分 · 1クレジット消化 / 25 min · Uses 1 credit</div>
@@ -988,7 +988,6 @@ function renderBooking(credits) {
       </a>
       <a href="${canDouble ? doubleUrl : '#'}" 
          target="_blank" 
-         ${canDouble ? `onclick="openCalModal('jawschat/double-lesson'); return false;"` : ''}
          class="booking-btn${canDouble ? '' : ' disabled'}">
         <div class="booking-btn-left">
           <div class="booking-btn-title">📅 ダブルレッスンを予約 · Book a Double Lesson</div>
@@ -1015,30 +1014,6 @@ function logout() {
   localStorage.removeItem('jawschat_token_expiry');
   localStorage.removeItem('jawschat_record_id');
   showScreen('login');
-}
-
-// ── CAL.COM EMBED (popup modal on click, with name/email prefill) ──
-(function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement('script')).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if (typeof namespace === 'string') { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ['initNamespace', namespace]); } else p(cal, ar); return; } p(cal, ar); }; })(window, 'https://app.cal.com/embed/embed.js', 'init');
-Cal('init', { origin: 'https://cal.com' });
-// Refresh the portal in the background once a booking completes, so the new lesson appears
-Cal('on', { action: 'bookingSuccessful', callback: function () { if (typeof silentRefresh === 'function') silentRefresh(); } });
-
-function openCalModal(calLink) {
-  try {
-    const theme = (document.documentElement.getAttribute('data-theme') === 'dark') ? 'dark' : 'light';
-    Cal('modal', {
-      calLink: calLink,
-      config: {
-        name: (typeof bookingStudent !== 'undefined' && bookingStudent.name) ? bookingStudent.name : '',
-        email: (typeof bookingStudent !== 'undefined' && bookingStudent.email) ? bookingStudent.email : '',
-        theme: theme
-      }
-    });
-  } catch (e) {
-    const qs = '?name=' + encodeURIComponent((bookingStudent && bookingStudent.name) || '') +
-               '&email=' + encodeURIComponent((bookingStudent && bookingStudent.email) || '');
-    window.open('https://cal.com/' + calLink + qs, '_blank');
-  }
 }
 </script>
 <!-- CANCEL CONFIRM MODAL -->
