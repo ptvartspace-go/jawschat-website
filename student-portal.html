@@ -676,6 +676,7 @@ document.addEventListener('visibilitychange', () => {
 
 // ── LOAD PORTAL ──
 async function loadPortal(data, lessons) {
+  lastLessonCount = (lessons || []).length;
   // Greeting
   const name = data.nickname || data.name || '';
   document.getElementById('greetingName').innerHTML =
@@ -896,6 +897,7 @@ function pastLessonCard(lesson) {
 // ── CANCEL LESSON ──
 let cancelTargetId = null;
 let bookingStudent = { name: '', email: '' };
+let lastLessonCount = 0;
 
 function openCancelModal(lessonId, startTimeStr) {
   cancelTargetId = lessonId;
@@ -1020,8 +1022,42 @@ function logout() {
 // ── CAL.COM EMBED (popup modal on click, with name/email prefill) ──
 (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement('script')).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if (typeof namespace === 'string') { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ['initNamespace', namespace]); } else p(cal, ar); return; } p(cal, ar); }; })(window, 'https://app.cal.com/embed/embed.js', 'init');
 Cal('init', { origin: 'https://cal.com' });
-// Refresh the portal in the background once a booking completes, so the new lesson appears
-Cal('on', { action: 'bookingSuccessful', callback: function () { if (typeof silentRefresh === 'function') silentRefresh(); } });
+// After a booking, the lesson isn't in Airtable instantly — Cal's webhook → Make → Airtable
+// takes a few seconds. So poll until the new lesson actually appears, rather than refreshing once.
+Cal('on', { action: 'bookingSuccessful', callback: function () { pollForBooking(); } });
+
+function pollForBooking() {
+  const baseline = lastLessonCount;
+  let attempts = 0;
+  const maxAttempts = 10;   // 10 × 3s ≈ 30s window
+  const interval = setInterval(async () => {
+    attempts++;
+    const token = localStorage.getItem('jawschat_token');
+    if (!token) { clearInterval(interval); return; }
+    try {
+      const res = await fetch(DATA_WEBHOOK, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token })
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.id) {
+          const count = (data.lessons || []).length;
+          if (count > baseline) {            // new lesson has landed — render and stop
+            await loadPortal(data, data.lessons || []);
+            clearInterval(interval);
+            return;
+          }
+          if (attempts >= maxAttempts) {     // give up waiting, but still refresh credits etc.
+            await loadPortal(data, data.lessons || []);
+          }
+        }
+      }
+    } catch (e) { /* transient — keep polling */ }
+    if (attempts >= maxAttempts) clearInterval(interval);
+  }, 3000);
+}
 
 function openCalModal(calLink) {
   try {
