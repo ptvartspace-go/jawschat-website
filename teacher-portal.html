@@ -633,6 +633,7 @@ function studentHistoryHtml(sid) {
     const fb = [];
     if (String(l.More||'').trim()) fb.push(`<div class="hist-fb"><span class="hist-fb-lbl">More</span>${fbEsc(l.More)}</div>`);
     if (String(l.Less||'').trim()) fb.push(`<div class="hist-fb"><span class="hist-fb-lbl">Less</span>${fbEsc(l.Less)}</div>`);
+    if (String(l.Message||'').trim()) fb.push(`<div class="hist-fb"><span class="hist-fb-lbl">Message</span>${fbEsc(l.Message)}</div>`);
     return `
       <div class="hist-row">
         <div class="hist-line">
