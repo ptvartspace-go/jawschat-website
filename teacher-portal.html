@@ -554,6 +554,35 @@ function getStudentForLesson(lesson) {
 function lessonStart(l) { return parseDate(l['Start time'] || l.startTime || l['Lesson date']); }
 function lessonEnd(l)   { return parseDate(l['End time'] || l.endTime) || (lessonStart(l) ? new Date(lessonStart(l).getTime() + 25*60000) : null); }
 
+function fbEsc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function hasFeedback(l){ return (l.Rating!=='' && l.Rating!=null) || String(l.More||'').trim() || String(l.Less||'').trim() || String(l.Message||'').trim(); }
+
+// Most recent Completed lesson (with feedback) for the same student as `lesson`
+function getLastFeedback(lesson) {
+  const student = getStudentForLesson(lesson);
+  const sid = student.ID || student.id;
+  if (!sid) return null;
+  const done = allLessons
+    .filter(l => (l.Select || '') === 'Completed')
+    .filter(l => { const ids = Array.isArray(l.Student) ? l.Student : (l.Student ? [l.Student] : []); return ids.includes(sid); })
+    .filter(hasFeedback)
+    .sort((a, b) => (lessonStart(b)?.getTime()||0) - (lessonStart(a)?.getTime()||0));
+  return done[0] || null;
+}
+
+function feedbackHtml(fb) {
+  if (!fb) return 'No feedback yet';
+  const d = lessonStart(fb);
+  const r = Number(fb.Rating);
+  const stars = (r >= 1 && r <= 5) ? '★'.repeat(r) + '☆'.repeat(5 - r) : '';
+  const head = `<div style="font-size:0.72rem;opacity:0.65;margin-bottom:4px;">${d ? `${fmtDay(d)} ${fmtMonth(d)}` : ''}${stars ? ` · ${stars}` : ''}</div>`;
+  const rows = [];
+  if (String(fb.More||'').trim())    rows.push(`<div><strong>More:</strong> ${fbEsc(fb.More)}</div>`);
+  if (String(fb.Less||'').trim())    rows.push(`<div><strong>Less:</strong> ${fbEsc(fb.Less)}</div>`);
+  if (String(fb.Message||'').trim()) rows.push(`<div><strong>Message:</strong> ${fbEsc(fb.Message)}</div>`);
+  return head + (rows.length ? rows.join('') : (stars ? '<div style="opacity:0.7;">Rating only</div>' : 'No feedback yet'));
+}
+
 function fmtTime(d) { return d ? d.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' }) : '—'; }
 function fmtDay(d)  { return d ? d.getDate() : '—'; }
 function fmtMonth(d){ return d ? d.toLocaleDateString('en-US', { month: 'short' }).toUpperCase() : ''; }
@@ -676,7 +705,7 @@ function renderNowNext() {
   const isNow = start && end && start <= now && end >= now;
   const credits = student['Credits remaining'] ?? '—';
   const creditsLow = credits !== '—' && credits <= 1;
-  const lastFeedback = lesson['Last feedback'] || lesson.lastFeedback || '';
+  const lastFeedback = feedbackHtml(getLastFeedback(lesson));
 
   nowCard.innerHTML = `
     <div class="now-card">
@@ -702,7 +731,7 @@ function renderNowNext() {
           </div>
           <div class="info-block">
             <div class="info-block-label">Last Feedback / Request</div>
-            <div class="info-block-value">${lastFeedback || 'No feedback yet'}</div>
+            <div class="info-block-value">${lastFeedback}</div>
           </div>
           <div class="info-block">
             <div class="info-block-label">Teacher Notes</div>
