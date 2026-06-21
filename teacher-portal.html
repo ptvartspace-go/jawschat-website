@@ -597,7 +597,7 @@ function feedbackHtml(fb) {
   const d = lessonStart(fb);
   const r = Number(fb.Rating);
   const stars = (r >= 1 && r <= 5) ? '★'.repeat(r) + '☆'.repeat(5 - r) : '';
-  const head = `<div style="font-size:0.72rem;opacity:0.65;margin-bottom:4px;">${d ? `${fmtDay(d)} ${fmtMonth(d)}` : ''}${stars ? ` · ${stars}` : ''}</div>`;
+  const head = `<div style="font-size:0.72rem;opacity:0.65;margin-bottom:4px;">${d ? `${fmtWeekday(d)} ${fmtDay(d)} ${fmtMonth(d)}` : ''}${stars ? ` · ${stars}` : ''}</div>`;
   const rows = [];
   if (String(fb.More||'').trim())    rows.push(`<div style="margin-bottom:9px;"><strong>More:</strong> ${fbEsc(fb.More)}</div>`);
   if (String(fb.Less||'').trim())    rows.push(`<div style="margin-bottom:9px;"><strong>Less:</strong> ${fbEsc(fb.Less)}</div>`);
@@ -605,11 +605,11 @@ function feedbackHtml(fb) {
   return head + (rows.length ? rows.join('') : (stars ? '<div style="opacity:0.7;">Rating only</div>' : 'No feedback yet'));
 }
 
-// All lessons for a student (any status), newest first
+// All lessons for a student (any status), oldest first
 function lessonsForStudent(sid) {
   return allLessons
     .filter(l => { const ids = Array.isArray(l.Student) ? l.Student : (l.Student ? [l.Student] : []); return ids.includes(sid); })
-    .sort((a, b) => (lessonStart(b)?.getTime()||0) - (lessonStart(a)?.getTime()||0));
+    .sort((a, b) => (lessonStart(a)?.getTime()||0) - (lessonStart(b)?.getTime()||0));
 }
 
 function histStatusClass(status) {
@@ -626,7 +626,7 @@ function studentHistoryHtml(sid) {
   if (!lessons.length) return '<div class="hist-empty">No lessons yet.</div>';
   return lessons.map(l => {
     const d = lessonStart(l);
-    const dateStr = d ? `${fmtDay(d)} ${fmtMonth(d)}` : '—';
+    const dateStr = d ? `${fmtWeekday(d)} ${fmtDay(d)} ${fmtMonth(d)}` : '—';
     const status = l.Select || '—';
     const r = Number(l.Rating);
     const stars = (r >= 1 && r <= 5) ? '★'.repeat(r) + '☆'.repeat(5 - r) : '';
@@ -658,6 +658,7 @@ function toggleStudent(sid) {
 function fmtTime(d) { return d ? d.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' }) : '—'; }
 function fmtDay(d)  { return d ? d.getDate() : '—'; }
 function fmtMonth(d){ return d ? d.toLocaleDateString('en-US', { month: 'short' }).toUpperCase() : ''; }
+function fmtWeekday(d){ return d ? d.toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase() : ''; }
 function esc(s) { return String(s || '').replace(/'/g, "\\'"); }
 
 // ── LOAD PORTAL ──
@@ -738,7 +739,7 @@ function renderNeedsAction() {
     const student = getStudentForLesson(lesson);
     const name = student.Nickname || student['Student name'] || '—';
     const start = lessonStart(lesson);
-    const dateStr = start ? `${fmtDay(start)} ${fmtMonth(start)} · ${fmtTime(start)}` : '—';
+    const dateStr = start ? `${fmtWeekday(start)} ${fmtDay(start)} ${fmtMonth(start)} · ${fmtTime(start)}` : '—';
     const hasFathom = !!(lesson['Fathom link']);
     return `
       <div class="action-item">
@@ -783,7 +784,7 @@ function renderNowNext() {
     <div class="now-card">
       <div class="now-header">
         <span class="now-header-label">${isNow ? '🔴 NOW' : '⏰ NEXT'}</span>
-        <span class="now-header-time">${start ? `${fmtDay(start)} ${fmtMonth(start)} · ${fmtTime(start)}` : '—'}</span>
+        <span class="now-header-time">${start ? `${fmtWeekday(start)} ${fmtDay(start)} ${fmtMonth(start)} · ${fmtTime(start)}` : '—'}</span>
       </div>
       <div class="now-body">
         <div class="now-countdown" id="nowCountdown" data-start="${start ? start.getTime() : ''}" data-end="${end ? end.getTime() : ''}"></div>
@@ -893,7 +894,7 @@ function renderUpcoming() {
         </div>
         <div class="upcoming-info">
           <div class="upcoming-name">${student.Nickname || student['Student name'] || '—'}</div>
-          <div class="upcoming-meta">${fmtTime(start)} · ${student.Plan || '—'} · ${student.Level || '—'}</div>
+          <div class="upcoming-meta">${fmtWeekday(start)} ${fmtTime(start)} · ${student.Plan || '—'} · ${student.Level || '—'}</div>
         </div>
         <div class="upcoming-credits ${creditsLow ? 'low' : ''}">${credits} cr</div>
       </div>`;
