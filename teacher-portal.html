@@ -575,6 +575,7 @@ function getStudentForLesson(lesson) {
 
 function lessonStart(l) { return parseDate(l['Start time'] || l.startTime || l['Lesson date']); }
 function lessonEnd(l)   { return parseDate(l['End time'] || l.endTime) || (lessonStart(l) ? new Date(lessonStart(l).getTime() + 25*60000) : null); }
+function lessonDuration(l){ const s = lessonStart(l), e = lessonEnd(l); return (s && e) ? Math.round((e - s) / 60000) : null; }
 
 function fbEsc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function hasFeedback(l){ return (l.Rating!=='' && l.Rating!=null) || String(l.More||'').trim() || String(l.Less||'').trim() || String(l.Message||'').trim(); }
@@ -784,7 +785,7 @@ function renderNowNext() {
     <div class="now-card">
       <div class="now-header">
         <span class="now-header-label">${isNow ? '🔴 NOW' : '⏰ NEXT'}</span>
-        <span class="now-header-time">${start ? `${fmtWeekday(start)} ${fmtDay(start)} ${fmtMonth(start)} · ${fmtTime(start)}` : '—'}</span>
+        <span class="now-header-time">${start ? `${fmtWeekday(start)} ${fmtDay(start)} ${fmtMonth(start)} · ${fmtTime(start)}${lessonDuration(lesson) ? ` · ${lessonDuration(lesson)} min` : ''}` : '—'}</span>
       </div>
       <div class="now-body">
         <div class="now-countdown" id="nowCountdown" data-start="${start ? start.getTime() : ''}" data-end="${end ? end.getTime() : ''}"></div>
@@ -894,7 +895,7 @@ function renderUpcoming() {
         </div>
         <div class="upcoming-info">
           <div class="upcoming-name">${student.Nickname || student['Student name'] || '—'}</div>
-          <div class="upcoming-meta">${fmtWeekday(start)} ${fmtTime(start)} · ${student.Plan || '—'} · ${student.Level || '—'}</div>
+          <div class="upcoming-meta">${fmtWeekday(start)} ${fmtTime(start)}${lessonDuration(lesson) ? ` · ${lessonDuration(lesson)} min` : ''} · ${student.Plan || '—'} · ${student.Level || '—'}</div>
         </div>
         <div class="upcoming-credits ${creditsLow ? 'low' : ''}">${credits} cr</div>
       </div>`;
