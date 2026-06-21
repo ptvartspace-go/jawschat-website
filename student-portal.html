@@ -667,6 +667,9 @@ async function loadPortal(data, lessons) {
   document.getElementById('greetingPlan').textContent =
     `${data.plan || '—'} プラン`;
 
+  // Cal.com booking prefill (name + email)
+  bookingStudent = { name: (data.name || data.nickname || ''), email: (data.email || '') };
+
   // Credits
   const credits = data.credits || 0;
   const plan = data.plan || '';
@@ -796,6 +799,7 @@ function pastLessonCard(lesson) {
 
 // ── CANCEL LESSON ──
 let cancelTargetId = null;
+let bookingStudent = { name: '', email: '' };
 
 function openCancelModal(lessonId, startTimeStr) {
   cancelTargetId = lessonId;
@@ -867,16 +871,26 @@ function renderBooking(credits) {
 
   const canDouble = credits >= 2;
 
+  const qs = (() => {
+    const p = new URLSearchParams();
+    if (bookingStudent.name)  p.set('name', bookingStudent.name);   // name must come first (Cal.com quirk)
+    if (bookingStudent.email) p.set('email', bookingStudent.email);
+    const s = p.toString();
+    return s ? '?' + s : '';
+  })();
+  const lessonUrl = 'https://cal.com/jawschat/lesson' + qs;
+  const doubleUrl = 'https://cal.com/jawschat/double-lesson' + qs;
+
   section.innerHTML = `
     <div class="booking-grid">
-      <a href="https://cal.com/jawschat/lesson" target="_blank" class="booking-btn">
+      <a href="${lessonUrl}" target="_blank" class="booking-btn">
         <div class="booking-btn-left">
           <div class="booking-btn-title">📅 レッスンを予約 · Book a Lesson</div>
           <div class="booking-btn-sub">25分 · 1クレジット消化 / 25 min · Uses 1 credit</div>
         </div>
         <div class="booking-btn-badge">1 credit</div>
       </a>
-      <a href="${canDouble ? 'https://cal.com/jawschat/double-lesson' : '#'}" 
+      <a href="${canDouble ? doubleUrl : '#'}" 
          target="_blank" 
          class="booking-btn${canDouble ? '' : ' disabled'}">
         <div class="booking-btn-left">
