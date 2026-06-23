@@ -1024,7 +1024,7 @@ function logout() {
 Cal('init', { origin: 'https://cal.com' });
 // After a booking, the lesson isn't in Airtable instantly — Cal's webhook → Make → Airtable
 // takes a few seconds. So poll until the new lesson actually appears, rather than refreshing once.
-Cal('on', { action: 'bookingSuccessful', callback: function () { Cal('close'); pollForBooking(); } });
+Cal('on', { action: 'bookingSuccessful', callback: function () { setTimeout(function() { Cal('close'); }, 1500); pollForBooking(); } });
 
 function pollForBooking() {
   const baseline = lastLessonCount;
