@@ -964,6 +964,7 @@ function pastLessonCard(lesson) {
         <div class="lesson-status">完了 · Completed</div>
       </div>
       ${fathomLink ? `<a href="${fathomLink}" target="_blank" class="btn-fathom">録画 · Recording</a>` : ''}
+      ${String(f['Teacher message']||'').trim() ? `<div class="lesson-feedback"><div class="fb-title">先生からのメッセージ · Message from your teacher</div><div class="fb-row">${fbEsc(String(f['Teacher message']))}</div></div>` : ''}
       ${feedbackBlock(f) || feedbackButton(f)}
     </div>`;
 }
