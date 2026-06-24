@@ -186,36 +186,6 @@
   }
   .credit-dot.empty { background: rgba(255,255,255,0.15); }
 
-  /* credits info */
-  .credits-info-btn {
-    width: 22px; height: 22px; border-radius: 50%;
-    background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
-    color: rgba(255,255,255,0.6); font-size: 0.72rem; font-weight: 700;
-    cursor: pointer; flex-shrink: 0; align-self: flex-start;
-    display: flex; align-items: center; justify-content: center;
-    transition: background 0.15s;
-  }
-  .credits-info-btn:hover { background: rgba(255,255,255,0.22); color: #fff; }
-  .credits-info-panel {
-    display: none; background: #111; border: 1px solid #333;
-    border-radius: 12px; padding: 1.1rem 1.3rem; margin-top: 0.75rem;
-    font-size: 0.82rem; line-height: 1.7; color: rgba(255,255,255,0.75);
-  }
-  .credits-info-panel.open { display: block; }
-  .credits-info-panel strong { color: #fff; }
-  .credits-info-panel .ci-row {
-    display: flex; gap: 0.6rem; align-items: flex-start; margin-bottom: 0.6rem;
-  }
-  .credits-info-panel .ci-row:last-child { margin-bottom: 0; }
-  .credits-info-panel .ci-dot {
-    width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 5px;
-  }
-  .credits-info-panel .ci-dot.full { background: var(--terra); }
-  .credits-info-panel .ci-dot.empty { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); }
-  .credits-info-panel .ci-divider {
-    border: none; border-top: 1px solid #2a2a2a; margin: 0.75rem 0;
-  }
-
   /* expiry badge */
   .expiry-badge {
     background: var(--amber-pale);
@@ -504,26 +474,6 @@
         <div class="credits-number" id="creditsNumber">—<span>credits</span></div>
         <div class="credits-dots" id="creditsDots"></div>
       </div>
-      <button class="credits-info-btn" onclick="toggleCreditsInfo()" aria-label="クレジットについて">?</button>
-    </div>
-    <div class="credits-info-panel" id="creditsInfoPanel">
-      <div class="ci-row"><div class="ci-dot full"></div><div><strong>塗りつぶされた点 · Filled dot</strong> — 使用可能なクレジット1回分です。レッスン1回に1クレジット使用します。<br>One available credit. Each 25-min lesson uses 1 credit.</div></div>
-      <div class="ci-row"><div class="ci-dot empty"></div><div><strong>空の点 · Empty dot</strong> — まだ使用されていないか、次回更新時に追加されるクレジットの枠です。<br>A slot not yet filled — credits are added on your next billing date.</div></div>
-      <hr class="ci-divider">
-      <div style="margin-bottom:0.6rem;"><strong>繰り越しと上限 · Rollover &amp; Cap</strong><br>
-      未使用のクレジットは翌月に繰り越されます。ただし、プランごとに上限があります。更新日に新しいクレジットが追加された後、合計が上限を超えた分は失効します。<br>
-      Unused credits carry over each month, up to your plan's cap. On your billing date, new credits are added first — then any amount over the cap is forfeited.</div>
-      <div style="margin-bottom:0.6rem; padding-left:0.75rem; border-left: 2px solid #333; font-size:0.78rem; color:rgba(255,255,255,0.5);">
-      例 · Example: レギュラープラン（月8回、上限12）で5クレジット残って更新 → 8追加で合計13 → 上限12を超えた1クレジットが失効 → 残高12。<br>
-      Regular plan (8/month, cap 12): 5 credits remaining at renewal → 8 added = 13 → 1 forfeited → balance 12.</div>
-      <hr class="ci-divider">
-      <div style="margin-bottom:0.6rem;"><strong>有効期限 · Expiry</strong><br>
-      クレジットは最終お支払い日から30日間有効です。プランを解約した場合も、現在の30日間が終了するまで使用できます。<br>
-      Credits expire 30 days after your last payment. If you cancel, your credits remain valid until the end of your current 30-day period.</div>
-      <hr class="ci-divider">
-      <div><strong>キャンセルについて · Cancellations</strong><br>
-      レッスン開始24時間以上前のキャンセル → クレジット返還。24時間以内のキャンセルまたは無断欠席 → クレジットは消費されます。<br>
-      Cancel 24+ hours before: credit returned. Cancel within 24 hours or no-show: credit is used.</div>
     </div>
 
     <!-- Expiry -->
@@ -942,10 +892,6 @@ function renderLessons(lessonData) {
 }
 
 // ── PAST LESSONS DROPDOWN ──
-function toggleCreditsInfo() {
-  document.getElementById('creditsInfoPanel').classList.toggle('open');
-}
-
 function applyPastState() {
   const body = document.getElementById('pastLessons');
   const chev = document.getElementById('pastChevron');
@@ -1018,6 +964,7 @@ function pastLessonCard(lesson) {
         <div class="lesson-status">完了 · Completed</div>
       </div>
       ${fathomLink ? `<a href="${fathomLink}" target="_blank" class="btn-fathom">録画 · Recording</a>` : ''}
+      ${String(f['Teacher message']||'').trim() ? `<div class="lesson-feedback"><div class="fb-title">先生からのメッセージ · Message from your teacher</div><div class="fb-row">${fbEsc(String(f['Teacher message']))}</div></div>` : ''}
       ${feedbackBlock(f) || feedbackButton(f)}
     </div>`;
 }
