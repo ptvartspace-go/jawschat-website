@@ -206,6 +206,11 @@
     margin-bottom: 0.75rem; padding-bottom: 0.5rem;
     border-bottom: 1.5px solid var(--cream-border);
   }
+  .past-toggle { cursor: pointer; display: flex; align-items: center; justify-content: space-between; user-select: none; }
+  .past-count { opacity: 0.6; margin-left: 0.25rem; }
+  .past-chevron { transition: transform 0.2s ease; font-size: 0.85rem; }
+  .past-chevron.open { transform: rotate(180deg); }
+  #pastLessons.collapsed { display: none; }
 
   /* lesson cards */
   .lesson-card {
@@ -485,8 +490,11 @@
 
     <!-- Past -->
     <div class="section">
-      <div class="section-title">過去のレッスン · Past Lessons</div>
-      <div id="pastLessons"></div>
+      <div class="section-title past-toggle" onclick="togglePast()">
+        <span>過去のレッスン · Past Lessons <span id="pastCount" class="past-count"></span></span>
+        <span id="pastChevron" class="past-chevron">▾</span>
+      </div>
+      <div id="pastLessons" class="collapsed"></div>
     </div>
 
     <!-- Booking -->
@@ -852,6 +860,9 @@ function renderLessons(lessonData) {
   } else {
     pastEl.innerHTML = `<div class="empty-state">過去のレッスン記録はまだありません。<br>No past lessons yet.</div>`;
   }
+  const pastCountEl = document.getElementById('pastCount');
+  if (pastCountEl) pastCountEl.textContent = past.length ? `(${past.length})` : '';
+  applyPastState();
 
   startLessonCountdown();
 
@@ -859,6 +870,19 @@ function renderLessons(lessonData) {
   if (!liveRerenderTimer) {
     liveRerenderTimer = setInterval(() => { if (currentLessons.length) renderLessons(currentLessons); }, 30000);
   }
+}
+
+// ── PAST LESSONS DROPDOWN ──
+function applyPastState() {
+  const body = document.getElementById('pastLessons');
+  const chev = document.getElementById('pastChevron');
+  if (!body) return;
+  if (pastExpanded) { body.classList.remove('collapsed'); if (chev) chev.classList.add('open'); }
+  else { body.classList.add('collapsed'); if (chev) chev.classList.remove('open'); }
+}
+function togglePast() {
+  pastExpanded = !pastExpanded;
+  applyPastState();
 }
 
 // ── LESSON CARD ──
@@ -927,6 +951,7 @@ let bookingStudent = { name: '', email: '' };
 let lastLessonCount = 0;
 let currentLessons = [];
 let liveRerenderTimer = null;
+let pastExpanded = false;
 
 function openCancelModal(lessonId, startTimeStr) {
   cancelTargetId = lessonId;
