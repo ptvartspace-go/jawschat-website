@@ -497,8 +497,6 @@
   <div class="modal">
     <h2>Complete Lesson ✓</h2>
     <p class="modal-sub" id="modalStudentName">—</p>
-    <label class="modal-label">Message to student (optional)</label>
-    <textarea class="modal-input" id="teacherMessage" rows="3" placeholder="先生からのメッセージ · Leave a note for your student…"></textarea>
     <div class="modal-actions">
       <button class="btn-confirm" onclick="confirmComplete()">Confirm & Send Feedback</button>
       <button class="btn-modal-cancel" onclick="closeModal()">Cancel</button>
@@ -993,20 +991,17 @@ function openCompleteModal(lessonId, studentName) {
   pendingLessonId = lessonId;
   pendingStudentName = studentName;
   document.getElementById('modalStudentName').textContent = studentName;
-  document.getElementById('teacherMessage').value = '';
   document.getElementById('completeModal').classList.add('visible');
 }
 
 function closeModal() {
   document.getElementById('completeModal').classList.remove('visible');
-  document.getElementById('teacherMessage').value = '';
 }
 
 async function confirmComplete() {
   const lessonId = pendingLessonId;
-  const message = document.getElementById('teacherMessage').value.trim();
   closeModal();
-  await sendLessonAction('complete', lessonId, message);
+  await sendLessonAction('complete', lessonId);
 }
 
 async function markNoShow(lessonId, studentName) {
@@ -1014,12 +1009,12 @@ async function markNoShow(lessonId, studentName) {
   await sendLessonAction('noshow', lessonId);
 }
 
-async function sendLessonAction(action, lessonId, message = '') {
+async function sendLessonAction(action, lessonId) {
   try {
     const res = await fetch(COMPLETE_WEBHOOK, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action, lessonId, message })
+      body: JSON.stringify({ action, lessonId })
     });
     if (res.ok) {
       showToast(action === 'complete' ? '✓ Lesson completed · Feedback email sent' : '✗ No-show recorded', 'success');
