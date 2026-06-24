@@ -217,6 +217,10 @@
     display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
   }
   .lesson-card.next { border-color: var(--terra); background: var(--terra-pale); }
+  .lesson-card.live { border: 3px solid #e53935; background: rgba(229,57,53,0.06); animation: livepulse 1.8s infinite; }
+  @keyframes livepulse { 0%,100% { box-shadow: 0 0 0 0 rgba(229,57,53,0.0); } 50% { box-shadow: 0 0 0 5px rgba(229,57,53,0.18); } }
+  .live-banner { flex-basis: 100%; width: 100%; order: -1; background: #e53935; color: #fff; font-weight: 700; text-align: center; padding: 9px 12px; border-radius: 8px; font-size: 0.85rem; line-height: 1.45; font-family: 'Noto Sans JP', sans-serif; }
+  .btn-meet-live { background: #e53935 !important; color: #fff !important; font-weight: 700; animation: livepulse 1.8s infinite; }
   .lesson-date-block { text-align: center; flex-shrink: 0; min-width: 52px; }
   .lesson-day { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; color: var(--terra); line-height: 1; }
   .lesson-month { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); }
@@ -803,42 +807,64 @@ function startLessonCountdown() {
 // ── RENDER LESSONS ──
 function renderLessons(lessonData) {
   const lessons = Array.isArray(lessonData) ? lessonData : (lessonData.records || []);
+  if (Array.isArray(lessonData)) currentLessons = lessonData;
   const now = new Date();
+  const GRACE = 5 * 60000; // keep a lesson joinable up to 5 min past its end time
 
+  // Live = an Upcoming lesson happening right now (start ≤ now ≤ end + grace)
+  const live = lessons.filter(l => {
+    if (l.Select !== 'Upcoming') return false;
+    const s = parseDate(l['Start time']); const e = parseDate(l['End time']);
+    return s && e && s <= now && now <= new Date(e.getTime() + GRACE);
+  }).sort((a, b) => parseDate(a['Start time']) - parseDate(b['Start time']));
+
+  // Upcoming = Upcoming lessons still in the future
   const upcoming = lessons
     .filter(l => { const s = parseDate(l['Start time']); return l.Select === 'Upcoming' && s && s > now; })
     .sort((a, b) => parseDate(a['Start time']) - parseDate(b['Start time']));
-  const past = lessons.filter(l => { const s = parseDate(l['Start time']); return l.Select === 'Completed' || (s && s <= now); });
 
-  // Next lesson
+  // Past = Completed only (cancelled / not-yet-marked lessons never show here)
+  const past = lessons.filter(l => l.Select === 'Completed');
+
+  // Next-lesson slot: any LIVE lesson on top (red "join now"), then the soonest future lesson
   const nextEl = document.getElementById('nextLesson');
+  let html = '';
+  if (live.length > 0) html += live.map(l => lessonCard(l, 'live')).join('');
   if (upcoming.length > 0) {
-    nextEl.innerHTML = lessonCard(upcoming[0], true);
-  } else {
-    nextEl.innerHTML = `<div class="empty-state">予約中のレッスンはありません。<br>No upcoming lessons booked.</div>`;
+    html += lessonCard(upcoming[0], 'next');
+  } else if (live.length === 0) {
+    html += `<div class="empty-state">予約中のレッスンはありません。<br>No upcoming lessons booked.</div>`;
   }
+  nextEl.innerHTML = html;
 
-  // Upcoming (rest)
+  // Upcoming (rest, after the soonest one)
   const upcomingEl = document.getElementById('upcomingLessons');
-  if (upcoming.length > 1) {
-    upcomingEl.innerHTML = upcoming.slice(1).map(l => lessonCard(l, false)).join('');
-  } else {
-    upcomingEl.innerHTML = `<div class="empty-state">その他の予約はありません。<br>No other upcoming lessons.</div>`;
-  }
+  const rest = upcoming.slice(1);
+  upcomingEl.innerHTML = rest.length > 0
+    ? rest.map(l => lessonCard(l, false)).join('')
+    : `<div class="empty-state">その他の予約はありません。<br>No other upcoming lessons.</div>`;
 
-  // Past
+  // Past (most recent first)
   const pastEl = document.getElementById('pastLessons');
   if (past.length > 0) {
-    pastEl.innerHTML = [...past].reverse().map(l => pastLessonCard(l)).join('');
+    const pastSorted = [...past].sort((a, b) => (parseDate(b['Start time'])?.getTime()||0) - (parseDate(a['Start time'])?.getTime()||0));
+    pastEl.innerHTML = pastSorted.map(l => pastLessonCard(l)).join('');
   } else {
     pastEl.innerHTML = `<div class="empty-state">過去のレッスン記録はまだありません。<br>No past lessons yet.</div>`;
   }
 
   startLessonCountdown();
+
+  // Re-render every 30s so a lesson flips to "live" (and out again) on its own, no reload needed
+  if (!liveRerenderTimer) {
+    liveRerenderTimer = setInterval(() => { if (currentLessons.length) renderLessons(currentLessons); }, 30000);
+  }
 }
 
 // ── LESSON CARD ──
-function lessonCard(lesson, isNext) {
+function lessonCard(lesson, mode) {
+  const isLive = mode === 'live';
+  const isNext = mode === 'next';
   const f = lesson;
   const start = parseDate(f['Start time']);
   const end = parseDate(f['End time']);
@@ -850,7 +876,8 @@ function lessonCard(lesson, isNext) {
   const meetLink = f['Google meet link'] || '#';
 
   return `
-    <div class="lesson-card${isNext ? ' next' : ''}">
+    <div class="lesson-card${isNext ? ' next' : ''}${isLive ? ' live' : ''}">
+      ${isLive ? `<div class="live-banner">🔴 レッスン中です！下のボタンから今すぐ参加してください<br>Your lesson is live now — join below!</div>` : ''}
       <div class="lesson-date-block">
         <div class="lesson-day">${day}</div>
         <div class="lesson-month">${month}</div>
@@ -858,12 +885,12 @@ function lessonCard(lesson, isNext) {
       </div>
       <div class="lesson-info">
         <div class="lesson-time">${time} <span class="lesson-duration">· ${durationMin}分 / ${durationMin}min</span></div>
-        <div class="lesson-status">${isNext ? '次のレッスン · Next lesson' : '予約済み · Booked'}</div>
+        <div class="lesson-status">${isLive ? '🔴 レッスン中 · In progress' : (isNext ? '次のレッスン · Next lesson' : '予約済み · Booked')}</div>
         ${isNext ? `<div class="lesson-countdown" id="lessonCountdown" data-start="${start ? start.getTime() : ''}" data-end="${end ? end.getTime() : ''}"></div>` : ''}
       </div>
       <div class="lesson-actions">
-        <a href="${meetLink}" target="_blank" class="btn-meet">Join Meet</a>
-        <button class="btn-cancel-lesson" onclick="openCancelModal('${f.id || f.ID}', '${f['Start time']}')">キャンセル · Cancel</button>
+        <a href="${meetLink}" target="_blank" class="btn-meet${isLive ? ' btn-meet-live' : ''}">${isLive ? '🎥 今すぐ参加 · Join Now' : 'Join Meet'}</a>
+        ${isLive ? '' : `<button class="btn-cancel-lesson" onclick="openCancelModal('${f.id || f.ID}', '${f['Start time']}')">キャンセル · Cancel</button>`}
       </div>
     </div>`;
 }
@@ -898,6 +925,8 @@ function pastLessonCard(lesson) {
 let cancelTargetId = null;
 let bookingStudent = { name: '', email: '' };
 let lastLessonCount = 0;
+let currentLessons = [];
+let liveRerenderTimer = null;
 
 function openCancelModal(lessonId, startTimeStr) {
   cancelTargetId = lessonId;
