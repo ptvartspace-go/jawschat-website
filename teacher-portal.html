@@ -497,8 +497,6 @@
   <div class="modal">
     <h2>Complete Lesson ✓</h2>
     <p class="modal-sub" id="modalStudentName">—</p>
-    <label class="modal-label" for="fathomInput">Fathom Recording Link (optional)</label>
-    <input type="url" class="modal-input" id="fathomInput" placeholder="https://fathom.video/share/...">
     <div class="modal-actions">
       <button class="btn-confirm" onclick="confirmComplete()">Confirm & Send Feedback</button>
       <button class="btn-modal-cancel" onclick="closeModal()">Cancel</button>
@@ -663,35 +661,82 @@ function fmtWeekday(d){ return d ? d.toLocaleDateString('en-US', { weekday: 'sho
 function esc(s) { return String(s || '').replace(/'/g, "\\'"); }
 
 // ── LOAD PORTAL ──
+async function fetchData() {
+  const [studentsRes, lessonsRes] = await Promise.all([
+    fetch(DATA_WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ request: 'students' })
+    }),
+    fetch(LESSONS_WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ request: 'lessons' })
+    })
+  ]);
+  const studentsData = await studentsRes.json();
+  const lessonsData = await lessonsRes.json();
+  allStudents = dedupe(studentsData.students || []);
+  allLessons = dedupe(lessonsData.lessons || []);
+}
+
 async function loadPortal() {
   document.getElementById('loginScreen').style.display = 'none';
   document.getElementById('loadingScreen').style.display = 'flex';
 
   try {
-    const [studentsRes, lessonsRes] = await Promise.all([
-      fetch(DATA_WEBHOOK, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ request: 'students' })
-      }),
-      fetch(LESSONS_WEBHOOK, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ request: 'lessons' })
-      })
-    ]);
-    const studentsData = await studentsRes.json();
-    const lessonsData = await lessonsRes.json();
-    allStudents = dedupe(studentsData.students || []);
-    allLessons = dedupe(lessonsData.lessons || []);
-    renderPortal();
+    await fetchData();
   } catch(err) {
     console.error(err);
-    renderPortal();
   }
+  renderPortal();
 
   document.getElementById('loadingScreen').style.display = 'none';
   document.getElementById('portal').classList.add('visible');
+  setupAutoRefresh();
+}
+
+// Re-categorise lessons against the current clock WITHOUT refetching (0 Make operations).
+// This is what moves a lesson into "🔴 NOW" at its start and into "To Mark" at its end.
+function reRenderTimeSections() {
+  renderNeedsAction();
+  renderNowNext();
+  renderUpcoming();
+}
+
+// Pull fresh data (new bookings, submitted feedback, completions) and re-render,
+// preserving any student rows the teacher has expanded.
+async function silentRefresh() {
+  const openIds = [...document.querySelectorAll('.student-detail')]
+    .filter(d => d.style.display !== 'none')
+    .map(d => d.id);
+  try {
+    await fetchData();
+  } catch(err) {
+    console.error(err);
+    return;
+  }
+  renderPortal();
+  openIds.forEach(id => {
+    const d = document.getElementById(id);
+    if (d) {
+      d.style.display = 'block';
+      const c = document.getElementById('chev-' + id.replace('detail-', ''));
+      if (c) c.textContent = '▾';
+    }
+  });
+}
+
+let autoRefreshSet = false;
+function setupAutoRefresh() {
+  if (autoRefreshSet) return;
+  autoRefreshSet = true;
+  // Every 30s: re-categorise on the current time using cached data (no network, no Make ops).
+  setInterval(reRenderTimeSections, 30000);
+  // Every 5 min: quietly pull fresh data as a backstop.
+  setInterval(silentRefresh, 300000);
+  // And whenever the teacher switches back to this tab.
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) silentRefresh(); });
 }
 
 function dedupe(arr) {
@@ -946,9 +991,7 @@ function openCompleteModal(lessonId, studentName) {
   pendingLessonId = lessonId;
   pendingStudentName = studentName;
   document.getElementById('modalStudentName').textContent = studentName;
-  document.getElementById('fathomInput').value = '';
   document.getElementById('completeModal').classList.add('visible');
-  document.getElementById('fathomInput').focus();
 }
 
 function closeModal() {
@@ -956,27 +999,26 @@ function closeModal() {
 }
 
 async function confirmComplete() {
-  const fathomLink = document.getElementById('fathomInput').value.trim();
   const lessonId = pendingLessonId;
   closeModal();
-  await sendLessonAction('complete', lessonId, fathomLink);
+  await sendLessonAction('complete', lessonId);
 }
 
 async function markNoShow(lessonId, studentName) {
   if (!confirm(`Mark ${studentName}'s lesson as a no-show? The credit stays consumed (no refund) per policy.`)) return;
-  await sendLessonAction('noshow', lessonId, '');
+  await sendLessonAction('noshow', lessonId);
 }
 
-async function sendLessonAction(action, lessonId, fathomLink) {
+async function sendLessonAction(action, lessonId) {
   try {
     const res = await fetch(COMPLETE_WEBHOOK, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action, lessonId, fathomLink })
+      body: JSON.stringify({ action, lessonId })
     });
     if (res.ok) {
       showToast(action === 'complete' ? '✓ Lesson completed · Feedback email sent' : '✗ No-show recorded', 'success');
-      setTimeout(() => loadPortal(), 1500);
+      setTimeout(() => silentRefresh(), 1500);
     } else {
       showToast('Something went wrong — try again', 'error');
     }
