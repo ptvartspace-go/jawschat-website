@@ -300,6 +300,10 @@
     transition: all 0.15s;
   }
   .btn-fathom:hover { background: var(--terra-pale); }
+  .lesson-feedback-cta { flex-basis: 100%; width: 100%; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--cream-border); display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
+  .fb-cta-text { font-size: 0.72rem; opacity: 0.7; }
+  .btn-feedback { display: inline-block; font-family: 'Nunito', sans-serif; font-size: 0.78rem; font-weight: 700; color: #fff; background: var(--terra); border: 1.5px solid var(--terra); border-radius: 8px; padding: 0.45rem 0.9rem; text-decoration: none; white-space: nowrap; transition: all 0.15s; }
+  .btn-feedback:hover { opacity: 0.9; }
 
   .empty-state {
     text-align: center; padding: 2rem 1rem;
@@ -774,6 +778,16 @@ function feedbackBlock(f) {
     </div>`;
 }
 
+// Shown on a completed lesson that has no feedback yet — opens the feedback form for THIS lesson.
+function feedbackButton(f) {
+  const id = f.id || f.ID;
+  if (!id) return '';
+  return `<div class="lesson-feedback-cta">
+      <span class="fb-cta-text">レッスンはいかがでしたか？ · How was this lesson?</span>
+      <a href="feedback.html?lesson=${encodeURIComponent(id)}" target="_blank" class="btn-feedback">フィードバックする · Leave feedback</a>
+    </div>`;
+}
+
 let lessonCountdownInterval = null;
 function startLessonCountdown() {
   if (lessonCountdownInterval) clearInterval(lessonCountdownInterval);
@@ -950,7 +964,7 @@ function pastLessonCard(lesson) {
         <div class="lesson-status">完了 · Completed</div>
       </div>
       ${fathomLink ? `<a href="${fathomLink}" target="_blank" class="btn-fathom">録画 · Recording</a>` : ''}
-      ${feedbackBlock(f)}
+      ${feedbackBlock(f) || feedbackButton(f)}
     </div>`;
 }
 
