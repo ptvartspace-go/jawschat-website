@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JawsChat — Teacher Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@300;400;500;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f5f0e6;
+    --cream-dark: #ede8dc;
+    --cream-border: #ddd8cc;
+    --ink: #1a1a1a;
+    --ink-soft: #444;
+    --ink-muted: #888;
+    --terra: #c04a2a;
+    --terra-light: #d4603e;
+    --terra-pale: #f9ede9;
+    --white: #ffffff;
+    --green: #2a7a4f;
+    --green-pale: #edf7f1;
+    --green-border: #b2d8c0;
+    --amber: #b86a00;
+    --amber-pale: #fff8ed;
+    --amber-border: #f0d090;
+    --red: #c0392b;
+    --red-pale: #fdf0f0;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Nunito', 'Noto Sans JP', sans-serif;
+    background: var(--ink);
+    color: var(--white);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* ── LOGIN ── */
+  .login-screen {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    padding: 2rem;
+    background: var(--ink);
+  }
+  .login-card {
+    background: #222;
+    border: 1px solid #333;
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    width: 100%; max-width: 380px;
+    text-align: center;
+  }
+  .login-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem; letter-spacing: 0.08em;
+    color: var(--white); margin-bottom: 0.25rem;
+  }
+  .login-logo span { color: var(--terra); }
+  .login-sub {
+    font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: #666; margin-bottom: 2rem;
+  }
+  .login-input {
+    width: 100%; background: #111; border: 1px solid #333; border-radius: 8px;
+    color: var(--white); font-family: 'Nunito', sans-serif; font-size: 1rem;
+    padding: 0.8rem 1rem; outline: none; margin-bottom: 0.75rem;
+    transition: border-color 0.15s;
+  }
+  .login-input:focus { border-color: var(--terra); }
+  .btn-login {
+    width: 100%; font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem;
+    letter-spacing: 0.1em; color: var(--white); background: var(--terra);
+    border: none; border-radius: 8px; padding: 0.8rem; cursor: pointer;
+    transition: background 0.15s;
+  }
+  .btn-login:hover { background: var(--terra-light); }
+  .login-error {
+    font-size: 0.8rem; color: var(--terra); margin-top: 0.75rem;
+    display: none;
+  }
+
+  /* ── PORTAL LAYOUT ── */
+  .portal { display: none; min-height: 100vh; }
+  .portal.visible { display: block; }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    background: #111;
+    border-bottom: 1px solid #2a2a2a;
+    padding: 0 1.5rem;
+    height: 56px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .topbar-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem; letter-spacing: 0.08em; color: var(--white);
+    display: flex; align-items: center; gap: 9px;
+  }
+  .topbar-logo img { width: 30px; height: 30px; object-fit: contain; border-radius: 7px; }
+  .topbar-logo span { color: var(--terra); }
+  .topbar-label {
+    font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #555;
+  }
+  .btn-logout {
+    font-size: 0.75rem; color: #555; background: none; border: none;
+    cursor: pointer; font-family: 'Nunito', sans-serif;
+    transition: color 0.15s;
+  }
+  .btn-logout:hover { color: var(--terra); }
+
+  /* ── MAIN GRID ── */
+  .portal-body {
+    max-width: 1000px; margin: 0 auto;
+    padding: 1.5rem 1.25rem 4rem;
+    display: flex; flex-direction: column; gap: 1.5rem;
+  }
+
+  /* ── SECTION NAV BAR ── */
+  .section-nav {
+    position: sticky; top: 56px; z-index: 90;
+    display: flex; gap: 0.5rem; flex-wrap: wrap;
+    background: rgba(17,17,17,0.95); backdrop-filter: blur(8px);
+    padding: 0.6rem 0.25rem; margin: -0.5rem 0 0.25rem;
+    border-bottom: 1px solid #222;
+  }
+  .section-nav-link {
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em;
+    color: #888; text-decoration: none;
+    padding: 0.35rem 0.85rem; border-radius: 999px;
+    background: #1c1c1c; border: 1px solid #2a2a2a;
+    transition: all 0.15s; white-space: nowrap;
+  }
+  .section-nav-link:hover { color: var(--white); border-color: #444; }
+  .section-nav-link.has-items {
+    color: var(--terra); border-color: rgba(192,74,42,0.5);
+    background: rgba(192,74,42,0.1);
+  }
+
+  /* ── COUNTDOWN ── */
+  .now-countdown { margin-bottom: 0.85rem; min-height: 1.4rem; }
+  .cd-count {
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem;
+    letter-spacing: 0.06em; color: var(--green);
+  }
+  .cd-count.urgent { color: var(--terra); animation: pulse 1s ease-in-out infinite; }
+  .cd-live {
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem;
+    letter-spacing: 0.06em; color: var(--terra);
+  }
+  .cd-ended { font-size: 0.85rem; color: #666; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.55; } }
+
+  /* ── NOW/NEXT CARD ── */
+  .now-card {
+    background: #161616;
+    border: 1px solid #2a2a2a;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .now-header {
+    background: var(--terra);
+    padding: 0.6rem 1.25rem;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .now-header-label {
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: rgba(255,255,255,0.8);
+  }
+  .now-header-time {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem; letter-spacing: 0.06em; color: var(--white);
+  }
+  .now-body { padding: 1.25rem; }
+  .now-student-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem; letter-spacing: 0.04em; color: var(--white);
+    line-height: 1; margin-bottom: 0.25rem;
+  }
+  .now-plan-credits {
+    font-size: 0.8rem; color: #666; margin-bottom: 1.25rem;
+  }
+  .now-plan-credits span { color: var(--terra); font-weight: 700; }
+
+  .now-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0.75rem; margin-bottom: 1.25rem;
+  }
+  @media (max-width: 600px) { .now-grid { grid-template-columns: 1fr; } }
+
+  .info-block {
+    background: #1e1e1e; border: 1px solid #2a2a2a; border-radius: 10px;
+    padding: 0.85rem 1rem;
+  }
+  .info-block-label {
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: #555; margin-bottom: 0.4rem;
+  }
+  .info-block-value {
+    font-size: 0.88rem; color: #ccc; line-height: 1.6;
+    font-family: 'Noto Sans JP', sans-serif;
+  }
+  .info-block-value.highlight { color: var(--white); font-weight: 600; }
+
+  .now-actions {
+    display: flex; gap: 0.75rem; flex-wrap: wrap;
+  }
+  .btn-meet {
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem;
+    letter-spacing: 0.08em; color: var(--white);
+    background: var(--green); border: none; border-radius: 10px;
+    padding: 0.7rem 1.5rem; cursor: pointer; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: opacity 0.15s; flex: 1; justify-content: center;
+  }
+  .btn-meet:hover { opacity: 0.85; }
+  .btn-complete {
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem;
+    letter-spacing: 0.08em; color: var(--white);
+    background: #2a5298; border: none; border-radius: 10px;
+    padding: 0.7rem 1.5rem; cursor: pointer;
+    transition: opacity 0.15s; flex: 1;
+  }
+  .btn-complete:hover { opacity: 0.85; }
+  .btn-noshow {
+    font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 700;
+    color: #666; background: none; border: 1px solid #333; border-radius: 10px;
+    padding: 0.7rem 1.25rem; cursor: pointer; transition: all 0.15s;
+  }
+  .btn-noshow:hover { border-color: var(--red); color: var(--red); }
+
+  /* ── COMPLETE MODAL ── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.85); z-index: 200;
+    align-items: center; justify-content: center; padding: 1.5rem;
+  }
+  .modal-overlay.visible { display: flex; }
+  .modal {
+    background: #161616; border: 1px solid #333; border-radius: 16px;
+    padding: 2rem; width: 100%; max-width: 440px;
+  }
+  .modal h2 {
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem;
+    letter-spacing: 0.06em; color: var(--white); margin-bottom: 0.25rem;
+  }
+  .modal-sub { font-size: 0.8rem; color: #666; margin-bottom: 1.5rem; }
+  .modal-label {
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: #555; margin-bottom: 0.4rem;
+    display: block;
+  }
+  .modal-input {
+    width: 100%; background: #111; border: 1px solid #333; border-radius: 8px;
+    color: var(--white); font-family: 'Nunito', sans-serif; font-size: 0.9rem;
+    padding: 0.7rem 1rem; outline: none; margin-bottom: 1.25rem;
+    transition: border-color 0.15s;
+  }
+  .modal-input:focus { border-color: var(--terra); }
+  .modal-actions { display: flex; gap: 0.75rem; }
+  .btn-confirm {
+    flex: 1; font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem;
+    letter-spacing: 0.08em; color: var(--white); background: var(--green);
+    border: none; border-radius: 8px; padding: 0.75rem; cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .btn-confirm:hover { opacity: 0.85; }
+  .btn-modal-cancel {
+    font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 700;
+    color: #666; background: none; border: 1px solid #333; border-radius: 8px;
+    padding: 0.75rem 1.25rem; cursor: pointer; transition: all 0.15s;
+  }
+  .btn-modal-cancel:hover { border-color: #555; color: #999; }
+
+  /* ── NEEDS ACTION ── */
+  .action-list { display: flex; flex-direction: column; gap: 0.5rem; }
+  .action-item {
+    background: rgba(192,74,42,0.08);
+    border: 1px solid rgba(192,74,42,0.35);
+    border-radius: 10px;
+    padding: 0.85rem 1.1rem;
+    display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+  }
+  .action-info { flex: 1; min-width: 140px; }
+  .action-name { font-size: 0.95rem; font-weight: 700; color: var(--white); }
+  .action-meta { font-size: 0.75rem; color: var(--terra); }
+  .action-buttons { display: flex; gap: 0.5rem; }
+  .btn-action-complete {
+    font-family: 'Nunito', sans-serif; font-size: 0.8rem; font-weight: 700;
+    color: var(--white); background: #2a5298; border: none; border-radius: 8px;
+    padding: 0.5rem 1rem; cursor: pointer; transition: opacity 0.15s;
+  }
+  .btn-action-complete:hover { opacity: 0.85; }
+  .btn-action-noshow {
+    font-family: 'Nunito', sans-serif; font-size: 0.8rem; font-weight: 700;
+    color: #888; background: none; border: 1px solid #444; border-radius: 8px;
+    padding: 0.5rem 1rem; cursor: pointer; transition: all 0.15s;
+  }
+  .btn-action-noshow:hover { border-color: var(--red); color: var(--red); }
+
+  /* ── UPCOMING ── */
+  .section-title {
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: #555;
+    padding-bottom: 0.5rem; border-bottom: 1px solid #222;
+    margin-bottom: 0.75rem;
+  }
+
+  .upcoming-list { display: flex; flex-direction: column; gap: 0.5rem; }
+  .upcoming-item {
+    background: #161616; border: 1px solid #222; border-radius: 10px;
+    padding: 0.85rem 1.1rem;
+    display: flex; align-items: center; gap: 1rem;
+    cursor: pointer; transition: border-color 0.15s;
+  }
+  .upcoming-item:hover { border-color: #444; }
+  .upcoming-time {
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem;
+    color: var(--terra); line-height: 1; flex-shrink: 0; min-width: 52px;
+    text-align: center;
+  }
+  .upcoming-time-sub { font-size: 0.65rem; color: #555; letter-spacing: 0.06em; }
+  .upcoming-info { flex: 1; }
+  .upcoming-name { font-size: 0.95rem; font-weight: 700; color: var(--white); }
+  .upcoming-meta { font-size: 0.78rem; color: #666; }
+  .upcoming-credits {
+    font-size: 0.78rem; font-weight: 700;
+    padding: 0.25rem 0.6rem; border-radius: 6px;
+    background: #1e1e1e; color: #888;
+  }
+  .upcoming-credits.low { background: rgba(192,74,42,0.15); color: var(--terra); }
+
+  /* ── STUDENT LIST ── */
+  .student-list { display: flex; flex-direction: column; gap: 0.5rem; }
+  .student-item {
+    background: #161616; border: 1px solid #222; border-radius: 10px;
+    padding: 0.85rem 1.1rem;
+    display: flex; align-items: center; gap: 1rem;
+    cursor: pointer; transition: border-color 0.15s;
+  }
+  .student-item:hover { border-color: #444; }
+  .student-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--terra); display: flex; align-items: center;
+    justify-content: center; font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem; color: var(--white); flex-shrink: 0;
+  }
+  .student-info { flex: 1; }
+  .student-name { font-size: 0.92rem; font-weight: 700; color: var(--white); }
+  .student-meta { font-size: 0.75rem; color: #666; }
+  .student-credits {
+    text-align: right;
+  }
+  .student-credits-num {
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem;
+    color: var(--white); line-height: 1;
+  }
+  .student-credits-num.low { color: var(--terra); }
+  .student-credits-label { font-size: 0.62rem; color: #555; letter-spacing: 0.06em; }
+
+  /* ── STATUS BADGE ── */
+  .badge {
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 0.2rem 0.5rem; border-radius: 4px;
+    display: inline-block;
+  }
+  .badge-active { background: rgba(42,122,79,0.2); color: #6fd4a0; }
+  .badge-paused { background: rgba(184,106,0,0.2); color: #f5c060; }
+  .badge-cancelled { background: rgba(192,57,43,0.2); color: #e87070; }
+
+  /* ── STUDENT HISTORY STRIP ── */
+  .student-row { display: flex; flex-direction: column; }
+  .student-chevron { color: #666; font-size: 0.8rem; width: 14px; text-align: center; flex-shrink: 0; transition: color 0.15s; }
+  .student-item:hover .student-chevron { color: #aaa; }
+  .student-detail { background: #121212; border: 1px solid #222; border-radius: 10px; margin-top: 0.4rem; padding: 0.5rem 1.1rem 0.7rem; }
+  .hist-row { padding: 0.5rem 0; border-bottom: 1px solid #1e1e1e; }
+  .hist-row:last-child { border-bottom: none; }
+  .hist-line { display: flex; align-items: center; gap: 0.6rem; }
+  .hist-date { font-size: 0.78rem; color: #aaa; min-width: 54px; }
+  .hist-status { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.12rem 0.4rem; border-radius: 4px; }
+  .hs-completed { background: rgba(42,122,79,0.2); color: #6fd4a0; }
+  .hs-upcoming  { background: rgba(42,82,152,0.25); color: #7fa8e8; }
+  .hs-cancelled { background: rgba(192,57,43,0.2); color: #e87070; }
+  .hs-noshow    { background: rgba(184,106,0,0.2); color: #f5c060; }
+  .hs-other     { background: #222; color: #888; }
+  .hist-stars { font-size: 0.78rem; color: #f5c060; margin-left: auto; }
+  .hist-dim { color: #555; }
+  .hist-fbs { margin-top: 0.35rem; padding-left: 54px; }
+  .hist-fb { font-size: 0.76rem; color: #bbb; margin-top: 0.2rem; line-height: 1.45; }
+  .hist-fb-lbl { color: #777; font-weight: 700; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.04em; margin-right: 0.3rem; }
+  .hist-empty { font-size: 0.78rem; color: #555; padding: 0.5rem 0; }
+
+  /* ── EMPTY STATE ── */
+  .empty {
+    text-align: center; padding: 2rem 1rem;
+    font-size: 0.85rem; color: #444;
+    background: #161616; border: 1px dashed #2a2a2a; border-radius: 10px;
+  }
+
+  /* ── LOADING ── */
+  .loading-screen {
+    min-height: 100vh; display: flex; align-items: center;
+    justify-content: center; flex-direction: column; gap: 1rem;
+    background: var(--ink);
+  }
+  .spinner {
+    width: 32px; height: 32px;
+    border: 2px solid #333; border-top-color: var(--terra);
+    border-radius: 50%; animation: spin 0.7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-screen p { font-size: 0.8rem; color: #555; letter-spacing: 0.06em; }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%);
+    background: #222; border: 1px solid #333; border-radius: 10px;
+    padding: 0.75rem 1.5rem; font-size: 0.85rem; color: var(--white);
+    opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 300;
+    white-space: nowrap;
+  }
+  .toast.visible { opacity: 1; }
+  .toast.success { border-color: var(--green); color: #6fd4a0; }
+  .toast.error { border-color: var(--red); color: #e87070; }
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-card">
+    <div class="login-logo">JAWS<span>Chat</span></div>
+    <div class="login-sub">Teacher Portal</div>
+    <input type="password" class="login-input" id="passwordInput" placeholder="Password" onkeydown="if(event.key==='Enter')login()">
+    <button class="btn-login" onclick="login()">Enter</button>
+    <div class="login-error" id="loginError">Incorrect password</div>
+  </div>
+</div>
+
+<!-- LOADING -->
+<div class="loading-screen" id="loadingScreen" style="display:none;">
+  <div class="spinner"></div>
+  <p>LOADING PORTAL</p>
+</div>
+
+<!-- PORTAL -->
+<div class="portal" id="portal">
+
+  <div class="topbar">
+    <div class="topbar-logo"><img src="https://jawschat.com/shark.gif" alt="JawsChat">JAWS<span>Chat</span></div>
+    <div class="topbar-label">Teacher Portal</div>
+    <button class="btn-logout" onclick="logout()">Log out</button>
+  </div>
+
+  <div class="portal-body">
+
+    <!-- SECTION MENU BAR -->
+    <nav class="section-nav" id="sectionNav">
+      <a href="#nowSection" class="section-nav-link">Now · Next</a>
+      <a href="#upcomingSection" class="section-nav-link">Upcoming</a>
+      <a href="#completedSection" class="section-nav-link" id="navCompleted">To Mark</a>
+      <a href="#studentsSection" class="section-nav-link">Students</a>
+    </nav>
+
+    <!-- NOW/NEXT -->
+    <div id="nowSection">
+      <div class="section-title">Now · Next Lesson</div>
+      <div id="nowCard"></div>
+    </div>
+
+    <!-- UPCOMING -->
+    <div id="upcomingSection">
+      <div class="section-title">Upcoming</div>
+      <div class="upcoming-list" id="upcomingList"></div>
+    </div>
+
+    <!-- COMPLETED / NEEDS ACTION: past lessons still unmarked -->
+    <div id="completedSection" style="display:none;">
+      <div class="section-title" style="color:var(--terra);">⚡ To Mark — Completed Lessons Awaiting Action</div>
+      <div class="action-list" id="needsActionList"></div>
+    </div>
+
+    <!-- ALL STUDENTS -->
+    <div id="studentsSection">
+      <div class="section-title">All Students</div>
+      <div class="student-list" id="studentList"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- COMPLETE MODAL -->
+<div class="modal-overlay" id="completeModal">
+  <div class="modal">
+    <h2>Complete Lesson ✓</h2>
+    <p class="modal-sub" id="modalStudentName">—</p>
+    <label class="modal-label">Message to student (optional)</label>
+    <textarea class="modal-input" id="teacherMessage" rows="3" placeholder="先生からのメッセージ · Leave a note for your student…"></textarea>
+    <div class="modal-actions">
+      <button class="btn-confirm" onclick="confirmComplete()">Confirm & Send Feedback</button>
+      <button class="btn-modal-cancel" onclick="closeModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ── CONFIG ──
+const PASSWORD = 'jawschat2026';
+const DATA_WEBHOOK = 'https://hook.eu1.make.com/5yarkqjswqdexbwnu9kggvo13wr34s8q';
+const LESSONS_WEBHOOK = 'https://hook.eu1.make.com/pyvt7vwggmg9av79puvoiigz9c70sds3';
+const COMPLETE_WEBHOOK = 'https://hook.eu1.make.com/2j9p2raljgyfienclqbfxek7aoq4br5d';
+const SESSION_KEY = 'jawschat_teacher_session';
+const SESSION_EXPIRY_DAYS = 30;
+
+let allStudents = [];
+let allLessons = [];
+
+// ── INIT ──
+window.addEventListener('DOMContentLoaded', () => {
+  const session = localStorage.getItem(SESSION_KEY);
+  const expiry = localStorage.getItem(SESSION_KEY + '_expiry');
+  if (session === 'authenticated' && expiry && new Date() < new Date(expiry)) {
+    loadPortal();
+  }
+});
+
+// ── LOGIN ──
+function login() {
+  const val = document.getElementById('passwordInput').value;
+  if (val === PASSWORD) {
+    const expiry = new Date();
+    expiry.setDate(expiry.getDate() + SESSION_EXPIRY_DAYS);
+    localStorage.setItem(SESSION_KEY, 'authenticated');
+    localStorage.setItem(SESSION_KEY + '_expiry', expiry.toISOString());
+    loadPortal();
+  } else {
+    document.getElementById('loginError').style.display = 'block';
+    document.getElementById('passwordInput').value = '';
+    document.getElementById('passwordInput').focus();
+  }
+}
+
+function logout() {
+  localStorage.removeItem(SESSION_KEY);
+  localStorage.removeItem(SESSION_KEY + '_expiry');
+  location.reload();
+}
+
+// ── HELPERS ──
+function parseDate(val) {
+  if (!val) return null;
+  // Try ISO / standard parse first
+  let d = new Date(val);
+  if (!isNaN(d)) return d;
+  // Try Japanese format: 2026年6月11日 23:30
+  const m = String(val).match(/(\d{4})年(\d{1,2})月(\d{1,2})日\s*(\d{1,2}):(\d{2})/);
+  if (m) {
+    d = new Date(+m[1], +m[2]-1, +m[3], +m[4], +m[5]);
+    if (!isNaN(d)) return d;
+  }
+  return null;
+}
+
+function getStudentForLesson(lesson) {
+  const links = lesson.Student;
+  const ids = Array.isArray(links) ? links : (links ? [links] : []);
+  return allStudents.find(s => ids.includes(s.ID || s.id)) || {};
+}
+
+function lessonStart(l) { return parseDate(l['Start time'] || l.startTime || l['Lesson date']); }
+function lessonEnd(l)   { return parseDate(l['End time'] || l.endTime) || (lessonStart(l) ? new Date(lessonStart(l).getTime() + 25*60000) : null); }
+function lessonDuration(l){ const s = lessonStart(l), e = lessonEnd(l); return (s && e) ? Math.round((e - s) / 60000) : null; }
+
+function fbEsc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function hasFeedback(l){ return (l.Rating!=='' && l.Rating!=null) || String(l.More||'').trim() || String(l.Less||'').trim() || String(l.Message||'').trim(); }
+
+// Most recent Completed lesson (with feedback) for the same student as `lesson`
+function getLastFeedback(lesson) {
+  const student = getStudentForLesson(lesson);
+  const sid = student.ID || student.id;
+  if (!sid) return null;
+  const done = allLessons
+    .filter(l => (l.Select || '') === 'Completed')
+    .filter(l => { const ids = Array.isArray(l.Student) ? l.Student : (l.Student ? [l.Student] : []); return ids.includes(sid); })
+    .filter(hasFeedback)
+    .sort((a, b) => (lessonStart(b)?.getTime()||0) - (lessonStart(a)?.getTime()||0));
+  return done[0] || null;
+}
+
+function feedbackHtml(fb) {
+  if (!fb) return 'No feedback yet';
+  const d = lessonStart(fb);
+  const r = Number(fb.Rating);
+  const stars = (r >= 1 && r <= 5) ? '★'.repeat(r) + '☆'.repeat(5 - r) : '';
+  const head = `<div style="font-size:0.72rem;opacity:0.65;margin-bottom:4px;">${d ? `${fmtWeekday(d)} ${fmtDay(d)} ${fmtMonth(d)}` : ''}${stars ? ` · ${stars}` : ''}</div>`;
+  const rows = [];
+  if (String(fb.More||'').trim())    rows.push(`<div style="margin-bottom:9px;"><strong>More:</strong> ${fbEsc(fb.More)}</div>`);
+  if (String(fb.Less||'').trim())    rows.push(`<div style="margin-bottom:9px;"><strong>Less:</strong> ${fbEsc(fb.Less)}</div>`);
+  if (String(fb.Message||'').trim()) rows.push(`<div><strong>Message:</strong> ${fbEsc(fb.Message)}</div>`);
+  return head + (rows.length ? rows.join('') : (stars ? '<div style="opacity:0.7;">Rating only</div>' : 'No feedback yet'));
+}
+
+// All lessons for a student (any status), oldest first
+function lessonsForStudent(sid) {
+  return allLessons
+    .filter(l => { const ids = Array.isArray(l.Student) ? l.Student : (l.Student ? [l.Student] : []); return ids.includes(sid); })
+    .sort((a, b) => (lessonStart(a)?.getTime()||0) - (lessonStart(b)?.getTime()||0));
+}
+
+function histStatusClass(status) {
+  const s = String(status||'').toLowerCase();
+  if (s === 'completed') return 'hs-completed';
+  if (s === 'upcoming')  return 'hs-upcoming';
+  if (s === 'cancelled') return 'hs-cancelled';
+  if (s === 'no-show')   return 'hs-noshow';
+  return 'hs-other';
+}
+
+function studentHistoryHtml(sid) {
+  const lessons = lessonsForStudent(sid);
+  if (!lessons.length) return '<div class="hist-empty">No lessons yet.</div>';
+  return lessons.map(l => {
+    const d = lessonStart(l);
+    const dateStr = d ? `${fmtWeekday(d)} ${fmtDay(d)} ${fmtMonth(d)}` : '—';
+    const status = l.Select || '—';
+    const r = Number(l.Rating);
+    const stars = (r >= 1 && r <= 5) ? '★'.repeat(r) + '☆'.repeat(5 - r) : '';
+    const fb = [];
+    if (String(l.More||'').trim()) fb.push(`<div class="hist-fb"><span class="hist-fb-lbl">More</span>${fbEsc(l.More)}</div>`);
+    if (String(l.Less||'').trim()) fb.push(`<div class="hist-fb"><span class="hist-fb-lbl">Less</span>${fbEsc(l.Less)}</div>`);
+    if (String(l.Message||'').trim()) fb.push(`<div class="hist-fb"><span class="hist-fb-lbl">Message</span>${fbEsc(l.Message)}</div>`);
+    return `
+      <div class="hist-row">
+        <div class="hist-line">
+          <span class="hist-date">${dateStr}</span>
+          <span class="hist-status ${histStatusClass(status)}">${status}</span>
+          <span class="hist-stars">${stars || '<span class="hist-dim">—</span>'}</span>
+        </div>
+        ${fb.length ? `<div class="hist-fbs">${fb.join('')}</div>` : ''}
+      </div>`;
+  }).join('');
+}
+
+function toggleStudent(sid) {
+  const d = document.getElementById('detail-' + sid);
+  const c = document.getElementById('chev-' + sid);
+  if (!d) return;
+  const open = d.style.display !== 'none';
+  d.style.display = open ? 'none' : 'block';
+  if (c) c.textContent = open ? '▸' : '▾';
+}
+
+function fmtTime(d) { return d ? d.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' }) : '—'; }
+function fmtDay(d)  { return d ? d.getDate() : '—'; }
+function fmtMonth(d){ return d ? d.toLocaleDateString('en-US', { month: 'short' }).toUpperCase() : ''; }
+function fmtWeekday(d){ return d ? d.toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase() : ''; }
+function esc(s) { return String(s || '').replace(/'/g, "\\'"); }
+
+// ── LOAD PORTAL ──
+async function fetchData() {
+  const [studentsRes, lessonsRes] = await Promise.all([
+    fetch(DATA_WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ request: 'students' })
+    }),
+    fetch(LESSONS_WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ request: 'lessons' })
+    })
+  ]);
+  const studentsData = await studentsRes.json();
+  const lessonsData = await lessonsRes.json();
+  allStudents = dedupe(studentsData.students || []);
+  allLessons = dedupe(lessonsData.lessons || []);
+}
+
+async function loadPortal() {
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('loadingScreen').style.display = 'flex';
+
+  try {
+    await fetchData();
+  } catch(err) {
+    console.error(err);
+  }
+  renderPortal();
+
+  document.getElementById('loadingScreen').style.display = 'none';
+  document.getElementById('portal').classList.add('visible');
+  setupAutoRefresh();
+}
+
+// Re-categorise lessons against the current clock WITHOUT refetching (0 Make operations).
+// This is what moves a lesson into "🔴 NOW" at its start and into "To Mark" at its end.
+function reRenderTimeSections() {
+  renderNeedsAction();
+  renderNowNext();
+  renderUpcoming();
+}
+
+// Pull fresh data (new bookings, submitted feedback, completions) and re-render,
+// preserving any student rows the teacher has expanded.
+async function silentRefresh() {
+  const openIds = [...document.querySelectorAll('.student-detail')]
+    .filter(d => d.style.display !== 'none')
+    .map(d => d.id);
+  try {
+    await fetchData();
+  } catch(err) {
+    console.error(err);
+    return;
+  }
+  renderPortal();
+  openIds.forEach(id => {
+    const d = document.getElementById(id);
+    if (d) {
+      d.style.display = 'block';
+      const c = document.getElementById('chev-' + id.replace('detail-', ''));
+      if (c) c.textContent = '▾';
+    }
+  });
+}
+
+let autoRefreshSet = false;
+function setupAutoRefresh() {
+  if (autoRefreshSet) return;
+  autoRefreshSet = true;
+  // Every 30s: re-categorise on the current time using cached data (no network, no Make ops).
+  setInterval(reRenderTimeSections, 30000);
+  // Every 5 min: quietly pull fresh data as a backstop.
+  setInterval(silentRefresh, 300000);
+  // And whenever the teacher switches back to this tab.
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) silentRefresh(); });
+}
+
+function dedupe(arr) {
+  const seen = new Set();
+  return arr.filter(item => {
+    const id = item.ID || item.id;
+    if (!id || seen.has(id)) return false;
+    seen.add(id);
+    return true;
+  });
+}
+
+// ── RENDER ──
+function renderPortal() {
+  renderNeedsAction();
+  renderNowNext();
+  renderUpcoming();
+  renderStudentList();
+}
+
+// ── COMPLETED / NEEDS ACTION: past lessons still marked Upcoming ──
+function renderNeedsAction() {
+  const now = new Date();
+  const container = document.getElementById('completedSection');
+  const list = document.getElementById('needsActionList');
+  const navBtn = document.getElementById('navCompleted');
+
+  const overdue = allLessons
+    .filter(l => (l.Select || '') === 'Upcoming')
+    .filter(l => { const e = lessonEnd(l); return e && e < now; })
+    .sort((a, b) => lessonEnd(b) - lessonEnd(a));
+
+  if (overdue.length === 0) {
+    container.style.display = 'none';
+    if (navBtn) { navBtn.textContent = 'To Mark'; navBtn.classList.remove('has-items'); }
+    return;
+  }
+
+  if (navBtn) {
+    navBtn.textContent = `To Mark (${overdue.length})`;
+    navBtn.classList.add('has-items');
+  }
+
+  container.style.display = 'block';
+  list.innerHTML = overdue.map(lesson => {
+    const student = getStudentForLesson(lesson);
+    const name = student.Nickname || student['Student name'] || '—';
+    const start = lessonStart(lesson);
+    const dateStr = start ? `${fmtWeekday(start)} ${fmtDay(start)} ${fmtMonth(start)} · ${fmtTime(start)}` : '—';
+    const hasFathom = !!(lesson['Fathom link']);
+    return `
+      <div class="action-item">
+        <div class="action-info">
+          <div class="action-name">${name}</div>
+          <div class="action-meta">${dateStr} · awaiting completion${hasFathom ? ' · 🎬 recording ready' : ''}</div>
+        </div>
+        <div class="action-buttons">
+          <button class="btn-action-complete" onclick="openCompleteModal('${lesson.id}', '${esc(name)}')">✓ Complete</button>
+          <button class="btn-action-noshow" onclick="markNoShow('${lesson.id}', '${esc(name)}')">✗ No-show</button>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+// ── NOW / NEXT ──
+function renderNowNext() {
+  const now = new Date();
+  const nowCard = document.getElementById('nowCard');
+
+  const upcoming = allLessons
+    .filter(l => (l.Select || '') === 'Upcoming')
+    .filter(l => { const e = lessonEnd(l); return e && e >= now; })
+    .sort((a, b) => lessonStart(a) - lessonStart(b));
+
+  if (upcoming.length === 0) {
+    nowCard.innerHTML = `<div class="empty">No upcoming lessons.</div>`;
+    return;
+  }
+
+  const lesson = upcoming[0];
+  const student = getStudentForLesson(lesson);
+  const sName = student.Nickname || student['Student name'] || '—';
+  const start = lessonStart(lesson);
+  const end = lessonEnd(lesson);
+  const isNow = start && end && start <= now && end >= now;
+  const credits = student['Credits remaining'] ?? '—';
+  const creditsLow = credits !== '—' && credits <= 1;
+  const lastFeedback = feedbackHtml(getLastFeedback(lesson));
+
+  nowCard.innerHTML = `
+    <div class="now-card">
+      <div class="now-header">
+        <span class="now-header-label">${isNow ? '🔴 NOW' : '⏰ NEXT'}</span>
+        <span class="now-header-time">${start ? `${fmtWeekday(start)} ${fmtDay(start)} ${fmtMonth(start)} · ${fmtTime(start)}${lessonDuration(lesson) ? ` · ${lessonDuration(lesson)} min` : ''}` : '—'}</span>
+      </div>
+      <div class="now-body">
+        <div class="now-countdown" id="nowCountdown" data-start="${start ? start.getTime() : ''}" data-end="${end ? end.getTime() : ''}"></div>
+        <div class="now-student-name">${sName}</div>
+        <div class="now-plan-credits">
+          ${student['Student name'] || ''} · ${student.Plan || '—'} · <span class="${creditsLow ? 'low' : ''}">${credits} credits remaining</span>
+        </div>
+        <div class="now-grid">
+          <div class="info-block">
+            <div class="info-block-label">Goals</div>
+            <div class="info-block-value">${student.Goals || '—'}</div>
+          </div>
+          <div class="info-block">
+            <div class="info-block-label">Level · Topics</div>
+            <div class="info-block-value highlight">${student.Level || '—'}</div>
+            <div class="info-block-value" style="margin-top:4px;font-size:0.78rem;">${student['Topics of interest'] || '—'}</div>
+          </div>
+          <div class="info-block">
+            <div class="info-block-label">Last Feedback / Request</div>
+            <div class="info-block-value">${lastFeedback}</div>
+          </div>
+          <div class="info-block">
+            <div class="info-block-label">Teacher Notes</div>
+            <div class="info-block-value">${lesson['Teacher notes'] || 'No notes yet'}</div>
+          </div>
+        </div>
+        <div class="now-actions">
+          <a href="${lesson['Google meet link'] || '#'}" target="_blank" class="btn-meet">🎥 Join Meet</a>
+        </div>
+      </div>
+    </div>`;
+
+  startCountdown();
+}
+
+// ── COUNTDOWN TIMER ──
+let countdownInterval = null;
+function startCountdown() {
+  if (countdownInterval) clearInterval(countdownInterval);
+  const el = document.getElementById('nowCountdown');
+  if (!el || !el.dataset.start) return;
+
+  const tick = () => {
+    const node = document.getElementById('nowCountdown');
+    if (!node) { clearInterval(countdownInterval); return; }
+    const startMs = Number(node.dataset.start);
+    const endMs = Number(node.dataset.end);
+    const now = Date.now();
+
+    if (endMs && now >= startMs && now <= endMs) {
+      node.innerHTML = `<span class="cd-live">🔴 IN PROGRESS</span>`;
+      return;
+    }
+    if (endMs && now > endMs) {
+      node.innerHTML = `<span class="cd-ended">Lesson ended</span>`;
+      clearInterval(countdownInterval);
+      return;
+    }
+
+    let diff = Math.max(0, startMs - now);
+    const days = Math.floor(diff / 86400000); diff -= days * 86400000;
+    const hrs  = Math.floor(diff / 3600000);  diff -= hrs * 3600000;
+    const mins = Math.floor(diff / 60000);    diff -= mins * 60000;
+    const secs = Math.floor(diff / 1000);
+
+    let label, urgent = false;
+    if (days > 0) {
+      label = `starts in ${days}d ${hrs}h`;
+    } else if (hrs >= 1) {
+      label = `starts in ${hrs}h ${String(mins).padStart(2,'0')}m`;
+    } else {
+      label = `starts in ${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
+      if (startMs - now <= 5 * 60000) urgent = true;
+    }
+    node.innerHTML = `<span class="cd-count ${urgent ? 'urgent' : ''}">${label}</span>`;
+  };
+
+  tick();
+  countdownInterval = setInterval(tick, 1000);
+}
+
+// ── UPCOMING ──
+function renderUpcoming() {
+  const now = new Date();
+  const list = document.getElementById('upcomingList');
+  const upcoming = allLessons
+    .filter(l => (l.Select || '') === 'Upcoming')
+    .filter(l => { const e = lessonEnd(l); return e && e >= now; })
+    .sort((a, b) => lessonStart(a) - lessonStart(b))
+    .slice(1, 8);
+
+  if (upcoming.length === 0) {
+    list.innerHTML = `<div class="empty">No more lessons scheduled.</div>`;
+    return;
+  }
+
+  list.innerHTML = upcoming.map(lesson => {
+    const student = getStudentForLesson(lesson);
+    const start = lessonStart(lesson);
+    const credits = student['Credits remaining'] ?? '—';
+    const creditsLow = credits !== '—' && credits <= 1;
+    return `
+      <div class="upcoming-item">
+        <div class="upcoming-time">
+          ${fmtDay(start)}<br>
+          <span class="upcoming-time-sub">${fmtMonth(start)}</span>
+        </div>
+        <div class="upcoming-info">
+          <div class="upcoming-name">${student.Nickname || student['Student name'] || '—'}</div>
+          <div class="upcoming-meta">${fmtWeekday(start)} ${fmtTime(start)}${lessonDuration(lesson) ? ` · ${lessonDuration(lesson)} min` : ''} · ${student.Plan || '—'} · ${student.Level || '—'}</div>
+        </div>
+        <div class="upcoming-credits ${creditsLow ? 'low' : ''}">${credits} cr</div>
+      </div>`;
+  }).join('');
+}
+
+// ── STUDENT LIST ──
+function renderStudentList() {
+  const list = document.getElementById('studentList');
+  if (allStudents.length === 0) {
+    list.innerHTML = `<div class="empty">No students yet.</div>`;
+    return;
+  }
+
+  const sorted = [...allStudents].sort((a, b) => (a['Student name'] || '').localeCompare(b['Student name'] || ''));
+  list.innerHTML = sorted.map(s => {
+    const sid = s.id || s.ID;
+    const name = s.Nickname || s['Student name'] || '?';
+    const initial = name[0].toUpperCase();
+    const credits = s['Credits remaining'] ?? 0;
+    const creditsLow = credits <= 1;
+    const status = s.Status || '—';
+    const statusClass = status === 'Active' ? 'badge-active' : status === 'Paused' ? 'badge-paused' : 'badge-cancelled';
+    return `
+      <div class="student-row">
+        <div class="student-item" onclick="toggleStudent('${sid}')">
+          <div class="student-avatar">${initial}</div>
+          <div class="student-info">
+            <div class="student-name">${s['Student name'] || '—'} ${s.Nickname ? '<span style="color:#666;font-weight:400;">· ' + s.Nickname + '</span>' : ''} <span class="badge ${statusClass}">${status}</span></div>
+            <div class="student-meta">${s.Plan || '—'} · ${s.Email || '—'}</div>
+          </div>
+          <div class="student-credits">
+            <div class="student-credits-num ${creditsLow ? 'low' : ''}">${credits}</div>
+            <div class="student-credits-label">CREDITS</div>
+          </div>
+          <div class="student-chevron" id="chev-${sid}">▸</div>
+        </div>
+        <div class="student-detail" id="detail-${sid}" style="display:none;">${studentHistoryHtml(sid)}</div>
+      </div>`;
+  }).join('');
+}
+
+// ── COMPLETE MODAL ──
+let pendingLessonId = null;
+let pendingStudentName = null;
+
+function openCompleteModal(lessonId, studentName) {
+  pendingLessonId = lessonId;
+  pendingStudentName = studentName;
+  document.getElementById('modalStudentName').textContent = studentName;
+  document.getElementById('teacherMessage').value = '';
+  document.getElementById('completeModal').classList.add('visible');
+}
+
+function closeModal() {
+  document.getElementById('completeModal').classList.remove('visible');
+  document.getElementById('teacherMessage').value = '';
+}
+
+async function confirmComplete() {
+  const lessonId = pendingLessonId;
+  const message = document.getElementById('teacherMessage').value.trim();
+  closeModal();
+  await sendLessonAction('complete', lessonId, message);
+}
+
+async function markNoShow(lessonId, studentName) {
+  if (!confirm(`Mark ${studentName}'s lesson as a no-show? The credit stays consumed (no refund) per policy.`)) return;
+  await sendLessonAction('noshow', lessonId);
+}
+
+async function sendLessonAction(action, lessonId, message = '') {
+  try {
+    const res = await fetch(COMPLETE_WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action, lessonId, message })
+    });
+    if (res.ok) {
+      showToast(action === 'complete' ? '✓ Lesson completed · Feedback email sent' : '✗ No-show recorded', 'success');
+      setTimeout(() => silentRefresh(), 1500);
+    } else {
+      showToast('Something went wrong — try again', 'error');
+    }
+  } catch(err) {
+    showToast('Something went wrong — try again', 'error');
+  }
+}
+
+// ── TOAST ──
+function showToast(msg, type = '') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = `toast visible ${type}`;
+  setTimeout(() => t.className = 'toast', 3000);
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+});
+</script>
+</body>
+</html>
