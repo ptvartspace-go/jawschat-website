@@ -427,26 +427,6 @@
     text-decoration: none;
   }
 
-  /* ── BOOKING SUCCESS TOAST ── */
-  .booking-success-toast {
-    display: none;
-    position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
-    z-index: 300;
-    background: var(--green); color: #fff;
-    border-radius: 14px;
-    padding: 1rem 1.5rem;
-    text-align: center;
-    box-shadow: 0 6px 24px rgba(0,0,0,0.18);
-    min-width: 260px; max-width: calc(100vw - 3rem);
-    font-family: 'Noto Sans JP', sans-serif;
-    animation: toastIn 0.25s ease;
-  }
-  .booking-success-toast.visible { display: block; }
-  .booking-success-toast .toast-icon { font-size: 1.5rem; margin-bottom: 0.3rem; }
-  .booking-success-toast .toast-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.06em; line-height: 1.1; }
-  .booking-success-toast .toast-sub { font-size: 0.8rem; opacity: 0.85; margin-top: 0.25rem; line-height: 1.5; }
-  @keyframes toastIn { from { opacity: 0; transform: translateX(-50%) translateY(12px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
-
   footer {
     background: #1a1a1a; border-top: 1px solid rgba(255,255,255,0.08);
     padding: 2rem; text-align: center;
@@ -1026,6 +1006,8 @@ function pastLessonCard(lesson) {
   const time = (f['Start time'] && start) ? start.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' }) : '';
   const fathomLink = f['Fathom link'];
 
+  const teacherMsg = String(f['Teacher message'] || '').trim();
+
   return `
     <div class="lesson-card">
       <div class="lesson-date-block">
@@ -1038,6 +1020,7 @@ function pastLessonCard(lesson) {
         <div class="lesson-status">完了 · Completed</div>
       </div>
       ${fathomLink ? `<a href="${fathomLink}" target="_blank" class="btn-fathom">録画 · Recording</a>` : ''}
+      ${teacherMsg ? `<div class="lesson-feedback"><div class="fb-title">先生のフィードバック · Teacher's feedback</div><div class="fb-row">${fbEsc(teacherMsg)}</div></div>` : ''}
       ${feedbackBlock(f) || feedbackButton(f)}
     </div>`;
 }
@@ -1175,15 +1158,7 @@ function logout() {
 Cal('init', { origin: 'https://cal.com' });
 // After a booking, the lesson isn't in Airtable instantly — Cal's webhook → Make → Airtable
 // takes a few seconds. So poll until the new lesson actually appears, rather than refreshing once.
-Cal('on', { action: 'bookingSuccessful', callback: function () {
-  // Close the Cal modal immediately so the student never sees the native Cancel/Reschedule buttons.
-  // bookingSuccessful fires after the booking is committed server-side, so closing here is safe.
-  try { Cal('closeModal'); } catch(e) { /* ignore if not supported */ }
-  // Show JawsChat's own branded success state
-  showBookingSuccessToast();
-  // Continue polling for the new lesson to land in Airtable
-  pollForBooking();
-} });
+Cal('on', { action: 'bookingSuccessful', callback: function () { pollForBooking(); } });
 
 function pollForBooking() {
   const baseline = lastLessonCount;
@@ -1218,14 +1193,6 @@ function pollForBooking() {
   }, 3000);
 }
 
-function showBookingSuccessToast() {
-  const toast = document.getElementById('bookingSuccessToast');
-  if (!toast) return;
-  toast.classList.add('visible');
-  // Auto-dismiss after 5 seconds (the portal re-renders when the lesson lands, which is visual enough)
-  setTimeout(function () { toast.classList.remove('visible'); }, 5000);
-}
-
 function openCalModal(calLink) {
   try {
     const theme = (document.documentElement.getAttribute('data-theme') === 'dark') ? 'dark' : 'light';
@@ -1244,13 +1211,6 @@ function openCalModal(calLink) {
   }
 }
 </script>
-<!-- BOOKING SUCCESS TOAST -->
-<div class="booking-success-toast" id="bookingSuccessToast">
-  <div class="toast-icon">✅</div>
-  <div class="toast-title">予約完了 · Booked!</div>
-  <div class="toast-sub">レッスンが予約されました。<br>Your lesson is confirmed. Updating your portal…</div>
-</div>
-
 <!-- CANCEL CONFIRM MODAL -->
 <div class="modal-overlay" id="cancelModal">
   <div class="modal-box">

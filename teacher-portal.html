@@ -632,6 +632,7 @@ function studentHistoryHtml(sid) {
     const r = Number(l.Rating);
     const stars = (r >= 1 && r <= 5) ? '★'.repeat(r) + '☆'.repeat(5 - r) : '';
     const fb = [];
+    if (String(l['Teacher message']||'').trim()) fb.push(`<div class="hist-fb"><span class="hist-fb-lbl">先生のフィードバック · Teacher's feedback</span>${fbEsc(l['Teacher message'])}</div>`);
     if (String(l.More||'').trim()) fb.push(`<div class="hist-fb"><span class="hist-fb-lbl">More</span>${fbEsc(l.More)}</div>`);
     if (String(l.Less||'').trim()) fb.push(`<div class="hist-fb"><span class="hist-fb-lbl">Less</span>${fbEsc(l.Less)}</div>`);
     if (String(l.Message||'').trim()) fb.push(`<div class="hist-fb"><span class="hist-fb-lbl">Message</span>${fbEsc(l.Message)}</div>`);
