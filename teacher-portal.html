@@ -205,6 +205,20 @@
   }
   .info-block-value.highlight { color: var(--white); font-weight: 600; }
 
+  .teacher-notes-input {
+    width: 100%; background: transparent; border: none; border-bottom: 1px solid #333;
+    color: #ccc; font-size: 0.88rem; font-family: 'Noto Sans JP', sans-serif;
+    line-height: 1.6; resize: vertical; outline: none; padding: 0.15rem 0;
+    transition: border-color 0.2s;
+  }
+  .teacher-notes-input:focus { border-color: var(--terra); color: var(--white); }
+  .teacher-notes-input::placeholder { color: #444; }
+  .notes-save-state {
+    font-size: 0.6rem; font-weight: 400; letter-spacing: 0.04em;
+    text-transform: none; color: #888; margin-left: 0.4rem;
+    transition: opacity 0.4s;
+  }
+
   .now-actions {
     display: flex; gap: 0.75rem; flex-wrap: wrap;
   }
@@ -517,6 +531,7 @@ const PASSWORD = 'jawschat2026';
 const DATA_WEBHOOK = 'https://hook.eu1.make.com/5yarkqjswqdexbwnu9kggvo13wr34s8q';
 const LESSONS_WEBHOOK = 'https://hook.eu1.make.com/pyvt7vwggmg9av79puvoiigz9c70sds3';
 const COMPLETE_WEBHOOK = 'https://hook.eu1.make.com/2j9p2raljgyfienclqbfxek7aoq4br5d';
+const NOTES_WEBHOOK    = 'https://hook.eu1.make.com/ccat2a8ugvghsogckekxpc3xcqt66894';
 const SESSION_KEY = 'jawschat_teacher_session';
 const SESSION_EXPIRY_DAYS = 30;
 
@@ -744,6 +759,13 @@ function setupAutoRefresh() {
   setInterval(silentRefresh, 300000);
   // And whenever the teacher switches back to this tab.
   document.addEventListener('visibilitychange', () => { if (!document.hidden) silentRefresh(); });
+
+  // Teacher notes autosave on blur (delegated — textarea is injected dynamically)
+  document.addEventListener('blur', e => {
+    if (e.target && e.target.classList.contains('teacher-notes-input')) {
+      saveTeacherNotes(e.target);
+    }
+  }, true);
 }
 
 function dedupe(arr) {
@@ -860,8 +882,12 @@ function renderNowNext() {
             <div class="info-block-value">${lastFeedback}</div>
           </div>
           <div class="info-block">
-            <div class="info-block-label">Teacher Notes</div>
-            <div class="info-block-value">${lesson['Teacher notes'] || 'No notes yet'}</div>
+            <div class="info-block-label">Teacher Notes <span class="notes-save-state" id="notesSaveState"></span></div>
+            <textarea class="teacher-notes-input" id="teacherNotesInput"
+              data-student-id="${student.id || student.ID}"
+              data-original="${esc(student['Teacher notes'] || '')}"
+              placeholder="Add notes about this student…"
+              rows="3">${student['Teacher notes'] || ''}</textarea>
           </div>
         </div>
         <div class="now-actions">
@@ -871,6 +897,30 @@ function renderNowNext() {
     </div>`;
 
   startCountdown();
+}
+
+// ── TEACHER NOTES AUTOSAVE ──
+async function saveTeacherNotes(textarea) {
+  const studentId = textarea.dataset.studentId;
+  const notes = textarea.value;
+  const original = textarea.dataset.original;
+  if (notes === original) return; // unchanged — don't fire
+  const stateEl = document.getElementById('notesSaveState');
+  if (stateEl) { stateEl.textContent = 'Saving…'; stateEl.style.opacity = '1'; }
+  try {
+    await fetch(NOTES_WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ studentId, notes })
+    });
+    textarea.dataset.original = notes;
+    if (stateEl) {
+      stateEl.textContent = 'Saved ✓';
+      setTimeout(() => { stateEl.style.opacity = '0'; setTimeout(() => { stateEl.textContent = ''; }, 400); }, 2000);
+    }
+  } catch(e) {
+    if (stateEl) { stateEl.textContent = 'Error — not saved'; stateEl.style.opacity = '1'; }
+  }
 }
 
 // ── COUNTDOWN TIMER ──
