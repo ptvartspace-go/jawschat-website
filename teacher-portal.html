@@ -391,6 +391,8 @@
   .hist-fbs { margin-top: 0.35rem; padding-left: 54px; }
   .hist-fb { font-size: 0.76rem; color: #bbb; margin-top: 0.2rem; line-height: 1.45; }
   .hist-fb-lbl { color: #777; font-weight: 700; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.04em; margin-right: 0.3rem; }
+  .hist-fathom { font-size: 0.72rem; color: var(--terra); text-decoration: none; margin-left: auto; white-space: nowrap; }
+  .hist-fathom:hover { text-decoration: underline; }
   .hist-empty { font-size: 0.78rem; color: #555; padding: 0.5rem 0; }
 
   /* ── EMPTY STATE ── */
@@ -636,12 +638,14 @@ function studentHistoryHtml(sid) {
     if (String(l.More||'').trim()) fb.push(`<div class="hist-fb"><span class="hist-fb-lbl">More</span>${fbEsc(l.More)}</div>`);
     if (String(l.Less||'').trim()) fb.push(`<div class="hist-fb"><span class="hist-fb-lbl">Less</span>${fbEsc(l.Less)}</div>`);
     if (String(l.Message||'').trim()) fb.push(`<div class="hist-fb"><span class="hist-fb-lbl">Message</span>${fbEsc(l.Message)}</div>`);
+    const fathomLink = String(l['Fathom link'] || '').trim();
     return `
       <div class="hist-row">
         <div class="hist-line">
           <span class="hist-date">${dateStr}</span>
           <span class="hist-status ${histStatusClass(status)}">${status}</span>
           <span class="hist-stars">${stars || '<span class="hist-dim">—</span>'}</span>
+          ${fathomLink ? `<a href="${fathomLink}" target="_blank" class="hist-fathom">録画 · Recording</a>` : ''}
         </div>
         ${fb.length ? `<div class="hist-fbs">${fb.join('')}</div>` : ''}
       </div>`;
