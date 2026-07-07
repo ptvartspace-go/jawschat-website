@@ -356,14 +356,14 @@
   .account-row-label { color: var(--ink-muted); font-family: 'Noto Sans JP', sans-serif; }
   .account-row-value { font-weight: 700; color: var(--ink); }
 
-  .btn-manage {
+  .btn-cancel {
     width: 100%; font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 700;
     color: var(--ink-muted); background: transparent;
     border: 1.5px solid var(--cream-border); border-radius: 10px;
     padding: 0.75rem; cursor: pointer; margin-top: 0.75rem;
     transition: all 0.15s;
   }
-  .btn-manage:hover { border-color: var(--terra); color: var(--terra); background: var(--terra-pale); }
+  .btn-cancel:hover { border-color: #c0392b; color: #c0392b; }
 
   .btn-logout {
     width: 100%; font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 700;
@@ -577,7 +577,7 @@
           <span class="account-row-value" id="accountStatus">—</span>
         </div>
       </div>
-      <button class="btn-manage" onclick="window.location.href='manage-subscription.html'">⚙️ プランを管理する · Manage Subscription</button>
+      <button class="btn-cancel" onclick="confirmCancel()">解約する · Cancel Subscription</button>
       <button class="btn-logout" onclick="logout()">ログアウト · Log out</button>
     </div>
 
@@ -1133,6 +1133,16 @@ function renderBooking(credits) {
         <div class="booking-btn-badge double">2 credits</div>
       </a>
     </div>`;
+}
+
+// ── CANCEL ──
+function confirmCancel() {
+  const confirmed = confirm(
+    '本当に解約しますか？\nクレジットは現在の期間終了まで有効です。\n\nAre you sure you want to cancel?\nYour credits remain valid until the end of your current period.'
+  );
+  if (confirmed) {
+    window.location.href = 'mailto:jawschat1@gmail.com?subject=解約のご連絡&body=解約を希望します。';
+  }
 }
 
 // ── LOGOUT ──
