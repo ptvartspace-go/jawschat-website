@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JawsChat — プランを管理する · Manage Subscription</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@300;400;500;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f5f0e6;
+    --cream-dark: #ede8dc;
+    --cream-border: #ddd8cc;
+    --ink: #1a1a1a;
+    --ink-soft: #444;
+    --ink-muted: #888;
+    --terra: #c04a2a;
+    --terra-light: #d4603e;
+    --terra-pale: #f9ede9;
+    --white: #ffffff;
+    --green: #2d7a5f;
+    --green-pale: #edf7f1;
+    --green-border: #b2d8c0;
+    --amber: #b86a00;
+    --amber-pale: #fff8ed;
+    --amber-border: #f0d090;
+  }
+
+  /* ── DARK THEME (matches student/teacher portals) ── */
+  [data-theme="dark"] {
+    --cream: #1c1c1e;
+    --cream-dark: #18181a;
+    --cream-border: #303034;
+    --ink: #ededed;
+    --ink-soft: #c4c4c4;
+    --ink-muted: #8a8a8a;
+    --terra: #d4603e;
+    --terra-light: #e07550;
+    --terra-pale: #2a1a14;
+    --white: #242428;
+    --green: #3a9a72;
+    --green-pale: #16241e;
+    --green-border: #2a5a44;
+    --amber: #d18a20;
+    --amber-pale: #2a2010;
+    --amber-border: #5a4520;
+  }
+  [data-theme="dark"] nav { background: rgba(28,28,30,0.98) !important; }
+  [data-theme="dark"] .error-banner { background: #2a1414; border-color: #5a2424; color: #f0a0a0; }
+
+  .theme-toggle {
+    background: none; border: 1.5px solid var(--cream-border);
+    border-radius: 999px; width: 38px; height: 38px;
+    cursor: pointer; font-size: 1.05rem; line-height: 1;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--ink); transition: all 0.15s; flex-shrink: 0;
+  }
+  .theme-toggle:hover { border-color: var(--terra); color: var(--terra); }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Nunito', 'Noto Sans JP', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(245,240,230,0.98);
+    border-bottom: 1px solid var(--cream-border);
+    padding: 0 1.5rem;
+    height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-logo img { width: 36px; height: 36px; object-fit: contain; border-radius: 8px; }
+  .nav-logo-text { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+  .nav-logo-text span { color: var(--terra); }
+  .nav-right { display: flex; align-items: center; gap: 1rem; }
+  .nav-back {
+    font-size: 0.8rem; font-weight: 700; color: var(--ink-soft);
+    text-decoration: none; letter-spacing: 0.02em;
+  }
+  .nav-back:hover { color: var(--terra); }
+
+  /* ── SCREENS ── */
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  .page-wrap { max-width: 560px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+
+  /* ── LOADING ── */
+  .loading-wrap {
+    min-height: calc(100vh - 64px);
+    display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 1rem;
+  }
+  .spinner {
+    width: 36px; height: 36px;
+    border: 3px solid var(--cream-border);
+    border-top-color: var(--terra);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-wrap p { font-family: 'Noto Sans JP', sans-serif; font-size: 0.85rem; color: var(--ink-muted); }
+
+  /* ── NEED LOGIN ── */
+  .needlogin-card {
+    background: var(--white); border: 1.5px solid var(--cream-border);
+    border-radius: 14px; padding: 2rem 1.75rem; text-align: center;
+    margin-top: 2rem;
+  }
+  .needlogin-card .icon { font-size: 2rem; margin-bottom: 0.75rem; }
+  .needlogin-card h2 { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 0.04em; margin-bottom: 0.6rem; }
+  .needlogin-card p { font-size: 0.85rem; color: var(--ink-soft); font-family: 'Noto Sans JP', sans-serif; margin-bottom: 1.25rem; }
+
+  /* ── HEADER ── */
+  .page-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 0.04em; margin-bottom: 0.25rem; }
+  .page-sub { font-size: 0.85rem; color: var(--ink-muted); font-family: 'Noto Sans JP', sans-serif; margin-bottom: 1.75rem; }
+
+  /* ── PENDING BANNER ── */
+  .pending-banner {
+    background: var(--amber-pale); border: 1.5px solid var(--amber-border);
+    border-radius: 12px; padding: 1.1rem 1.3rem; margin-bottom: 1.75rem;
+    display: flex; gap: 0.8rem; align-items: flex-start;
+  }
+  .pending-banner .icon { font-size: 1.3rem; flex-shrink: 0; }
+  .pending-banner strong { color: var(--amber); display: block; margin-bottom: 0.25rem; font-size: 0.9rem; }
+  .pending-banner p { font-size: 0.82rem; color: var(--ink-soft); font-family: 'Noto Sans JP', sans-serif; line-height: 1.7; }
+
+  /* ── ACCOUNT CARD ── */
+  .section { margin-bottom: 2rem; }
+  .section-title {
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--terra);
+    margin-bottom: 0.75rem; padding-bottom: 0.5rem;
+    border-bottom: 1.5px solid var(--cream-border);
+  }
+  .section-intro { font-size: 0.84rem; color: var(--ink-muted); font-family: 'Noto Sans JP', sans-serif; margin-bottom: 1rem; line-height: 1.7; }
+  .account-card {
+    background: var(--white); border: 1.5px solid var(--cream-border);
+    border-radius: 12px; padding: 1.25rem 1.5rem;
+  }
+  .account-row { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; border-bottom: 1px solid var(--cream-border); font-size: 0.88rem; }
+  .account-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .account-row-label { color: var(--ink-muted); font-family: 'Noto Sans JP', sans-serif; }
+  .account-row-value { font-weight: 700; color: var(--ink); }
+
+  /* ── PLAN CARDS ── */
+  .plan-cards { display: flex; flex-direction: column; gap: 0.75rem; }
+  .plan-card {
+    background: var(--white); border: 2px solid var(--cream-border);
+    border-radius: 14px; padding: 1.1rem 1.3rem;
+    cursor: pointer; transition: border-color 0.15s, box-shadow 0.15s;
+    display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+  }
+  .plan-card:hover { border-color: var(--terra); }
+  .plan-card.selected { border-color: var(--terra); background: var(--terra-pale); box-shadow: 0 0 0 3px rgba(192,74,42,0.12); }
+  .plan-card-name { font-weight: 800; font-size: 0.95rem; color: var(--ink); margin-bottom: 0.15rem; }
+  .plan-card-detail { font-size: 0.78rem; color: var(--ink-muted); font-family: 'Noto Sans JP', sans-serif; }
+  .plan-card-price { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; color: var(--terra); white-space: nowrap; letter-spacing: 0.02em; }
+  .plan-card-price span { font-size: 0.65rem; font-family: 'Nunito', sans-serif; color: var(--ink-muted); display: block; text-align: right; letter-spacing: 0; }
+
+  /* ── BUTTONS ── */
+  .btn-primary {
+    width: 100%; font-family: 'Nunito', sans-serif; font-size: 0.9rem; font-weight: 800;
+    color: var(--white); background: var(--terra); border: none;
+    border-radius: 10px; padding: 0.85rem; cursor: pointer; margin-top: 1rem;
+    transition: opacity 0.15s;
+  }
+  .btn-primary:hover { opacity: 0.9; }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+  .btn-outline {
+    width: 100%; font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 700;
+    color: var(--ink-muted); background: transparent;
+    border: 1.5px solid var(--cream-border); border-radius: 10px;
+    padding: 0.8rem; cursor: pointer; transition: all 0.15s;
+  }
+  .btn-outline:hover { border-color: var(--terra); color: var(--terra); background: var(--terra-pale); }
+  .btn-link {
+    display: inline-block; font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 700;
+    color: var(--ink-muted); text-decoration: underline; background: none; border: none; cursor: pointer;
+    margin-top: 0.5rem;
+  }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 200;
+    background: rgba(26,26,26,0.5);
+    align-items: center; justify-content: center; padding: 1.25rem;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal-box { background: var(--white); border-radius: 14px; max-width: 380px; width: 100%; padding: 1.5rem; text-align: center; }
+  .modal-title { font-size: 1.05rem; font-weight: 800; color: var(--ink); margin-bottom: 0.6rem; }
+  .modal-text { font-size: 0.85rem; color: var(--ink-soft); font-family: 'Noto Sans JP', sans-serif; margin-bottom: 1.25rem; line-height: 1.7; }
+  .modal-buttons { display: flex; gap: 0.6rem; }
+  .modal-btn { flex: 1; font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 700; border-radius: 10px; padding: 0.7rem; cursor: pointer; border: none; }
+  .modal-btn-keep { background: var(--cream-dark); color: var(--ink); }
+  .modal-btn-confirm { background: var(--terra); color: var(--white); }
+  .modal-btn-confirm:disabled { opacity: 0.6; cursor: not-allowed; }
+
+  /* ── SUCCESS ── */
+  .success-wrap { min-height: calc(100vh - 64px); display: flex; align-items: center; justify-content: center; padding: 2rem 1.25rem; }
+  .success-card { background: var(--white); border: 1.5px solid var(--green-border); border-radius: 16px; padding: 2.25rem 1.75rem; text-align: center; max-width: 420px; }
+  .success-card .icon { font-size: 2.5rem; margin-bottom: 1rem; }
+  .success-card h2 { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; color: var(--green); letter-spacing: 0.04em; margin-bottom: 0.75rem; }
+  .success-card p { font-size: 0.88rem; color: var(--ink-soft); font-family: 'Noto Sans JP', sans-serif; line-height: 1.8; margin-bottom: 1.5rem; }
+
+  .error-banner {
+    background: #fdf0f0; border: 1px solid #f5c6c6; border-radius: 10px;
+    padding: 1rem 1.25rem; margin-bottom: 1rem;
+    font-family: 'Noto Sans JP', sans-serif; font-size: 0.85rem; color: #c0392b;
+  }
+
+  footer {
+    background: #1a1a1a; border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 2rem; text-align: center;
+    font-size: 0.78rem; color: rgba(255,255,255,0.3); letter-spacing: 0.04em;
+  }
+  footer span { color: var(--terra); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="https://jawschat.com/shark.gif" alt="JawsChat">
+    <div class="nav-logo-text">JAWS<span>Chat</span></div>
+  </a>
+  <div class="nav-right">
+    <a href="student-portal.html" class="nav-back">← マイページへ · Back to Portal</a>
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="ダークモード / Dark mode" aria-label="Toggle dark mode">🌙</button>
+  </div>
+</nav>
+
+<!-- LOADING -->
+<div class="screen active" id="screen-loading">
+  <div class="loading-wrap">
+    <div class="spinner"></div>
+    <p>読み込み中… / Loading…</p>
+  </div>
+</div>
+
+<!-- NEED LOGIN -->
+<div class="screen" id="screen-needlogin">
+  <div class="page-wrap">
+    <div class="needlogin-card">
+      <div class="icon">🔒</div>
+      <h2>ログインが必要です<br>Login Required</h2>
+      <p>マイページからログインしてください。<br>Please log in from your student portal first.</p>
+      <a href="student-portal.html" class="btn-primary" style="display:block; text-decoration:none; line-height:1.6; padding-top:0.9rem;">マイページへ · Go to Portal</a>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="screen" id="screen-main">
+  <div class="page-wrap">
+
+    <div id="errorBanner" class="error-banner" style="display:none;"></div>
+
+    <div class="page-title">プランを管理する</div>
+    <div class="page-sub">Manage Your Subscription</div>
+
+    <!-- Pending change banner -->
+    <div class="pending-banner" id="pendingBanner" style="display:none;">
+      <div class="icon">⏳</div>
+      <div>
+        <strong id="pendingBannerTitle">変更手続き中</strong>
+        <p id="pendingBannerText"></p>
+      </div>
+    </div>
+
+    <!-- Current plan -->
+    <div class="section">
+      <div class="section-title">現在のプラン · Current Plan</div>
+      <div class="account-card">
+        <div class="account-row">
+          <span class="account-row-label">プラン · Plan</span>
+          <span class="account-row-value" id="accPlan">—</span>
+        </div>
+        <div class="account-row">
+          <span class="account-row-label">残りクレジット · Credits Remaining</span>
+          <span class="account-row-value" id="accCredits">—</span>
+        </div>
+        <div class="account-row">
+          <span class="account-row-label">次回請求日 · Next Billing Date</span>
+          <span class="account-row-value" id="accBilling">—</span>
+        </div>
+        <div class="account-row">
+          <span class="account-row-label">ステータス · Status</span>
+          <span class="account-row-value" id="accStatus">—</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Change plan -->
+    <div class="section" id="changePlanSection">
+      <div class="section-title">プランを変更する · Change Plan</div>
+      <div class="section-intro" id="changePlanIntro"></div>
+      <div class="plan-cards" id="planCards"></div>
+      <button class="btn-primary" id="changePlanBtn" style="display:none;" onclick="openConfirm('change_plan')"></button>
+    </div>
+
+    <!-- Cancel -->
+    <div class="section" id="cancelSection">
+      <div class="section-title">解約する · Cancel Subscription</div>
+      <div class="section-intro" id="cancelIntro"></div>
+      <button class="btn-outline" onclick="openConfirm('cancel')">解約をリクエストする · Request Cancellation</button>
+    </div>
+
+    <p style="font-size:0.8rem; color:var(--ink-muted); text-align:center; line-height:1.8;">
+      ご不明な点がございましたら、<a href="mailto:peter@jawschat.com" style="color:var(--terra); font-weight:700; text-decoration:none;">peter@jawschat.com</a> までご連絡ください。<br>
+      Questions? Reach out anytime at peter@jawschat.com
+    </p>
+
+  </div>
+</div>
+
+<!-- SUCCESS -->
+<div class="screen" id="screen-success">
+  <div class="success-wrap">
+    <div class="success-card">
+      <div class="icon">✅</div>
+      <h2 id="successTitle">リクエストを受け付けました</h2>
+      <p id="successText"></p>
+      <a href="student-portal.html" class="btn-primary" style="display:block; text-decoration:none; line-height:1.6; padding-top:0.9rem;">マイページへ戻る · Back to Portal</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  © 2026 JawsChat · <span>PTV</span> — Polmeartagami Ventures · jawschat.com
+</footer>
+
+<!-- CONFIRM MODAL -->
+<div class="modal-overlay" id="confirmModal">
+  <div class="modal-box">
+    <div class="modal-title" id="confirmTitle"></div>
+    <div class="modal-text" id="confirmText"></div>
+    <div class="modal-buttons">
+      <button class="modal-btn modal-btn-keep" onclick="closeConfirm()">戻る · Go Back</button>
+      <button class="modal-btn modal-btn-confirm" id="confirmBtn" onclick="submitRequest()">リクエストする · Confirm</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── CONFIG ──
+// Same Portal Data Fetch webhook the student portal already uses — keeps auth/data identical.
+const DATA_WEBHOOK = 'https://hook.eu1.make.com/3uxpu1otpmbd69lch4769c80n5hbzt1o';
+// NEW — create a "Subscription Change Request" Make scenario and paste its webhook URL here.
+// Today this scenario only needs to log the request + email Peter for manual processing.
+// Later, automating Stripe/Airtable updates happens entirely inside that scenario —
+// this page and its payload never need to change.
+const SUBSCRIPTION_REQUEST_WEBHOOK = 'https://hook.eu1.make.com/REPLACE_WITH_NEW_WEBHOOK_URL';
+const TOKEN_EXPIRY_DAYS = 30;
+
+const PLANS = [
+  { key: 'Super Light', jp: 'スーパーライト', price: 5000,  credits: 2,  cap: 3  },
+  { key: 'Light',       jp: 'ライト',         price: 9000,  credits: 4,  cap: 6  },
+  { key: 'Regular',     jp: 'レギュラー',      price: 15000, credits: 8,  cap: 12 },
+  { key: 'Intensive',   jp: 'インテンシブ',    price: 20400, credits: 12, cap: 18 }
+];
+
+// ── THEME (shared with portal via localStorage) ──
+const THEME_KEY = 'jawschat_theme';
+function applyTheme(theme) {
+  if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+  else document.documentElement.removeAttribute('data-theme');
+  const btn = document.getElementById('themeToggle');
+  if (btn) {
+    btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+    btn.title = theme === 'dark' ? 'ライトモード / Light mode' : 'ダークモード / Dark mode';
+  }
+}
+function toggleTheme() {
+  const cur = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+  const next = cur === 'dark' ? 'light' : 'dark';
+  localStorage.setItem(THEME_KEY, next);
+  applyTheme(next);
+}
+applyTheme(localStorage.getItem(THEME_KEY) || 'light');
+
+// ── STATE ──
+let studentData = null;
+let selectedPlan = null;
+let pendingAction = null; // 'change_plan' | 'cancel'
+
+// ── INIT ──
+window.addEventListener('DOMContentLoaded', async () => {
+  const params = new URLSearchParams(window.location.search);
+  const urlToken = params.get('token');
+
+  if (urlToken) {
+    await loadWithToken(urlToken);
+    window.history.replaceState({}, '', window.location.pathname);
+    return;
+  }
+
+  const stored = localStorage.getItem('jawschat_token');
+  const expiry = localStorage.getItem('jawschat_token_expiry');
+  if (stored && expiry && new Date() < new Date(expiry)) {
+    await loadWithToken(stored);
+  } else {
+    showScreen('needlogin');
+  }
+});
+
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + name).classList.add('active');
+  window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+}
+
+async function loadWithToken(token) {
+  showScreen('loading');
+  try {
+    const res = await fetch(DATA_WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token })
+    });
+    if (!res.ok) { showScreen('needlogin'); return; }
+    const data = await res.json();
+    if (!data.id) { showScreen('needlogin'); return; }
+
+    const localExpiry = new Date();
+    localExpiry.setDate(localExpiry.getDate() + TOKEN_EXPIRY_DAYS);
+    localStorage.setItem('jawschat_token', token);
+    localStorage.setItem('jawschat_token_expiry', localExpiry.toISOString());
+
+    studentData = data;
+    studentData._token = token;
+    render(data);
+  } catch (err) {
+    console.error(err);
+    showScreen('needlogin');
+  }
+}
+
+// ── RENDER ──
+function render(data) {
+  const cap = { 'Trial': 1, 'Super Light': 3, 'Light': 6, 'Regular': 12, 'Intensive': 18 }[data.plan] || 12;
+  document.getElementById('accPlan').textContent = data.plan || '—';
+  document.getElementById('accCredits').textContent = `${data.credits ?? '—'} / ${cap}`;
+  document.getElementById('accStatus').textContent = data.status || '—';
+
+  const billingDate = data.billing ? new Date(data.billing) : null;
+  const billingStr = billingDate
+    ? billingDate.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' })
+    : '—';
+  document.getElementById('accBilling').textContent = billingStr;
+
+  // Graceful pending-change support — only shows once "Pending Change" is wired into
+  // the Portal Data Fetch scenario in Airtable. Until then this simply stays hidden.
+  const pending = data.pendingChange;
+  if (pending) {
+    document.getElementById('pendingBanner').style.display = 'flex';
+    if (pending === 'Cancel') {
+      document.getElementById('pendingBannerTitle').textContent = '解約手続き中 · Cancellation Pending';
+      document.getElementById('pendingBannerText').innerHTML =
+        `${billingStr} に解約されます。それまでクレジットはご利用いただけます。<br>Your subscription will end on ${billingStr}. Credits remain usable until then.`;
+    } else {
+      document.getElementById('pendingBannerTitle').textContent = 'プラン変更手続き中 · Plan Change Pending';
+      document.getElementById('pendingBannerText').innerHTML =
+        `${billingStr} に「${pending}」プランへ変更されます。<br>Your plan will change to ${pending} on ${billingStr}.`;
+    }
+    document.getElementById('changePlanSection').style.display = 'none';
+    document.getElementById('cancelSection').style.display = 'none';
+  } else {
+    document.getElementById('pendingBanner').style.display = 'none';
+    document.getElementById('changePlanSection').style.display = 'block';
+    document.getElementById('cancelSection').style.display = 'block';
+    document.getElementById('changePlanIntro').innerHTML =
+      `変更は次回請求日（${billingStr}）から反映されます。それまでは現在のプランのままです。<br>Changes take effect on your next billing date (${billingStr}). Your current plan stays active until then.`;
+    document.getElementById('cancelIntro').innerHTML =
+      `解約をリクエストすると、次回請求日（${billingStr}）でプランが終了します。それまでクレジットは引き続きご利用いただけます。<br>Cancelling ends your subscription on your next billing date (${billingStr}). Credits remain usable until then.`;
+    renderPlanCards(data.plan);
+  }
+
+  showScreen('main');
+}
+
+function renderPlanCards(currentPlan) {
+  const wrap = document.getElementById('planCards');
+  wrap.innerHTML = '';
+  selectedPlan = null;
+  document.getElementById('changePlanBtn').style.display = 'none';
+
+  PLANS.filter(p => p.key !== currentPlan).forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'plan-card';
+    card.id = 'plan-' + p.key.replace(/\s+/g, '');
+    card.onclick = () => selectPlan(p.key);
+    card.innerHTML = `
+      <div>
+        <div class="plan-card-name">${p.jp} · ${p.key}</div>
+        <div class="plan-card-detail">月${p.credits}回 · 上限${p.cap} / ${p.credits}/mo · cap ${p.cap}</div>
+      </div>
+      <div class="plan-card-price">¥${p.price.toLocaleString()}<span>/ 月 mo</span></div>
+    `;
+    wrap.appendChild(card);
+  });
+}
+
+function selectPlan(planKey) {
+  selectedPlan = planKey;
+  document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById('plan-' + planKey.replace(/\s+/g, '')).classList.add('selected');
+
+  const plan = PLANS.find(p => p.key === planKey);
+  const btn = document.getElementById('changePlanBtn');
+  btn.style.display = 'block';
+  btn.textContent = `「${plan.jp}」への変更をリクエストする · Request Change to ${plan.key}`;
+}
+
+// ── CONFIRM MODAL ──
+function openConfirm(action) {
+  pendingAction = action;
+  const billingStr = document.getElementById('accBilling').textContent;
+
+  if (action === 'change_plan') {
+    if (!selectedPlan) return;
+    const plan = PLANS.find(p => p.key === selectedPlan);
+    document.getElementById('confirmTitle').textContent = 'プラン変更をリクエストしますか？';
+    document.getElementById('confirmText').innerHTML =
+      `現在のプランから「${plan.jp}」プランへの変更をリクエストします。${billingStr} から新しいプランが適用されます。<br><br>` +
+      `Request a change to the ${plan.key} plan. This takes effect on ${billingStr}.`;
+  } else {
+    document.getElementById('confirmTitle').textContent = '解約をリクエストしますか？';
+    document.getElementById('confirmText').innerHTML =
+      `解約をリクエストします。${billingStr} まではこのまま現在のプランをご利用いただけます。<br><br>` +
+      `Request cancellation. Your current plan stays active until ${billingStr}.`;
+  }
+
+  document.getElementById('confirmBtn').disabled = false;
+  document.getElementById('confirmBtn').textContent = 'リクエストする · Confirm';
+  document.getElementById('confirmModal').classList.add('active');
+}
+
+function closeConfirm() {
+  pendingAction = null;
+  document.getElementById('confirmModal').classList.remove('active');
+}
+
+async function submitRequest() {
+  const btn = document.getElementById('confirmBtn');
+  btn.disabled = true;
+  btn.textContent = '送信中… / Sending…';
+
+  const billingStr = document.getElementById('accBilling').textContent;
+  const payload = {
+    token: studentData._token,
+    action: pendingAction,
+    currentPlan: studentData.plan,
+    targetPlan: pendingAction === 'change_plan' ? selectedPlan : null
+  };
+
+  try {
+    const res = await fetch(SUBSCRIPTION_REQUEST_WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) throw new Error('Request failed');
+
+    document.getElementById('confirmModal').classList.remove('active');
+
+    if (pendingAction === 'change_plan') {
+      const plan = PLANS.find(p => p.key === selectedPlan);
+      document.getElementById('successTitle').textContent = 'プラン変更リクエストを受け付けました';
+      document.getElementById('successText').innerHTML =
+        `${billingStr} から「${plan.jp}」プランに変更されます。確認のご連絡をいたします。<br><br>` +
+        `Your plan will change to ${plan.key} on ${billingStr}. We'll follow up to confirm.`;
+    } else {
+      document.getElementById('successTitle').textContent = '解約リクエストを受け付けました';
+      document.getElementById('successText').innerHTML =
+        `${billingStr} に解約されます。それまでクレジットはご利用いただけます。確認のご連絡をいたします。<br><br>` +
+        `Your subscription will end on ${billingStr}. Credits remain usable until then. We'll follow up to confirm.`;
+    }
+    showScreen('success');
+  } catch (err) {
+    console.error(err);
+    btn.disabled = false;
+    btn.textContent = 'リクエストする · Confirm';
+    const banner = document.getElementById('errorBanner');
+    banner.textContent = 'エラーが発生しました。もう一度お試しいただくか、peter@jawschat.com までご連絡ください。 / Something went wrong — please try again or email peter@jawschat.com.';
+    banner.style.display = 'block';
+  }
+}
+</script>
+
+</body>
+</html>
