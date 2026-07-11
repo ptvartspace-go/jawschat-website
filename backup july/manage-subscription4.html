@@ -399,8 +399,6 @@ function perLessonYen(p) { return Math.round(p.price / p.credits); }
 // Shared bilingual info-panel markup — identical copy in both trial and subscriber views.
 function planInfoPanelHTML(p) {
   const perLesson = perLessonYen(p).toLocaleString();
-  const leftover = Math.floor(p.credits / 2) + 1;   // 50% + 1 of the monthly allowance
-  const afterAdd = leftover + p.credits;            // new credits added on billing date
   return `
     <div class="plan-info-row">
       <strong>月${p.credits}クレジット</strong> — 25分レッスン${p.credits}回分です。連続で2枠予約すれば、55分レッスン1回としても使えます（2クレジット）。目安は${p.freqJp}。
@@ -411,12 +409,8 @@ function planInfoPanelHTML(p) {
       <span class="plan-info-en"><strong>¥${perLesson} per lesson</strong> (per 25-min lesson).</span>
     </div>
     <div class="plan-info-row">
-      <strong>繰り越しと上限</strong> — 使わなかったクレジットは翌月に繰り越せます（最大${p.cap}クレジットまで）。ただし上限を超えて溜まった分はなくなります。
-      <span class="plan-info-en"><strong>Rollover &amp; cap</strong> — unused credits carry over to the next month, up to ${p.cap}. Anything that builds up beyond the cap is lost, though.</span>
-    </div>
-    <div class="plan-info-row">
-      <strong>例</strong> — ${leftover}クレジット残っている状態で請求日を迎えると、新しい${p.credits}クレジットが加わって${afterAdd}になります。上限は${p.cap}なので、${p.cap}まで受け取り、超えた1クレジットだけがなくなります。
-      <span class="plan-info-en"><strong>Example</strong> — say you have ${leftover} credits left on your billing date. Your ${p.credits} new credits are added, bringing you to ${afterAdd}. The cap is ${p.cap}, so you keep ${p.cap} and just that 1 extra credit drops off.</span>
+      <strong>繰り越しと上限</strong> — 使わなかったクレジットは翌月に繰り越されます（最大${p.cap}クレジットまで）。毎月の請求日に新しいクレジットが加わり、上限を超えた分だけがなくなります。サブスクが続いている限り繰り越されるので、払った分が無駄になりません。
+      <span class="plan-info-en"><strong>Rollover &amp; cap</strong> — unused credits roll into the next month, up to ${p.cap}. On each billing date new credits are added, and only what's above the cap drops off. Credits keep rolling for as long as your plan is active — nothing you've paid for goes to waste.</span>
     </div>`;
 }
 
