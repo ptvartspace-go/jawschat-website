@@ -361,10 +361,10 @@ const SUBSCRIPTION_REQUEST_WEBHOOK = 'https://hook.eu1.make.com/axtgaz4o3rc4rrzy
 const TOKEN_EXPIRY_DAYS = 30;
 
 const PLANS = [
-  { key: 'Super Light', jp: 'スーパーライト', price: 5000,  credits: 2,  cap: 3,  buyUrl: 'https://buy.stripe.com/dRm4gA8Aie7Ag0x6XU1RC0b' },
-  { key: 'Light',       jp: 'ライト',         price: 9000,  credits: 4,  cap: 6,  buyUrl: 'https://buy.stripe.com/7sYbJ2eYG6F84hP2HE1RC0d' },
-  { key: 'Regular',     jp: 'レギュラー',      price: 15000, credits: 8,  cap: 12, buyUrl: 'https://buy.stripe.com/6oU3cwg2K8Ng7u15TQ1RC0a' },
-  { key: 'Intensive',   jp: 'インテンシブ',    price: 20400, credits: 12, cap: 18, buyUrl: 'https://buy.stripe.com/eVq28s2bU6F8eWtgyu1RC0e' }
+  { key: 'Super Light', jp: 'スーパーライト', price: 5000,  credits: 2,  cap: 3  },
+  { key: 'Light',       jp: 'ライト',         price: 9000,  credits: 4,  cap: 6  },
+  { key: 'Regular',     jp: 'レギュラー',      price: 15000, credits: 8,  cap: 12 },
+  { key: 'Intensive',   jp: 'インテンシブ',    price: 20400, credits: 12, cap: 18 }
 ];
 
 // ── THEME (shared with portal via localStorage) ──
@@ -472,17 +472,6 @@ function render(data) {
     }
     document.getElementById('changePlanSection').style.display = 'none';
     document.getElementById('cancelSection').style.display = 'none';
-  } else if (data.plan === 'Trial') {
-    // ── TRIAL VIEW ──
-    // A trial student has no subscription: no plan to "stay active", nothing to cancel.
-    // The plan cards become fresh-purchase links to the same buy.stripe.com checkouts
-    // used on the main site, and the cancel section is hidden entirely.
-    document.getElementById('pendingBanner').style.display = 'none';
-    document.getElementById('changePlanSection').style.display = 'block';
-    document.getElementById('cancelSection').style.display = 'none';
-    document.getElementById('changePlanIntro').innerHTML =
-      `体験レッスンはいかがでしたか？続けてご受講いただける場合は、以下のプランからお選びください。<br>Enjoyed your trial lesson? Choose a plan below to keep going.`;
-    renderTrialPlanCards();
   } else {
     document.getElementById('pendingBanner').style.display = 'none';
     document.getElementById('changePlanSection').style.display = 'block';
@@ -495,31 +484,6 @@ function render(data) {
   }
 
   showScreen('main');
-}
-
-// Trial view: all four plans as fresh-purchase links (no change-plan modal).
-// Opens the same buy.stripe.com checkout the main site uses, in a new tab.
-function renderTrialPlanCards() {
-  const wrap = document.getElementById('planCards');
-  wrap.innerHTML = '';
-  document.getElementById('changePlanBtn').style.display = 'none';
-
-  PLANS.forEach(p => {
-    const card = document.createElement('a');
-    card.className = 'plan-card';
-    card.href = p.buyUrl;
-    card.target = '_blank';
-    card.rel = 'noopener';
-    card.style.textDecoration = 'none';
-    card.innerHTML = `
-      <div>
-        <div class="plan-card-name">${p.jp} · ${p.key}</div>
-        <div class="plan-card-detail">月${p.credits}回 · 上限${p.cap} / ${p.credits}/mo · cap ${p.cap}</div>
-      </div>
-      <div class="plan-card-price">¥${p.price.toLocaleString()}<span>/ 月 mo</span></div>
-    `;
-    wrap.appendChild(card);
-  });
 }
 
 function renderPlanCards(currentPlan) {
