@@ -165,32 +165,6 @@
   .plan-card-price { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; color: var(--terra); white-space: nowrap; letter-spacing: 0.02em; }
   .plan-card-price span { font-size: 0.65rem; font-family: 'Nunito', sans-serif; color: var(--ink-muted); display: block; text-align: right; letter-spacing: 0; }
 
-  /* Right-hand cluster: price + "?" toggle stacked/aligned */
-  .plan-card-right { display: flex; align-items: center; gap: 0.7rem; }
-  .plan-info-toggle {
-    flex-shrink: 0; width: 26px; height: 26px; border-radius: 999px;
-    border: 1.5px solid var(--cream-border); background: transparent;
-    color: var(--ink-muted); font-family: 'Nunito', sans-serif; font-weight: 800;
-    font-size: 0.85rem; line-height: 1; cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    transition: all 0.15s;
-  }
-  .plan-info-toggle:hover { border-color: var(--terra); color: var(--terra); background: var(--terra-pale); }
-  .plan-info-toggle.open { border-color: var(--terra); color: var(--white); background: var(--terra); }
-
-  /* Expandable info panel below a card */
-  .plan-info-panel {
-    display: none;
-    background: var(--cream-dark); border: 1.5px solid var(--cream-border);
-    border-radius: 12px; padding: 1rem 1.15rem; margin-top: -0.15rem;
-    font-family: 'Noto Sans JP', sans-serif;
-  }
-  .plan-info-panel.open { display: block; }
-  .plan-info-row { font-size: 0.8rem; color: var(--ink-soft); line-height: 1.7; margin-bottom: 0.7rem; }
-  .plan-info-row:last-child { margin-bottom: 0; }
-  .plan-info-row strong { color: var(--terra); font-weight: 700; }
-  .plan-info-en { color: var(--ink-muted); display: block; margin-top: 0.1rem; }
-
   /* ── BUTTONS ── */
   .btn-primary {
     width: 100%; font-family: 'Nunito', sans-serif; font-size: 0.9rem; font-weight: 800;
@@ -387,44 +361,11 @@ const SUBSCRIPTION_REQUEST_WEBHOOK = 'https://hook.eu1.make.com/axtgaz4o3rc4rrzy
 const TOKEN_EXPIRY_DAYS = 30;
 
 const PLANS = [
-  { key: 'Super Light', jp: 'スーパーライト', price: 5000,  credits: 2,  cap: 3,  freqJp: '隔週ペース',   freqEn: 'about twice a month', buyUrl: 'https://buy.stripe.com/dRm4gA8Aie7Ag0x6XU1RC0b' },
-  { key: 'Light',       jp: 'ライト',         price: 9000,  credits: 4,  cap: 6,  freqJp: '週1回ペース',   freqEn: 'about once a week',   buyUrl: 'https://buy.stripe.com/7sYbJ2eYG6F84hP2HE1RC0d' },
-  { key: 'Regular',     jp: 'レギュラー',      price: 15000, credits: 8,  cap: 12, freqJp: '週2回ペース',   freqEn: 'about twice a week',  buyUrl: 'https://buy.stripe.com/6oU3cwg2K8Ng7u15TQ1RC0a' },
-  { key: 'Intensive',   jp: 'インテンシブ',    price: 20400, credits: 12, cap: 18, freqJp: '週3回ペース',   freqEn: 'about three times a week', buyUrl: 'https://buy.stripe.com/eVq28s2bU6F8eWtgyu1RC0e' }
+  { key: 'Super Light', jp: 'スーパーライト', price: 5000,  credits: 2,  cap: 3,  buyUrl: 'https://buy.stripe.com/dRm4gA8Aie7Ag0x6XU1RC0b' },
+  { key: 'Light',       jp: 'ライト',         price: 9000,  credits: 4,  cap: 6,  buyUrl: 'https://buy.stripe.com/7sYbJ2eYG6F84hP2HE1RC0d' },
+  { key: 'Regular',     jp: 'レギュラー',      price: 15000, credits: 8,  cap: 12, buyUrl: 'https://buy.stripe.com/6oU3cwg2K8Ng7u15TQ1RC0a' },
+  { key: 'Intensive',   jp: 'インテンシブ',    price: 20400, credits: 12, cap: 18, buyUrl: 'https://buy.stripe.com/eVq28s2bU6F8eWtgyu1RC0e' }
 ];
-
-// Per-lesson value (1 credit = one 25-min lesson). Rounds cleanly for all four plans.
-function perLessonYen(p) { return Math.round(p.price / p.credits); }
-
-// Shared bilingual info-panel markup — identical copy in both trial and subscriber views.
-function planInfoPanelHTML(p) {
-  const perLesson = perLessonYen(p).toLocaleString();
-  return `
-    <div class="plan-info-row">
-      <strong>月${p.credits}クレジット</strong> — 25分レッスン${p.credits}回分です。連続で2枠予約すれば、55分レッスン1回としても使えます（2クレジット）。目安は${p.freqJp}。
-      <span class="plan-info-en"><strong>${p.credits} credits / month</strong> — that's ${p.credits} × 25-min lessons, or book two slots back-to-back for one 55-min lesson (2 credits). Roughly ${p.freqEn}.</span>
-    </div>
-    <div class="plan-info-row">
-      <strong>1レッスンあたり ¥${perLesson}</strong>（25分レッスン）
-      <span class="plan-info-en"><strong>¥${perLesson} per lesson</strong> (per 25-min lesson).</span>
-    </div>
-    <div class="plan-info-row">
-      <strong>繰り越しと上限</strong> — 使わなかったクレジットは翌月に繰り越されます（最大${p.cap}クレジットまで）。毎月の請求日に新しいクレジットが加わり、上限を超えた分だけがなくなります。サブスクが続いている限り繰り越されるので、払った分が無駄になりません。
-      <span class="plan-info-en"><strong>Rollover &amp; cap</strong> — unused credits roll into the next month, up to ${p.cap}. On each billing date new credits are added, and only what's above the cap drops off. Credits keep rolling for as long as your plan is active — nothing you've paid for goes to waste.</span>
-    </div>`;
-}
-
-// Toggle a single card's info panel without triggering the card's own click
-// (checkout on trial cards, plan-select on subscriber cards).
-function togglePlanInfo(ev, key) {
-  ev.stopPropagation();
-  ev.preventDefault();
-  const safe = key.replace(/\s+/g, '');
-  const panel = document.getElementById('info-' + safe);
-  const btn = document.getElementById('infobtn-' + safe);
-  const isOpen = panel.classList.toggle('open');
-  btn.classList.toggle('open', isOpen);
-}
 
 // ── THEME (shared with portal via localStorage) ──
 const THEME_KEY = 'jawschat_theme';
@@ -564,22 +505,20 @@ function renderTrialPlanCards() {
   document.getElementById('changePlanBtn').style.display = 'none';
 
   PLANS.forEach(p => {
-    const safe = p.key.replace(/\s+/g, '');
-    const container = document.createElement('div');
-    container.innerHTML = `
-      <a class="plan-card" href="${p.buyUrl}" target="_blank" rel="noopener" style="text-decoration:none;">
-        <div>
-          <div class="plan-card-name">${p.jp} · ${p.key}</div>
-          <div class="plan-card-detail">月${p.credits}回 · 上限${p.cap} / ${p.credits}/mo · cap ${p.cap}</div>
-        </div>
-        <div class="plan-card-right">
-          <div class="plan-card-price">¥${p.price.toLocaleString()}<span>/ 月 mo</span></div>
-          <button class="plan-info-toggle" id="infobtn-${safe}" title="プランの詳細 / Plan details" aria-label="Plan details" onclick="togglePlanInfo(event, '${p.key}')">?</button>
-        </div>
-      </a>
-      <div class="plan-info-panel" id="info-${safe}">${planInfoPanelHTML(p)}</div>
+    const card = document.createElement('a');
+    card.className = 'plan-card';
+    card.href = p.buyUrl;
+    card.target = '_blank';
+    card.rel = 'noopener';
+    card.style.textDecoration = 'none';
+    card.innerHTML = `
+      <div>
+        <div class="plan-card-name">${p.jp} · ${p.key}</div>
+        <div class="plan-card-detail">月${p.credits}回 · 上限${p.cap} / ${p.credits}/mo · cap ${p.cap}</div>
+      </div>
+      <div class="plan-card-price">¥${p.price.toLocaleString()}<span>/ 月 mo</span></div>
     `;
-    while (container.firstChild) wrap.appendChild(container.firstChild);
+    wrap.appendChild(card);
   });
 }
 
@@ -590,23 +529,18 @@ function renderPlanCards(currentPlan) {
   document.getElementById('changePlanBtn').style.display = 'none';
 
   PLANS.filter(p => p.key !== currentPlan).forEach(p => {
-    const safe = p.key.replace(/\s+/g, '');
-    const container = document.createElement('div');
-    container.innerHTML = `
-      <div class="plan-card" id="plan-${safe}">
-        <div>
-          <div class="plan-card-name">${p.jp} · ${p.key}</div>
-          <div class="plan-card-detail">月${p.credits}回 · 上限${p.cap} / ${p.credits}/mo · cap ${p.cap}</div>
-        </div>
-        <div class="plan-card-right">
-          <div class="plan-card-price">¥${p.price.toLocaleString()}<span>/ 月 mo</span></div>
-          <button class="plan-info-toggle" id="infobtn-${safe}" title="プランの詳細 / Plan details" aria-label="Plan details" onclick="togglePlanInfo(event, '${p.key}')">?</button>
-        </div>
+    const card = document.createElement('div');
+    card.className = 'plan-card';
+    card.id = 'plan-' + p.key.replace(/\s+/g, '');
+    card.onclick = () => selectPlan(p.key);
+    card.innerHTML = `
+      <div>
+        <div class="plan-card-name">${p.jp} · ${p.key}</div>
+        <div class="plan-card-detail">月${p.credits}回 · 上限${p.cap} / ${p.credits}/mo · cap ${p.cap}</div>
       </div>
-      <div class="plan-info-panel" id="info-${safe}">${planInfoPanelHTML(p)}</div>
+      <div class="plan-card-price">¥${p.price.toLocaleString()}<span>/ 月 mo</span></div>
     `;
-    container.querySelector('.plan-card').onclick = () => selectPlan(p.key);
-    while (container.firstChild) wrap.appendChild(container.firstChild);
+    wrap.appendChild(card);
   });
 }
 
