@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JawsChat — ご登録ありがとうございます / Welcome to JawsChat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@300;400;500;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #f5f0e6;
+    --cream-dark: #ede8dc;
+    --cream-border: #ddd8cc;
+    --ink: #1a1a1a;
+    --ink-soft: #444;
+    --ink-muted: #888;
+    --terra: #c04a2a;
+    --terra-light: #d4603e;
+    --terra-pale: #f9ede9;
+    --white: #ffffff;
+    --green: #2a7a4f;
+    --green-pale: #edf7f2;
+    --green-border: #b3ddc8;
+    --shadow: 0 4px 40px rgba(100,80,60,0.10);
+    --shadow-lg: 0 12px 60px rgba(100,80,60,0.16);
+  }
+
+  body {
+    font-family: 'Nunito', 'Noto Sans JP', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(245,240,230,0.98);
+    border-bottom: 1px solid var(--cream-border);
+    padding: 0 2rem;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+  .nav-logo img {
+    width: 36px; height: 36px;
+    object-fit: contain;
+    border-radius: 8px;
+  }
+  .nav-logo-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.06em;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .nav-logo-text span { color: var(--terra); }
+  .nav-links { display: none; }
+  @media (min-width: 640px) {
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 1.5rem;
+      align-items: center;
+    }
+    .nav-links a {
+      text-decoration: none;
+      font-size: 0.85rem;
+      color: var(--ink-soft);
+      transition: color 0.2s;
+      letter-spacing: 0.03em;
+    }
+    .nav-links a:hover { color: var(--terra); }
+    .nav-cta {
+      background: var(--terra);
+      color: var(--white) !important;
+      padding: 0.45rem 1.1rem;
+      border-radius: 6px;
+      font-weight: 700;
+      transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--terra-light) !important; }
+  }
+
+  /* ─── LAYOUT ─── */
+  .page-wrap {
+    padding-top: 64px;
+    min-height: 100vh;
+  }
+
+  /* ─── HERO ─── */
+  .hero-band {
+    background: var(--terra);
+    padding: 3rem 1.5rem 2.5rem;
+    text-align: center;
+  }
+  .hero-shark {
+    width: 72px; height: 72px;
+    border-radius: 16px;
+    margin: 0 auto 1rem;
+    display: block;
+  }
+  .hero-band h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2rem, 6vw, 3rem);
+    color: var(--white);
+    letter-spacing: 0.06em;
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+  }
+  .hero-band .sub {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.8);
+    letter-spacing: 0.04em;
+  }
+
+  /* ─── CONTENT ─── */
+  .content {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 2.5rem 1.25rem 4rem;
+  }
+
+  /* ─── SUCCESS CARD ─── */
+  .success-card {
+    background: var(--green-pale);
+    border: 1.5px solid var(--green-border);
+    border-radius: 16px;
+    padding: 1.5rem 1.75rem;
+    margin-bottom: 2rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  .success-icon {
+    font-size: 1.8rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .success-card h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 0.05em;
+    color: var(--green);
+    margin-bottom: 0.25rem;
+  }
+  .success-card p {
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    line-height: 1.75;
+  }
+
+  /* ─── SECTION LABEL ─── */
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  /* ─── PATH CARDS ─── */
+  .path-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .path-card {
+    background: var(--white);
+    border: 2px solid var(--cream-border);
+    border-radius: 14px;
+    padding: 1.4rem 1.6rem;
+    cursor: pointer;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    display: flex;
+    gap: 1.1rem;
+    align-items: flex-start;
+  }
+  .path-card:hover {
+    border-color: var(--terra);
+    box-shadow: 0 0 0 3px rgba(192,74,42,0.1);
+  }
+  .path-card.selected {
+    border-color: var(--terra);
+    background: var(--terra-pale);
+    box-shadow: 0 0 0 3px rgba(192,74,42,0.12);
+  }
+  .path-icon { font-size: 1.6rem; flex-shrink: 0; margin-top: 2px; }
+  .path-card h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 0.2rem;
+  }
+  .path-card p {
+    font-size: 0.85rem;
+    color: var(--ink-muted);
+    line-height: 1.6;
+  }
+
+  /* ─── ACTION PANEL ─── */
+  .action-panel {
+    display: none;
+    background: var(--white);
+    border: 1.5px solid var(--cream-border);
+    border-radius: 14px;
+    padding: 1.5rem 1.75rem;
+    margin-top: -0.25rem;
+    margin-bottom: 1rem;
+  }
+  .action-panel.visible { display: block; }
+  .action-panel p {
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    line-height: 1.8;
+    margin-bottom: 1.25rem;
+  }
+  .action-panel p:last-of-type { margin-bottom: 0; }
+
+  /* ─── BUTTONS ─── */
+  .btn {
+    display: inline-block;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.05rem;
+    letter-spacing: 0.07em;
+    text-decoration: none;
+    border-radius: 10px;
+    padding: 0.8rem 1.6rem;
+    transition: opacity 0.15s, background 0.15s;
+    text-align: center;
+  }
+  .btn-primary {
+    background: var(--terra);
+    color: var(--white);
+    width: 100%;
+    margin-top: 1.25rem;
+    display: block;
+  }
+  .btn-primary:hover { opacity: 0.88; }
+  .btn-secondary {
+    background: var(--ink);
+    color: var(--white);
+    width: 100%;
+    margin-top: 0.75rem;
+    display: block;
+  }
+  .btn-secondary:hover { opacity: 0.85; }
+
+  /* ─── DIVIDER ─── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--cream-border);
+    margin: 2rem 0;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--ink);
+    color: rgba(255,255,255,0.55);
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.03em;
+  }
+  footer span { color: var(--terra); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="https://jawschat.com" class="nav-logo">
+    <img src="https://jawschat.com/shark.gif" alt="JawsChat">
+    <div class="nav-logo-text">JAWS<span>Chat</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="https://jawschat.com" class="nav-cta">← ホームへ / Home</a></li>
+  </ul>
+</nav>
+
+<div class="page-wrap">
+
+  <!-- Hero -->
+  <div class="hero-band">
+    <img src="https://jawschat.com/shark.gif" alt="JawsChat" class="hero-shark">
+    <h1>ご登録ありがとうございます！<br>Welcome to JawsChat!</h1>
+    <p class="sub">プランのご購入が完了しました · Your plan is confirmed</p>
+  </div>
+
+  <div class="content">
+
+    <!-- Success banner -->
+    <div class="success-card">
+      <div class="success-icon">✅</div>
+      <div>
+        <h2>お支払い完了 · Payment Received</h2>
+        <p>ご購入ありがとうございます。クレジットはアカウントに追加されます。<br>
+        Thank you for joining! Your credits have been added to your account. You're ready to start booking lessons.</p>
+      </div>
+    </div>
+
+    <!-- Path selector -->
+    <div class="section-label">次のステップ · Next Step</div>
+    <p style="font-size:0.9rem; color:var(--ink-soft); margin-bottom:1.25rem; line-height:1.75;">
+      体験レッスンの受講経験はありますか？<br>
+      <span style="font-size:0.85rem; color:var(--ink-muted);">Have you already done a trial lesson with JawsChat?</span>
+    </p>
+
+    <div class="path-cards">
+
+      <!-- Path A: Has done trial -->
+      <div class="path-card" id="cardYes" onclick="selectPath('yes')">
+        <div class="path-icon">🎉</div>
+        <div>
+          <h3>はい、体験レッスンを受けました · Yes, I've had a trial</h3>
+          <p>ポータルからすぐにレッスンを予約できます。<br>I already have a portal account — take me there to book.</p>
+        </div>
+      </div>
+
+      <!-- Path B: No trial yet -->
+      <div class="path-card" id="cardNo" onclick="selectPath('no')">
+        <div class="path-icon">📋</div>
+        <div>
+          <h3>いいえ、体験はまだです · No, I haven't done a trial</h3>
+          <p>まず簡単なアンケートにご回答ください。<br>I'm new — I need to fill in the intake form first.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Action: Has done trial -->
+    <div class="action-panel" id="panelYes">
+      <p>
+        ポータルにログインして、レッスンをご予約ください。ご登録時に送信されたマジックリンクからアクセスできます。<br><br>
+        Log in to your student portal to book your first lesson. Use the magic link sent to your email when you registered.
+      </p>
+      <a href="https://jawschat.com/student-portal.html" class="btn btn-primary">🎓 ポータルへ · Go to My Portal</a>
+    </div>
+
+    <!-- Action: No trial yet -->
+    <div class="action-panel" id="panelNo">
+      <p>
+        レッスンを最大限に活用していただくために、簡単なアンケートへのご回答をお願いします（2〜3分）。目標、学習スタイル、興味などを教えてください。<br><br>
+        To make the most of your first lesson, please fill in a short intake form (2–3 minutes). It helps your teacher prepare something genuinely useful for you.
+      </p>
+      <a href="https://jawschat.com/trial-intake.html" class="btn btn-primary">📋 アンケートに回答する · Fill In the Intake Form</a>
+      <p style="font-size:0.8rem; color:var(--ink-muted); margin-top:1rem; margin-bottom:0;">
+        アンケートを送信後、ポータルへのアクセス方法をメールでご案内します。<br>
+        After submitting the form, we'll be in touch with your portal access details.
+      </p>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Help text -->
+    <p style="font-size:0.85rem; color:var(--ink-muted); line-height:1.8; text-align:center;">
+      ご不明な点がございましたら、お気軽にご連絡ください。<br>
+      If you have any questions, please get in touch at
+      <a href="mailto:peter@jawschat.com" style="color:var(--terra); text-decoration:none; font-weight:700;">peter@jawschat.com</a>
+    </p>
+
+  </div><!-- /content -->
+</div><!-- /page-wrap -->
+
+<footer>
+  © 2026 JawsChat · <span>PTV</span> — Polmeartagami Ventures · jawschat.com
+</footer>
+
+<script>
+function selectPath(choice) {
+  // Update card states
+  document.getElementById('cardYes').classList.toggle('selected', choice === 'yes');
+  document.getElementById('cardNo').classList.toggle('selected', choice === 'no');
+
+  // Show/hide panels
+  document.getElementById('panelYes').classList.toggle('visible', choice === 'yes');
+  document.getElementById('panelNo').classList.toggle('visible', choice === 'no');
+
+  // Scroll to panel
+  setTimeout(() => {
+    const panel = document.getElementById(choice === 'yes' ? 'panelYes' : 'panelNo');
+    panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }, 50);
+}
+</script>
+
+</body>
+</html>
