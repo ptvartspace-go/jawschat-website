@@ -438,81 +438,6 @@
     .credits-hero { flex-direction: column; align-items: flex-start; }
     .credits-number { font-size: 3rem; }
   }
-
-  /* ── GUIDED TOUR ── */
-  .tour-launch-btn {
-    display: inline-flex; align-items: center; gap: 0.35rem;
-    background: none; border: 1.5px solid var(--cream-border);
-    border-radius: 999px; padding: 0.35rem 0.8rem; height: 38px;
-    cursor: pointer; color: var(--ink); flex-shrink: 0;
-    font-family: 'Nunito', 'Noto Sans JP', sans-serif;
-    font-size: 0.8rem; font-weight: 700; letter-spacing: 0.04em;
-    line-height: 1; transition: all 0.15s;
-  }
-  .tour-launch-btn:hover { border-color: var(--terra); color: var(--terra); }
-  .tour-launch-icon { font-size: 0.95rem; }
-  @media (max-width: 420px) {
-    .tour-launch-label { display: none; }
-    .tour-launch-btn { padding: 0; width: 38px; justify-content: center; }
-  }
-
-  #tourOverlay { position: fixed; inset: 0; z-index: 9000; display: none; }
-  #tourOverlay.active { display: block; }
-
-  /* Spotlight: a transparent box with a huge shadow that dims everything else */
-  #tourHighlight {
-    position: fixed; top: 0; left: 0; width: 0; height: 0;
-    border-radius: 12px; pointer-events: none;
-    box-shadow: 0 0 0 9999px rgba(20,15,10,0.68);
-    outline: 2.5px solid var(--terra); outline-offset: 2px;
-    transition: top 0.28s cubic-bezier(.4,0,.2,1), left 0.28s cubic-bezier(.4,0,.2,1),
-                width 0.28s cubic-bezier(.4,0,.2,1), height 0.28s cubic-bezier(.4,0,.2,1);
-  }
-  #tourHighlight.no-target {
-    box-shadow: 0 0 0 9999px rgba(20,15,10,0.68);
-    outline: none; width: 0; height: 0; top: 50%; left: 50%;
-  }
-
-  .tour-tooltip {
-    position: fixed; z-index: 9100;
-    width: min(340px, calc(100vw - 2rem));
-    background: var(--white);
-    border: 1.5px solid var(--cream-border);
-    border-radius: 16px;
-    box-shadow: 0 12px 48px rgba(0,0,0,0.28);
-    padding: 1.25rem 1.35rem 1.1rem;
-    color: var(--ink);
-  }
-  .tour-tooltip-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; }
-  .tour-tooltip-title {
-    font-family: 'Bebas Neue', sans-serif; font-size: 1.35rem;
-    letter-spacing: 0.04em; color: var(--terra); line-height: 1.1;
-  }
-  .tour-skip {
-    background: none; border: none; cursor: pointer;
-    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em;
-    color: var(--ink-muted); padding: 0.2rem 0.3rem; flex-shrink: 0;
-  }
-  .tour-skip:hover { color: var(--terra); }
-  .tour-tooltip-body {
-    font-family: 'Noto Sans JP', 'Nunito', sans-serif;
-    font-size: 0.86rem; line-height: 1.7; color: var(--ink-soft);
-    margin-bottom: 1rem;
-  }
-  .tour-tooltip-body .en { display: block; margin-top: 0.35rem; color: var(--ink-muted); font-size: 0.82rem; }
-  .tour-tooltip-foot { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; }
-  .tour-progress { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; color: var(--ink-muted); }
-  .tour-btns { display: flex; gap: 0.5rem; }
-  .tour-btn {
-    font-family: 'Nunito', 'Noto Sans JP', sans-serif;
-    font-size: 0.8rem; font-weight: 700; letter-spacing: 0.03em;
-    border-radius: 9px; padding: 0.5rem 0.9rem; cursor: pointer;
-    border: 1.5px solid transparent; transition: all 0.15s; line-height: 1;
-  }
-  .tour-btn-back { background: var(--cream-dark); color: var(--ink); }
-  .tour-btn-back:hover { border-color: var(--cream-border); }
-  .tour-btn-next { background: var(--terra); color: #fff; }
-  .tour-btn-next:hover { background: var(--terra-light); }
 </style>
 </head>
 <body>
@@ -522,8 +447,7 @@
     <img src="https://jawschat.com/shark.gif" alt="JawsChat">
     <div class="nav-logo-text">JAWS<span>Chat</span></div>
   </a>
-  <div style="display:flex; align-items:center; gap:0.75rem;">
-    <button class="tour-launch-btn" id="tourBtn" onclick="startTour()" title="使い方ガイド / Guide" aria-label="使い方ガイド · Guide"><span class="tour-launch-icon">❓</span><span class="tour-launch-label">ガイド</span></button>
+  <div style="display:flex; align-items:center; gap:1rem;">
     <div class="nav-label">マイページ · My Portal</div>
     <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="ダークモード / Dark mode" aria-label="Toggle dark mode">🌙</button>
   </div>
@@ -594,8 +518,8 @@
       Regular plan (8/month, cap 12): 5 credits remaining at renewal → 8 added = 13 → 1 forfeited → balance 12.</div>
       <hr class="ci-divider">
       <div style="margin-bottom:0.6rem;"><strong>有効期限 · Expiry</strong><br>
-      更新日は毎月同じ日です（例：10日にご登録の場合、次回は翌月の10日）。プランをご利用中は、未使用のクレジットは有効期限なく翌月へ繰り越されます（上記の上限まで）。プランを解約された場合も、現在の期間が終了する次回更新日までクレジットをご利用いただけます。<br>
-      Your billing date falls on the same day each month (for example, if you start on the 10th, your next date is the 10th of the following month). While your plan is active, unused credits roll over each month with no expiry (up to the cap above). If you cancel, your credits stay usable until your next billing date, when the current period ends.</div>
+      クレジットは最終お支払い日から30日間有効です。プランを解約した場合も、現在の30日間が終了するまで使用できます。<br>
+      Credits expire 30 days after your last payment. If you cancel, your credits remain valid until the end of your current 30-day period.</div>
       <hr class="ci-divider">
       <div><strong>キャンセルについて · Cancellations</strong><br>
       レッスン開始24時間以上前のキャンセル → クレジット返還。24時間以内のキャンセルまたは無断欠席 → クレジットは消費されます。<br>
@@ -871,7 +795,6 @@ async function loadPortal(data, lessons) {
   renderBooking(data.credits || 0);
 
   showScreen('portal');
-  maybeAutoStartTour();
 }
 
 // ── DATE / DISPLAY HELPERS ──
@@ -1277,193 +1200,6 @@ function openCalModal(calLink) {
     window.open('https://cal.com/' + calLink + qs, '_blank');
   }
 }
-
-// ── GUIDED TOUR ──
-const TOUR_SEEN_KEY = 'jawschat_tour_seen';
-let tourIndex = 0;
-let autoTourChecked = false;
-
-const TOUR_STEPS = [
-  {
-    target: '#tourBtn',
-    title: 'ようこそ · Welcome',
-    ja: 'JawsChatマイページへようこそ！30秒でおもな使い方をご案内します。このガイドは、ヘッダーのこのボタンからいつでも見られます。',
-    en: 'Welcome to your JawsChat portal! Here\u2019s a quick 30-second tour. You can reopen this guide anytime from this button in the header.'
-  },
-  {
-    target: '.credits-hero',
-    title: '残りクレジット · Your Credits',
-    ja: 'ここに残りのクレジットが表示されます。1クレジット＝25分レッスン1回です。',
-    en: 'This shows your remaining credits. 1 credit = one 25-minute lesson.'
-  },
-  {
-    target: '.credits-info-btn',
-    title: 'くわしく · Details',
-    ja: 'この「？」をタップすると、繰り越し・上限・キャンセルなどの詳しい説明が開きます。',
-    en: 'Tap this \u201c?\u201d anytime for the details \u2014 rollover, caps, and cancellation rules.'
-  },
-  {
-    target: '#expiryBadge',
-    title: '有効期限 · Billing & Expiry',
-    ja: '次回の更新日とクレジットの有効期限がここに表示されます。（体験プランの場合は、ご登録後に表示されます。）',
-    en: 'Your next billing date and credit expiry show here. (On the trial plan, this appears once you subscribe.)'
-  },
-  {
-    target: '#nextLesson', expand: '.section',
-    title: 'レッスンの予定 · Your Lessons',
-    ja: '予約したレッスンはここに表示されます。次のレッスンと、その後の予定が並びます。',
-    en: 'Your booked lessons appear here \u2014 your next lesson, followed by any upcoming ones.'
-  },
-  {
-    target: '#bookingSection', expand: '.section',
-    title: '予約する · Book a Lesson',
-    ja: 'レッスンの予約はここから。ボタンをタップして、カレンダーから空いている時間を選ぶだけです。ダブルレッスン（55分）も選べます。',
-    en: 'Book your lessons here. Tap the button and pick an open time from the calendar. You can also book a double (55-min) lesson.'
-  },
-  {
-    target: '.past-toggle', expand: '.section',
-    title: '過去のレッスン · Past Lessons',
-    ja: 'ここをタップすると、これまでのレッスン、先生からのメモ、録画リンクを見返せます。',
-    en: 'Tap here to look back over past lessons, your teacher\u2019s notes, and recording links.'
-  },
-  {
-    target: '#accountPlan', expand: '.section',
-    title: 'アカウント · Account',
-    ja: '現在のプラン、更新日、ステータスはここで確認できます。',
-    en: 'Your current plan, billing date, and status are all here.'
-  },
-  {
-    target: '#themeToggle',
-    title: 'ダークモード · Night Mode',
-    ja: '目が疲れるときは、このボタンでダークモードに切り替えられます。もう一度タップすると元に戻ります。',
-    en: 'Tap this to switch to night mode when it\u2019s easier on the eyes \u2014 tap again to switch back.'
-  },
-  {
-    target: null,
-    title: '準備完了！· All Set!',
-    ja: 'これで準備完了です。ガイドはいつでもヘッダーのボタンから見られます。楽しいレッスンを！',
-    en: 'You\u2019re all set! Reopen this guide anytime from the header button. Enjoy your lessons!'
-  }
-];
-
-function maybeAutoStartTour() {
-  if (autoTourChecked) return;
-  autoTourChecked = true;
-  try {
-    if (!localStorage.getItem(TOUR_SEEN_KEY)) startTour();
-  } catch (e) { /* localStorage blocked — skip auto-launch */ }
-}
-
-function startTour() {
-  try { localStorage.setItem(TOUR_SEEN_KEY, '1'); } catch (e) {}
-  tourIndex = 0;
-  document.getElementById('tourOverlay').classList.add('active');
-  window.addEventListener('scroll', positionTourStep, { passive: true });
-  window.addEventListener('resize', positionTourStep);
-  document.addEventListener('keydown', tourKeyHandler);
-  renderTourStep();
-}
-
-function endTour() {
-  document.getElementById('tourOverlay').classList.remove('active');
-  window.removeEventListener('scroll', positionTourStep);
-  window.removeEventListener('resize', positionTourStep);
-  document.removeEventListener('keydown', tourKeyHandler);
-}
-
-function tourKeyHandler(e) {
-  if (e.key === 'Escape') endTour();
-  else if (e.key === 'ArrowRight') tourNext();
-  else if (e.key === 'ArrowLeft') tourPrev();
-}
-
-function tourNext() {
-  if (tourIndex >= TOUR_STEPS.length - 1) { endTour(); return; }
-  tourIndex++;
-  renderTourStep();
-}
-
-function tourPrev() {
-  if (tourIndex <= 0) return;
-  tourIndex--;
-  renderTourStep();
-}
-
-function renderTourStep() {
-  const step = TOUR_STEPS[tourIndex];
-  document.getElementById('tourTitle').textContent = step.title;
-  document.getElementById('tourBody').innerHTML =
-    step.ja + '<span class="en">' + step.en + '</span>';
-  document.getElementById('tourProgress').textContent =
-    (tourIndex + 1) + ' / ' + TOUR_STEPS.length;
-
-  const backBtn = document.getElementById('tourBack');
-  const nextBtn = document.getElementById('tourNext');
-  backBtn.style.visibility = (tourIndex === 0) ? 'hidden' : 'visible';
-  nextBtn.textContent = (tourIndex === TOUR_STEPS.length - 1) ? 'はじめる · Done' : '次へ · Next';
-
-  // Bring the target into view first, then position the spotlight + tooltip.
-  const el = resolveTourTarget(step);
-  if (el) {
-    el.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'auto' });
-  }
-  // rAF lets layout settle after the scroll before we measure.
-  requestAnimationFrame(positionTourStep);
-}
-
-function resolveTourTarget(step) {
-  if (!step || !step.target) return null;
-  let el = document.querySelector(step.target);
-  if (el && step.expand) el = el.closest(step.expand) || el;
-  return el;
-}
-
-function positionTourStep() {
-  const step = TOUR_STEPS[tourIndex];
-  const hl = document.getElementById('tourHighlight');
-  const tt = document.getElementById('tourTooltip');
-  const el = resolveTourTarget(step);
-  const vw = window.innerWidth, vh = window.innerHeight;
-  const ttRect = tt.getBoundingClientRect();
-  const margin = 12;
-
-  if (!el) {
-    // Centered card, no spotlight cut-out.
-    hl.classList.add('no-target');
-    tt.style.top = Math.max(margin, (vh - ttRect.height) / 2) + 'px';
-    tt.style.left = Math.max(margin, (vw - ttRect.width) / 2) + 'px';
-    return;
-  }
-
-  hl.classList.remove('no-target');
-  const r = el.getBoundingClientRect();
-  const pad = 8;
-  hl.style.top = (r.top - pad) + 'px';
-  hl.style.left = (r.left - pad) + 'px';
-  hl.style.width = (r.width + pad * 2) + 'px';
-  hl.style.height = (r.height + pad * 2) + 'px';
-
-  // Prefer placing the tooltip below the target; flip above if there isn't room.
-  const spaceBelow = vh - r.bottom;
-  const spaceAbove = r.top;
-  let top;
-  if (spaceBelow >= ttRect.height + margin + pad) {
-    top = r.bottom + pad + margin;
-  } else if (spaceAbove >= ttRect.height + margin + pad) {
-    top = r.top - pad - margin - ttRect.height;
-  } else {
-    // Neither fits cleanly — pin to whichever side has more room, clamped.
-    top = (spaceBelow >= spaceAbove) ? (r.bottom + pad + margin) : (r.top - pad - margin - ttRect.height);
-  }
-  top = Math.min(Math.max(margin, top), vh - ttRect.height - margin);
-
-  // Horizontally centre on the target, clamped to the viewport.
-  let left = r.left + r.width / 2 - ttRect.width / 2;
-  left = Math.min(Math.max(margin, left), vw - ttRect.width - margin);
-
-  tt.style.top = top + 'px';
-  tt.style.left = left + 'px';
-}
 </script>
 <!-- CANCEL CONFIRM MODAL -->
 <div class="modal-overlay" id="cancelModal">
@@ -1473,25 +1209,6 @@ function positionTourStep() {
     <div class="modal-buttons">
       <button class="modal-btn modal-btn-keep" onclick="closeCancelModal()">レッスンを残す · Keep lesson</button>
       <button class="modal-btn modal-btn-confirm" id="cancelConfirmBtn" onclick="confirmLessonCancel()">キャンセルする · Cancel it</button>
-    </div>
-  </div>
-</div>
-
-<!-- GUIDED TOUR -->
-<div id="tourOverlay">
-  <div id="tourHighlight"></div>
-  <div class="tour-tooltip" id="tourTooltip">
-    <div class="tour-tooltip-top">
-      <div class="tour-tooltip-title" id="tourTitle"></div>
-      <button class="tour-skip" onclick="endTour()">スキップ · Skip ✕</button>
-    </div>
-    <div class="tour-tooltip-body" id="tourBody"></div>
-    <div class="tour-tooltip-foot">
-      <span class="tour-progress" id="tourProgress"></span>
-      <div class="tour-btns">
-        <button class="tour-btn tour-btn-back" id="tourBack" onclick="tourPrev()">もどる · Back</button>
-        <button class="tour-btn tour-btn-next" id="tourNext" onclick="tourNext()">次へ · Next</button>
-      </div>
     </div>
   </div>
 </div>
