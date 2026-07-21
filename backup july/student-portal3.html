@@ -848,20 +848,15 @@ async function loadPortal(data, lessons) {
     dotsEl.appendChild(dot);
   }
 
-  // Expiry / renewal badge
+  // Expiry
   const billing = data.billing;
   if (billing) {
     const billingDate = new Date(billing);
     const today = new Date();
     const diffDays = Math.ceil((billingDate - today) / (1000 * 60 * 60 * 24));
     const dateStr = billingDate.toLocaleDateString('ja-JP', { month: 'long', day: 'numeric' });
-    // A pending cancellation (or a cancelled status) means credits END on the billing
-    // date. Otherwise the billing date is when credits RENEW, so frame it that way.
-    const statusText = (data.status || '').toLowerCase();
-    const ending = data.pendingChange === 'Cancel' || statusText.indexOf('cancel') !== -1;
-    document.getElementById('expiryText').innerHTML = ending
-      ? `ご利用期限：${dateStr}（あと${diffDays}日）<br>Credits valid until: ${dateStr} (in ${diffDays} days)`
-      : `クレジット更新日：${dateStr}（あと${diffDays}日）<br>Credits renew: ${dateStr} (in ${diffDays} days)`;
+    document.getElementById('expiryText').innerHTML =
+      `クレジット有効期限：${dateStr}（あと${diffDays}日）<br>Credits expire: ${dateStr} (in ${diffDays} days)`;
   }
 
   // Account
