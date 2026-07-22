@@ -99,24 +99,6 @@
 
   .nav-cta:hover { background: var(--terra-light) !important; color: var(--white) !important; }
 
-  .nav-links .nav-portal {
-    background: #2d7a5f;
-    color: var(--white) !important;
-    font-size: 0.78rem;
-    font-weight: 700;
-    padding: 0.5rem 1.1rem;
-    border-radius: 100px;
-    letter-spacing: 0.03em;
-    white-space: nowrap;
-    transition: background 0.2s !important;
-  }
-
-  .nav-links .nav-portal:hover { background: #236650; color: var(--white) !important; }
-
-  .nav-links .nav-cta { white-space: nowrap; }
-
-  .lbl-sm { display: none; }
-
   /* ── HERO ── */
   .hero {
     min-height: 100vh;
@@ -868,23 +850,7 @@
     .steps { grid-template-columns: 1fr 1fr; }
     .pricing-grid { grid-template-columns: 1fr; max-width: 380px; margin: 1rem auto 0; }
     .pricing-tabs { width: 100%; justify-content: center; }
-
-    /* Keep the action buttons reachable on mobile — hide only the
-       section anchors, which are reachable by scrolling anyway. */
-    nav { padding: 0 1rem; }
-    .nav-links { gap: 0.5rem; }
-    .nav-link-item { display: none; }
-    .nav-links .nav-portal, .nav-links .nav-cta { padding: 0.6rem 0.9rem; font-size: 0.75rem; }
-  }
-
-  @media (max-width: 480px) {
-    .lbl-lg { display: none; }
-    .lbl-sm { display: inline; }
-  }
-
-  @media (max-width: 400px) {
-    .nav-logo-text { display: none; }
-    .nav-links .nav-portal, .nav-links .nav-cta { padding: 0.6rem 0.8rem; }
+    .nav-links { display: none; }
   }
 
   /* ── TOPICS ── */
@@ -991,88 +957,6 @@
   @media (max-width: 768px) {
     .topics-grid { grid-template-columns: 1fr 1fr; }
   }
-
-  /* ── TESTIMONIALS ── */
-  .testimonials { background: var(--cream-dark); }
-
-  .testimonial-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-    gap: 1.2rem;
-    margin-top: 2rem;
-  }
-
-  .testimonial-card {
-    background: var(--white);
-    border: 1px solid var(--cream-border);
-    border-top: 3px solid var(--terra);
-    border-radius: 16px;
-    padding: 1.7rem 1.6rem 1.4rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-
-  .testimonial-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow);
-  }
-
-  .testimonial-card.featured {
-    background: var(--ink);
-    border-color: var(--ink);
-    border-top-color: var(--terra);
-    grid-column: span 2;
-  }
-
-  .quote-jp {
-    font-family: 'Noto Sans JP', sans-serif;
-    font-size: 0.92rem;
-    font-weight: 500;
-    line-height: 1.9;
-    color: var(--ink);
-  }
-
-  .quote-en {
-    font-size: 0.85rem;
-    line-height: 1.75;
-    color: var(--ink-soft);
-  }
-
-  .testimonial-card.featured .quote-jp {
-    font-size: 1rem;
-    line-height: 2;
-    color: var(--white);
-  }
-
-  .testimonial-card.featured .quote-en {
-    color: rgba(255,255,255,0.55);
-    line-height: 1.8;
-  }
-
-  .quote-attrib {
-    margin-top: auto;
-    padding-top: 0.9rem;
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    color: var(--terra);
-  }
-
-  .testimonial-card.featured .quote-attrib { color: #e0a58f; }
-
-  .testimonial-note {
-    margin-top: 1.8rem;
-    text-align: center;
-    font-size: 0.8rem;
-    color: var(--ink-muted);
-    letter-spacing: 0.03em;
-  }
-
-  @media (max-width: 700px) {
-    .testimonial-card.featured { grid-column: span 1; }
-  }
 </style>
 </head>
 <body>
@@ -1084,14 +968,13 @@
     <div class="nav-logo-text">JAWS<span>Chat</span></div>
   </a>
   <ul class="nav-links">
-    <li class="nav-link-item"><a href="#about">講師について</a></li>
-    <li class="nav-link-item"><a href="#how">レッスンの流れ</a></li>
-    <li class="nav-link-item"><a href="#topics">レッスン内容</a></li>
-    <li class="nav-link-item"><a href="#pricing">料金</a></li>
-    <li class="nav-link-item"><a href="#testimonials">生徒さんの声</a></li>
-    <li class="nav-link-item"><a href="#faq">よくある質問</a></li>
-    <li><a href="student-portal.html" class="nav-portal"><span class="lbl-lg">マイページ · My Portal</span><span class="lbl-sm">マイページ</span></a></li>
-    <li><a href="#pricing" class="nav-cta"><span class="lbl-lg">体験レッスン予約</span><span class="lbl-sm">体験予約</span></a></li>
+    <li><a href="#about">講師について</a></li>
+    <li><a href="#how">レッスンの流れ</a></li>
+    <li><a href="#topics">レッスン内容</a></li>
+    <li><a href="#pricing">料金</a></li>
+    <li><a href="#faq">よくある質問</a></li>
+    <li><a href="student-portal.html" style="font-size:0.78rem;font-weight:700;background:#2d7a5f;color:#ffffff;padding:0.4rem 1rem;border-radius:20px;text-decoration:none;letter-spacing:0.03em;transition:background 0.2s;" onmouseover="this.style.background='#236650'" onmouseout="this.style.background='#2d7a5f'">マイページ · My Portal</a></li>
+    <li><a href="#pricing" class="nav-cta">体験レッスン予約</a></li>
   </ul>
 </nav>
 
@@ -1413,51 +1296,6 @@
       Unused lessons roll over monthly · Cancel before next billing date · No hidden fees
     </p>
 
-  </div>
-</section>
-
-<!-- TESTIMONIALS -->
-<section class="testimonials" id="testimonials">
-  <div class="section-inner">
-    <div class="section-label">生徒さんの声 · What Students Say</div>
-    <div class="section-title-jp">実際のレッスンから</div>
-    <div class="section-title-en">In students' own words</div>
-
-    <div class="testimonial-grid">
-
-      <div class="testimonial-card featured">
-        <p class="quote-jp">「とても親切で丁寧な先生です。英語の持つ微妙なニュアンスの違いも教えてもらえて助かっています。発音も聞き取りやすいのでレッスンがスムーズです。」</p>
-        <p class="quote-en">&ldquo;A very kind and attentive teacher. He even teaches me the subtle nuances that English carries — a real help. His pronunciation is easy to follow, too, so lessons run smoothly.&rdquo;</p>
-        <p class="quote-attrib">— Mikie · 🇯🇵 Japan</p>
-      </div>
-
-      <div class="testimonial-card">
-        <p class="quote-jp">「質問に丁寧に答えて説明してくれます。」</p>
-        <p class="quote-en">&ldquo;He answers my questions carefully and explains everything clearly.&rdquo;</p>
-        <p class="quote-attrib">— Tamachan · 🇯🇵 Japan</p>
-      </div>
-
-      <div class="testimonial-card">
-        <p class="quote-en">&ldquo;He is so friendly and patient. I always enjoy talking to him. He listens to me carefully and corrects my mistakes. It's so helpful.&rdquo;</p>
-        <p class="quote-attrib">— Maru · 🇯🇵 Japan</p>
-      </div>
-
-      <div class="testimonial-card">
-        <p class="quote-en">&ldquo;He's a very good listener and gets students telling their own stories very naturally. I feel so comfortable asking questions about English and anything else — it feels more like a cozy conversation.&rdquo;</p>
-        <p class="quote-attrib">— Mihye · 🇰🇷 South Korea</p>
-      </div>
-
-      <div class="testimonial-card">
-        <p class="quote-en">&ldquo;I've gained the full confidence to speak English — the most important treasure when you're learning something new.&rdquo;</p>
-        <p class="quote-attrib">— Lou · 🇨🇳 China</p>
-      </div>
-
-    </div>
-
-    <p class="testimonial-note">
-      日本・韓国・中国の生徒さんからいただいた実際のレビューです。<br>
-      Real reviews from students in Japan, South Korea and China.
-    </p>
   </div>
 </section>
 
