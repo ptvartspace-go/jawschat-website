@@ -312,16 +312,13 @@
   .hero-tagline {
     display: flex;
     align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    text-align: center;
     gap: 8px;
     font-size: 0.82rem;
     font-weight: 600;
     color: var(--ink-muted);
   }
 
-  .hero-tagline .jp-tag { color: var(--terra); font-family: 'Noto Sans JP', sans-serif; font-size: 0.88rem; white-space: nowrap; }
+  .hero-tagline .jp-tag { color: var(--terra); font-family: 'Noto Sans JP', sans-serif; font-size: 0.88rem; }
   .hero-tagline .dot { color: var(--cream-border); }
   .hero-tagline .en-tag { text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.72rem; }
 
@@ -868,11 +865,6 @@
     .hero-wordmark { font-size: 2.8rem; }
     .about-grid { grid-template-columns: 1fr; }
     .about-photo-wrap { flex-direction: row; align-items: center; gap: 1.5rem; }
-    /* The photo was a fixed 240px inside a row flex — wider than the
-       viewport once padding and the name block were added. */
-    .about-photo { width: 150px; height: 180px; }
-    .about-grid, .about-content, .about-photo-wrap { min-width: 0; }
-    .about-text-jp, .about-text-en, .credential { overflow-wrap: break-word; }
     .steps { grid-template-columns: 1fr 1fr; }
     .pricing-grid { grid-template-columns: 1fr; max-width: 380px; margin: 1rem auto 0; }
     .pricing-tabs { width: 100%; justify-content: center; }
@@ -886,10 +878,6 @@
   }
 
   @media (max-width: 480px) {
-    section { padding: 4rem 1.25rem; }
-    .hero { padding: 90px 1.25rem 60px; }
-    .hero-logo-block { padding: 1.75rem 1.25rem; }
-    .about-photo { width: 120px; height: 145px; }
     .lbl-lg { display: none; }
     .lbl-sm { display: inline; }
   }
