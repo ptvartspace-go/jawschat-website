@@ -113,22 +113,6 @@
 
   .nav-links .nav-portal:hover { background: #236650; color: var(--white) !important; }
 
-  /* Free-materials pill — outline, so it reads as secondary to the two action pills */
-  .nav-links .nav-learn {
-    background: transparent;
-    color: var(--ink) !important;
-    font-size: 0.78rem;
-    font-weight: 700;
-    padding: 0.45rem 1.1rem;
-    border: 1.5px solid var(--ink);
-    border-radius: 100px;
-    letter-spacing: 0.03em;
-    white-space: nowrap;
-    transition: border-color 0.2s, color 0.2s !important;
-  }
-
-  .nav-links .nav-learn:hover { border-color: var(--terra); color: var(--terra) !important; }
-
   .nav-links .nav-cta { white-space: nowrap; }
 
   .lbl-sm { display: none; }
@@ -893,9 +877,12 @@
     .pricing-grid { grid-template-columns: 1fr; max-width: 380px; margin: 1rem auto 0; }
     .pricing-tabs { width: 100%; justify-content: center; }
 
+    /* Keep the action buttons reachable on mobile — hide only the
+       section anchors, which are reachable by scrolling anyway. */
     nav { padding: 0 1rem; }
     .nav-links { gap: 0.5rem; }
-    .nav-links .nav-learn, .nav-links .nav-portal, .nav-links .nav-cta { padding: 0.6rem 0.9rem; font-size: 0.75rem; }
+    .nav-link-item { display: none; }
+    .nav-links .nav-portal, .nav-links .nav-cta { padding: 0.6rem 0.9rem; font-size: 0.75rem; }
   }
 
   @media (max-width: 480px) {
@@ -909,7 +896,7 @@
 
   @media (max-width: 400px) {
     .nav-logo-text { display: none; }
-    .nav-links .nav-learn, .nav-links .nav-portal, .nav-links .nav-cta { padding: 0.6rem 0.7rem; font-size: 0.7rem; }
+    .nav-links .nav-portal, .nav-links .nav-cta { padding: 0.6rem 0.8rem; }
   }
 
   /* ── TOPICS ── */
@@ -1109,7 +1096,12 @@
     <div class="nav-logo-text">JAWS<span>Chat</span></div>
   </a>
   <ul class="nav-links">
-    <li><a href="learn/eiken/pre1/speaking/" class="nav-learn"><span class="lbl-lg">無料英検教材</span><span class="lbl-sm">無料教材</span></a></li>
+    <li class="nav-link-item"><a href="#about">講師について</a></li>
+    <li class="nav-link-item"><a href="#how">レッスンの流れ</a></li>
+    <li class="nav-link-item"><a href="#topics">レッスン内容</a></li>
+    <li class="nav-link-item"><a href="#pricing">料金</a></li>
+    <li class="nav-link-item"><a href="#testimonials">生徒さんの声</a></li>
+    <li class="nav-link-item"><a href="#faq">よくある質問</a></li>
     <li><a href="student-portal.html" class="nav-portal"><span class="lbl-lg">マイページ · My Portal</span><span class="lbl-sm">マイページ</span></a></li>
     <li><a href="#pricing" class="nav-cta"><span class="lbl-lg">体験レッスン予約</span><span class="lbl-sm">体験予約</span></a></li>
   </ul>

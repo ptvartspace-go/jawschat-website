@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>英検準1級 スピーキング練習ワークシート（無料） | JawsChat</title>
+<meta name="description" content="英検準1級 二次試験対策の無料ワークシート。4コマイラストのナレーション練習、模範解答、本番と同じ1分・2分タイマー付き。全8種類、登録不要ですぐ使えます。">
+<link rel="canonical" href="https://jawschat.com/learn/eiken/pre1/speaking/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="英検準1級 スピーキング練習ワークシート（無料） | JawsChat">
+<meta property="og:description" content="英検準1級 二次試験対策の無料ワークシート。ナレーション練習、模範解答、本番と同じタイマー付き。全8種類。">
+<meta property="og:url" content="https://jawschat.com/learn/eiken/pre1/speaking/">
+<meta property="og:image" content="https://jawschat.com/shark.gif">
+<meta property="og:site_name" content="JawsChat">
+<link rel="icon" href="https://jawschat.com/shark.gif">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Noto+Sans+JP:wght@300;400;500;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f5f0e6;
+    --cream-dark: #ede8dc;
+    --cream-border: #ddd8cc;
+    --ink: #1a1a1a;
+    --ink-soft: #444;
+    --ink-muted: #888;
+    --terra: #c04a2a;
+    --terra-light: #d4603e;
+    --terra-pale: #f9ede9;
+    --white: #ffffff;
+    --shadow: 0 4px 40px rgba(100,80,60,0.10);
+    --shadow-lg: 0 12px 60px rgba(100,80,60,0.16);
+    --radius: 12px;
+    --radius-lg: 16px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Nunito', 'Noto Sans JP', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--terra);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* ── GLOBAL NAV (matches jawschat.com) ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(245,240,230,0.98);
+    border-bottom: 1px solid var(--cream-border);
+    padding: 0 2rem;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-logo img { width: 36px; height: 36px; object-fit: contain; }
+  .nav-logo-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.06em;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .nav-logo-text span { color: var(--terra); }
+
+  .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+
+  .nav-links a {
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ink-soft);
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--terra); }
+
+  .nav-cta {
+    background: var(--terra);
+    color: var(--white) !important;
+    padding: 0.5rem 1.2rem;
+    border-radius: 100px;
+    white-space: nowrap;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--terra-light) !important; color: var(--white) !important; }
+
+  .nav-links .nav-portal {
+    background: #2d7a5f;
+    color: var(--white) !important;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 0.5rem 1.1rem;
+    border-radius: 100px;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+    transition: background 0.2s !important;
+  }
+  .nav-links .nav-portal:hover { background: #236650; color: var(--white) !important; }
+
+  /* Free-materials pill — outline, so it reads as secondary to the two action pills */
+  .nav-links .nav-learn {
+    background: transparent;
+    color: var(--ink) !important;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 0.45rem 1.1rem;
+    border: 1.5px solid var(--ink);
+    border-radius: 100px;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+    transition: border-color 0.2s, color 0.2s !important;
+  }
+  .nav-links .nav-learn:hover,
+  .nav-links .nav-learn.is-active {
+    border-color: var(--terra);
+    color: var(--terra) !important;
+  }
+
+  .lbl-sm { display: none; }
+
+  /* ── SECTION SUB-BAR ── */
+  .subbar {
+    position: fixed;
+    top: 64px; left: 0; right: 0;
+    z-index: 99;
+    height: 42px;
+    background: var(--cream-dark);
+    border-bottom: 1px solid var(--cream-border);
+    display: flex;
+    align-items: center;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .subbar::-webkit-scrollbar { display: none; }
+
+  .subbar-inner {
+    max-width: 940px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+  }
+
+  .crumb {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--ink-muted);
+    text-decoration: none;
+    letter-spacing: 0.03em;
+    transition: color 0.2s;
+  }
+  .crumb:hover { color: var(--terra); }
+  .crumb-sep { color: var(--cream-border); font-size: 0.7rem; }
+  .crumb-current { color: var(--ink); font-weight: 700; }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    background: var(--ink);
+    padding: 8.5rem 2rem 3.25rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header-inner { max-width: 940px; margin: 0 auto; position: relative; }
+
+  .header-kicker {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--terra);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .header-kicker::before {
+    content: '';
+    display: block;
+    width: 26px;
+    height: 2px;
+    background: var(--terra);
+  }
+
+  .header-title-jp {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: clamp(1.6rem, 4.5vw, 2.35rem);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.35;
+    margin-bottom: 0.35rem;
+  }
+
+  .header-title-en {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.2rem, 7vw, 3.4rem);
+    letter-spacing: 0.05em;
+    line-height: 1;
+    color: rgba(255,255,255,0.28);
+    margin-bottom: 1.25rem;
+  }
+
+  .header-sub {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.62);
+    max-width: 34rem;
+    line-height: 1.9;
+    margin-bottom: 1.75rem;
+  }
+
+  .header-badges { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  .hbadge {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 500;
+    padding: 5px 13px;
+    border-radius: 100px;
+    border: 1px solid;
+    letter-spacing: 0.04em;
+  }
+  .hbadge-terra { color: var(--terra-light); border-color: rgba(192,74,42,0.5); background: rgba(192,74,42,0.10); }
+  .hbadge-plain { color: rgba(255,255,255,0.6); border-color: rgba(255,255,255,0.18); background: rgba(255,255,255,0.04); }
+
+  /* ── HOW TO USE ── */
+  .howto {
+    background: #111;
+    border-top: 1px solid rgba(255,255,255,0.07);
+  }
+  .howto-inner {
+    max-width: 940px;
+    margin: 0 auto;
+    padding: 1.4rem 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 1.75rem;
+    align-items: flex-start;
+  }
+  .howto-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--terra);
+    white-space: nowrap;
+    padding-top: 4px;
+    flex-shrink: 0;
+  }
+  .howto-steps { display: flex; flex-wrap: wrap; gap: 0.6rem 1.6rem; list-style: none; }
+  .howto-steps li {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.6);
+    display: flex;
+    align-items: center;
+    gap: 9px;
+  }
+  .step-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 500;
+    width: 21px; height: 21px;
+    border-radius: 50%;
+    border: 1px solid rgba(192,74,42,0.6);
+    color: var(--terra-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* ── MAIN ── */
+  main { max-width: 940px; margin: 0 auto; padding: 3.25rem 2rem 4rem; }
+
+  .section-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--terra);
+    margin-bottom: 0.4rem;
+  }
+  .section-title-jp {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.4;
+    margin-bottom: 1.5rem;
+  }
+
+  /* ── WORKSHEET GRID ── */
+  .ws-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(265px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 4rem;
+  }
+
+  .ws-card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--cream-border);
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .ws-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+
+  .ws-bar { height: 5px; background: var(--terra); flex-shrink: 0; }
+
+  .ws-body {
+    padding: 1.15rem 1.35rem 1.25rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .ws-meta { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+
+  .ws-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--terra);
+    letter-spacing: 0.06em;
+  }
+
+  .ws-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    padding: 3px 9px;
+    border-radius: 100px;
+    background: var(--terra-pale);
+    color: var(--terra);
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+
+  .ws-title {
+    font-size: 1.02rem;
+    font-weight: 800;
+    color: var(--ink);
+    line-height: 1.35;
+  }
+
+  .ws-desc {
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+    line-height: 1.65;
+    flex: 1;
+  }
+
+  .ws-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.7rem 1.35rem;
+    border-top: 1px solid var(--cream-dark);
+    background: var(--cream);
+  }
+
+  .ws-open {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 500;
+    color: var(--terra);
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .ws-open svg { width: 13px; height: 13px; stroke: currentColor; stroke-width: 2; fill: none; }
+
+  .ws-feats { display: flex; gap: 5px; }
+  .feat {
+    width: 22px; height: 22px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.68rem;
+    background: var(--terra-pale);
+  }
+
+  /* Coming-soon card */
+  .ws-card.soon { opacity: 0.6; pointer-events: none; box-shadow: none; }
+  .ws-card.soon .ws-bar { background: var(--cream-border); }
+  .ws-card.soon .ws-title,
+  .ws-card.soon .ws-desc { color: var(--ink-muted); }
+  .ws-card.soon .ws-open { color: var(--ink-muted); }
+  .soon-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.05em;
+    color: var(--ink-muted);
+    background: var(--cream-dark);
+    border: 1px solid var(--cream-border);
+    border-radius: 100px;
+    padding: 3px 9px;
+    white-space: nowrap;
+  }
+
+  /* ── FORMAT REFERENCE ── */
+  .ref {
+    background: var(--ink);
+    border-radius: var(--radius-lg);
+    padding: 1.9rem 2rem;
+    margin-bottom: 3.5rem;
+  }
+  .ref-title {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 0.25rem;
+  }
+  .ref-title-en {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--terra-light);
+    margin-bottom: 1.4rem;
+  }
+  .ref-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
+    gap: 0.9rem;
+  }
+  .ref-item {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: var(--radius);
+    padding: 0.85rem 1rem;
+  }
+  .ref-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 5px;
+  }
+  .ref-value {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.9);
+    line-height: 1.55;
+  }
+  .ref-note {
+    display: block;
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.4);
+    margin-top: 2px;
+  }
+
+  /* ── TIPS ── */
+  .tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
+    gap: 0.9rem;
+    margin-bottom: 3.5rem;
+  }
+  .tip {
+    background: var(--white);
+    border: 1px solid var(--cream-border);
+    border-radius: var(--radius);
+    padding: 1.15rem 1.25rem;
+  }
+  .tip-icon { font-size: 1.2rem; display: block; margin-bottom: 0.55rem; }
+  .tip-title {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 0.3rem;
+  }
+  .tip-body { font-size: 0.8rem; color: var(--ink-soft); line-height: 1.7; }
+
+  /* ── CTA ── */
+  .cta {
+    background: var(--white);
+    border: 1px solid var(--cream-border);
+    border-left: 5px solid var(--terra);
+    border-radius: var(--radius-lg);
+    padding: 2rem 2.25rem;
+    box-shadow: var(--shadow);
+  }
+  .cta-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--terra);
+    margin-bottom: 0.6rem;
+  }
+  .cta-title {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.5;
+    margin-bottom: 0.6rem;
+  }
+  .cta-text {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 0.87rem;
+    color: var(--ink-soft);
+    line-height: 1.95;
+    max-width: 40rem;
+    margin-bottom: 1.4rem;
+  }
+  .cta-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
+
+  .btn-primary {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--terra);
+    color: var(--white);
+    text-decoration: none;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 0.75rem 1.6rem;
+    border-radius: 100px;
+    line-height: 1.35;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .btn-primary small { font-size: 0.68rem; font-weight: 400; opacity: 0.85; }
+  .btn-primary:hover { background: var(--terra-light); transform: translateY(-2px); }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    color: var(--ink);
+    text-decoration: none;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 0.75rem 1.5rem;
+    border: 1.5px solid var(--ink);
+    border-radius: 100px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--terra); color: var(--terra); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 2rem;
+    text-align: center;
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.04em;
+  }
+  footer span { color: var(--terra); }
+  footer a {
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    transition: color 0.2s;
+  }
+  footer a:hover { color: var(--terra); }
+  .footer-copy {
+    display: block;
+    margin-top: 1rem;
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.22);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 0 1rem; }
+    .nav-links { gap: 0.5rem; }
+    .nav-links .nav-portal,
+    .nav-links .nav-cta,
+    .nav-links .nav-learn { padding: 0.5rem 0.85rem; font-size: 0.72rem; }
+    .subbar-inner { padding: 0 1rem; }
+  }
+
+  @media (max-width: 640px) {
+    .page-header { padding: 8rem 1.25rem 2.5rem; }
+    .howto-inner { padding: 1.25rem 1.25rem; }
+    main { padding: 2.5rem 1.25rem 3rem; }
+    .ws-grid { grid-template-columns: 1fr; }
+    .ref { padding: 1.5rem 1.25rem; }
+    .cta { padding: 1.6rem 1.35rem; }
+    .lbl-lg { display: none; }
+    .lbl-sm { display: inline; }
+  }
+
+  @media (max-width: 400px) {
+    .nav-logo-text { display: none; }
+    .nav-links .nav-portal,
+    .nav-links .nav-cta,
+    .nav-links .nav-learn { padding: 0.5rem 0.7rem; font-size: 0.68rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+    .ws-card:hover, .btn-primary:hover { transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── GLOBAL NAV ── -->
+<nav>
+  <a href="/" class="nav-logo">
+    <img src="https://jawschat.com/shark.gif" alt="JawsChat">
+    <div class="nav-logo-text">JAWS<span>Chat</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/learn/eiken/pre1/speaking/" class="nav-learn is-active"><span class="lbl-lg">無料英検教材</span><span class="lbl-sm">無料教材</span></a></li>
+    <li><a href="/student-portal.html" class="nav-portal"><span class="lbl-lg">マイページ · My Portal</span><span class="lbl-sm">マイページ</span></a></li>
+    <li><a href="/#pricing" class="nav-cta"><span class="lbl-lg">体験レッスン予約</span><span class="lbl-sm">体験予約</span></a></li>
+  </ul>
+</nav>
+
+<!-- ── SECTION SUB-BAR ── -->
+<div class="subbar">
+  <div class="subbar-inner">
+    <span class="crumb">学習リソース</span>
+    <span class="crumb-sep">›</span>
+    <span class="crumb">英検</span>
+    <span class="crumb-sep">›</span>
+    <span class="crumb">準1級</span>
+    <span class="crumb-sep">›</span>
+    <span class="crumb crumb-current">スピーキング</span>
+  </div>
+</div>
+
+<!-- ── HEADER ── -->
+<header class="page-header">
+  <div class="header-inner">
+    <div class="header-kicker">JawsChat 無料教材 · 英検準1級</div>
+    <h1 class="header-title-jp">スピーキング練習ワークシート</h1>
+    <div class="header-title-en">Speaking Practice</div>
+    <p class="header-sub">
+      英検準1級 二次試験対策。4コマイラストのナレーション練習、4つの質問と模範解答、そして本番と同じ1分・2分のタイマーがセットになっています。登録不要、全て無料です。
+    </p>
+    <div class="header-badges">
+      <span class="hbadge hbadge-terra">準1級 / Grade Pre-1</span>
+      <span class="hbadge hbadge-plain">2-min narration</span>
+      <span class="hbadge hbadge-plain">4 discussion questions</span>
+      <span class="hbadge hbadge-plain">全8種類</span>
+    </div>
+  </div>
+</header>
+
+<!-- ── HOW TO USE ── -->
+<div class="howto">
+  <div class="howto-inner">
+    <div class="howto-label">使い方 / How to use</div>
+    <ol class="howto-steps">
+      <li><span class="step-num">1</span>トピックを読んで4コマを見る</li>
+      <li><span class="step-num">2</span>1分の準備タイマーを開始</li>
+      <li><span class="step-num">3</span>2分のナレーションタイマーで話す</li>
+      <li><span class="step-num">4</span>模範ナレーションと比べる</li>
+      <li><span class="step-num">5</span>4つの質問に答えてから模範解答を確認</li>
+    </ol>
+  </div>
+</div>
+
+<main>
+
+  <!-- ── WORKSHEETS ── -->
+  <div class="section-label">Worksheets</div>
+  <h2 class="section-title-jp">スピーキング練習シート</h2>
+
+  <div class="ws-grid">
+
+    <a class="ws-card" href="01.html">
+      <div class="ws-bar"></div>
+      <div class="ws-body">
+        <div class="ws-meta">
+          <span class="ws-num">No. 01</span>
+          <span class="ws-tag">Community</span>
+        </div>
+        <div class="ws-title">The Smartphone Class</div>
+        <div class="ws-desc">A woman volunteers at a community centre and notices elderly visitors struggling with their smartphones. She decides to start a free class to help them.</div>
+      </div>
+      <div class="ws-foot">
+        <div class="ws-open">
+          Open worksheet
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+        </div>
+        <div class="ws-feats">
+          <div class="feat" title="タイマー付き">⏱</div>
+          <div class="feat" title="模範解答つき">👁</div>
+        </div>
+      </div>
+    </a>
+
+    <a class="ws-card" href="02.html">
+      <div class="ws-bar"></div>
+      <div class="ws-body">
+        <div class="ws-meta">
+          <span class="ws-num">No. 02</span>
+          <span class="ws-tag">Environment</span>
+        </div>
+        <div class="ws-title">The Community Garden</div>
+        <div class="ws-desc">A man notices an abandoned overgrown lot and organises volunteers to transform it into a thriving community garden — only to discover the city plans to demolish it.</div>
+      </div>
+      <div class="ws-foot">
+        <div class="ws-open">
+          Open worksheet
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+        </div>
+        <div class="ws-feats">
+          <div class="feat" title="タイマー付き">⏱</div>
+          <div class="feat" title="模範解答つき">👁</div>
+        </div>
+      </div>
+    </a>
+
+    <a class="ws-card" href="03.html">
+      <div class="ws-bar"></div>
+      <div class="ws-body">
+        <div class="ws-meta">
+          <span class="ws-num">No. 03</span>
+          <span class="ws-tag">Civic action</span>
+        </div>
+        <div class="ws-title">Save Our Library</div>
+        <div class="ws-desc">A woman discovers her local library is closing due to budget cuts. She launches a community petition campaign that ends with the library being saved and reopened.</div>
+      </div>
+      <div class="ws-foot">
+        <div class="ws-open">
+          Open worksheet
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+        </div>
+        <div class="ws-feats">
+          <div class="feat" title="タイマー付き">⏱</div>
+          <div class="feat" title="模範解答つき">👁</div>
+        </div>
+      </div>
+    </a>
+
+    <a class="ws-card" href="04.html">
+      <div class="ws-bar"></div>
+      <div class="ws-body">
+        <div class="ws-meta">
+          <span class="ws-num">No. 04</span>
+          <span class="ws-tag">Sustainability</span>
+        </div>
+        <div class="ws-title">The Food Share Programme</div>
+        <div class="ws-desc">A man at a company cafeteria is troubled by the amount of food being thrown away each day. He proposes a programme to donate surplus food to local shelters.</div>
+      </div>
+      <div class="ws-foot">
+        <div class="ws-open">
+          Open worksheet
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+        </div>
+        <div class="ws-feats">
+          <div class="feat" title="タイマー付き">⏱</div>
+          <div class="feat" title="模範解答つき">👁</div>
+        </div>
+      </div>
+    </a>
+
+    <a class="ws-card" href="05.html">
+      <div class="ws-bar"></div>
+      <div class="ws-body">
+        <div class="ws-meta">
+          <span class="ws-num">No. 05</span>
+          <span class="ws-tag">Community safety</span>
+        </div>
+        <div class="ws-title">The Stolen Bicycle</div>
+        <div class="ws-desc">A woman returns to find her bicycle stolen from the station. After filing a report and posting flyers, an observant neighbour spots it and the police return it to her.</div>
+      </div>
+      <div class="ws-foot">
+        <div class="ws-open">
+          Open worksheet
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+        </div>
+        <div class="ws-feats">
+          <div class="feat" title="タイマー付き">⏱</div>
+          <div class="feat" title="模範解答つき">👁</div>
+        </div>
+      </div>
+    </a>
+
+    <a class="ws-card" href="06.html">
+      <div class="ws-bar"></div>
+      <div class="ws-body">
+        <div class="ws-meta">
+          <span class="ws-num">No. 06</span>
+          <span class="ws-tag">Community safety</span>
+        </div>
+        <div class="ws-title">The Playground Repair</div>
+        <div class="ws-desc">Children are playing in the park when the slide breaks. A father writes to the city council with photos, and new equipment is installed for everyone to enjoy.</div>
+      </div>
+      <div class="ws-foot">
+        <div class="ws-open">
+          Open worksheet
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+        </div>
+        <div class="ws-feats">
+          <div class="feat" title="タイマー付き">⏱</div>
+          <div class="feat" title="模範解答つき">👁</div>
+        </div>
+      </div>
+    </a>
+
+    <a class="ws-card" href="07.html">
+      <div class="ws-bar"></div>
+      <div class="ws-body">
+        <div class="ws-meta">
+          <span class="ws-num">No. 07</span>
+          <span class="ws-tag">Environment</span>
+        </div>
+        <div class="ws-title">The River Clean-Up</div>
+        <div class="ws-desc">A high school student discovers plastic waste on a local river bank and organises a community clean-up campaign that ends up attracting TV news coverage.</div>
+      </div>
+      <div class="ws-foot">
+        <div class="ws-open">
+          Open worksheet
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+        </div>
+        <div class="ws-feats">
+          <div class="feat" title="タイマー付き">⏱</div>
+          <div class="feat" title="模範解答つき">👁</div>
+        </div>
+      </div>
+    </a>
+
+    <a class="ws-card" href="08.html">
+      <div class="ws-bar"></div>
+      <div class="ws-body">
+        <div class="ws-meta">
+          <span class="ws-num">No. 08</span>
+          <span class="ws-tag">Health &amp; wellbeing</span>
+        </div>
+        <div class="ws-title">The First Aid Class</div>
+        <div class="ws-desc">A woman collapses in the street and is helped by a bystander who knows first aid. The experience inspires her to learn first aid herself and become a qualified instructor.</div>
+      </div>
+      <div class="ws-foot">
+        <div class="ws-open">
+          Open worksheet
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+        </div>
+        <div class="ws-feats">
+          <div class="feat" title="タイマー付き">⏱</div>
+          <div class="feat" title="模範解答つき">👁</div>
+        </div>
+      </div>
+    </a>
+
+    <div class="ws-card soon">
+      <div class="ws-bar"></div>
+      <div class="ws-body">
+        <div class="ws-meta">
+          <span class="ws-num" style="color:var(--ink-muted);">No. 09</span>
+          <span class="soon-badge">準備中</span>
+        </div>
+        <div class="ws-title">New Topic</div>
+        <div class="ws-desc">新しい練習シートを順次追加しています。またチェックしてみてください。</div>
+      </div>
+      <div class="ws-foot">
+        <div class="ws-open">Coming soon</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── FORMAT REFERENCE ── -->
+  <div class="ref">
+    <div class="ref-title">英検準1級 二次試験の流れ</div>
+    <div class="ref-title-en">Test format reference</div>
+    <div class="ref-grid">
+      <div class="ref-item">
+        <div class="ref-label">Preparation</div>
+        <div class="ref-value">1分<span class="ref-note">イラストとトピックを確認</span></div>
+      </div>
+      <div class="ref-item">
+        <div class="ref-label">Narration</div>
+        <div class="ref-value">2分<span class="ref-note">4コマを順番に説明する</span></div>
+      </div>
+      <div class="ref-item">
+        <div class="ref-label">Questions</div>
+        <div class="ref-value">4問<span class="ref-note">No.1は4コマ目、No.2〜4は一般的な質問</span></div>
+      </div>
+      <div class="ref-item">
+        <div class="ref-label">Scoring</div>
+        <div class="ref-value">発音・語彙・文法・内容<span class="ref-note">4つの観点で評価</span></div>
+      </div>
+      <div class="ref-item">
+        <div class="ref-label">Starting sentence</div>
+        <div class="ref-value">必ず指定される<span class="ref-note">その文どおりに話し始める</span></div>
+      </div>
+      <div class="ref-item">
+        <div class="ref-label">Card flip</div>
+        <div class="ref-value">No.1のあとに裏返す<span class="ref-note">No.2〜4はカードを見ずに答える</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TIPS ── -->
+  <div class="section-label">Tips</div>
+  <h2 class="section-title-jp">スピーキングのコツ</h2>
+
+  <div class="tips-grid">
+    <div class="tip">
+      <span class="tip-icon">🗓</span>
+      <div class="tip-title">時間の表現でつなぐ</div>
+      <div class="tip-body">"Two weeks later," "As a result," "However," などで4コマをつなぐと、話の流れが伝わりやすくなります。</div>
+    </div>
+    <div class="tip">
+      <span class="tip-icon">👁</span>
+      <div class="tip-title">見えるものを説明する</div>
+      <div class="tip-body">登場人物の表情や動作にも触れましょう。イラストをきちんと読み取っていることが面接官に伝わります。</div>
+    </div>
+    <div class="tip">
+      <span class="tip-icon">💬</span>
+      <div class="tip-title">必ず理由を添える</div>
+      <div class="tip-body">意見を言ったら "because," "so," "for example" で理由や具体例を続けると、解答に説得力が出ます。</div>
+    </div>
+    <div class="tip">
+      <span class="tip-icon">⚖️</span>
+      <div class="tip-title">両方の見方を考える</div>
+      <div class="tip-body">"Do you agree?" には "not completely" と答えても構いません。違う視点を検討できることは高く評価されます。</div>
+    </div>
+    <div class="tip">
+      <span class="tip-icon">🔄</span>
+      <div class="tip-title">タイマーを使って練習</div>
+      <div class="tip-body">各シートの1分・2分タイマーで、本番と同じ条件を繰り返し体験しておくと落ち着いて話せます。</div>
+    </div>
+    <div class="tip">
+      <span class="tip-icon">📝</span>
+      <div class="tip-title">模範解答と比べる</div>
+      <div class="tip-body">自分で答えたあとに模範解答を開き、次に使えそうな語彙や表現をメモしておきましょう。</div>
+    </div>
+  </div>
+
+  <!-- ── CTA ── -->
+  <div class="cta">
+    <div class="cta-label">Practice live</div>
+    <div class="cta-title">シートで準備したら、次は実際に話してみませんか。</div>
+    <p class="cta-text">
+      ワークシートは一人でも練習できますが、二次試験で問われるのは「その場で答える力」です。JawsChatの25分レッスンでは、オーストラリア人講師と一対一で、模範解答の暗記ではなく自分の言葉で話す練習ができます。英検対策だけに絞ることもできます。
+    </p>
+    <div class="cta-actions">
+      <a href="https://buy.stripe.com/14AbJ2cQy8Ng5lTgyu1RC03" target="_blank" rel="noopener" class="btn-primary">
+        体験レッスンを予約する<small>25分 · ¥1,000</small>
+      </a>
+      <a href="/#pricing" class="btn-secondary">料金を見る</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  © 2026 JawsChat · <span>PTV</span> — Polmeartagami Ventures · jawschat.com
+  <br><br>
+  <a href="/jawschat_terms.html">利用規約 · Terms and Conditions</a>
+  &nbsp;&nbsp;·&nbsp;&nbsp;
+  <a href="/learn/eiken/pre1/speaking/">学習リソース · Free Materials</a>
+  <span class="footer-copy">無断転載・複製を禁じます。</span>
+</footer>
+
+<!-- Traffic Ledger -->
+<script src="https://ptvartspace-go.github.io/Webstatsmine/tracker.js"
+        data-site="jawschat" defer></script>
+
+</body>
+</html>
