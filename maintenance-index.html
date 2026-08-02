@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>JawsChat — メンテナンス中 / Under Maintenance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@300;400;500;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #f5f0e6;
+    --cream-border: #ddd8cc;
+    --ink: #1a1a1a;
+    --ink-soft: #444;
+    --ink-muted: #888;
+    --terra: #c04a2a;
+    --terra-pale: #f9ede9;
+    --white: #ffffff;
+    --shadow-lg: 0 12px 60px rgba(100,80,60,0.16);
+  }
+
+  html, body { height: 100%; }
+
+  body {
+    font-family: 'Nunito', 'Noto Sans JP', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.7;
+    font-size: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1.25rem;
+    min-height: 100vh;
+  }
+
+  /* ─── CARD ─── */
+  .card {
+    background: var(--white);
+    border: 1.5px solid var(--cream-border);
+    border-radius: 20px;
+    box-shadow: var(--shadow-lg);
+    max-width: 520px;
+    width: 100%;
+    padding: 2.75rem 2rem 2.5rem;
+    text-align: center;
+  }
+
+  .shark {
+    width: 96px; height: 96px;
+    border-radius: 18px;
+    margin: 0 auto 1.5rem;
+    display: block;
+  }
+
+  .logo-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.9rem;
+    letter-spacing: 0.06em;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 1.75rem;
+  }
+  .logo-text span { color: var(--terra); }
+
+  /* ─── HEADLINE ─── */
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.2rem, 8vw, 3rem);
+    color: var(--terra);
+    letter-spacing: 0.05em;
+    line-height: 1.05;
+    margin-bottom: 0.35rem;
+  }
+  .headline-en {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(1.3rem, 5vw, 1.7rem);
+    letter-spacing: 0.08em;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+
+  /* ─── MESSAGE ─── */
+  .msg {
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+    line-height: 1.85;
+    margin-bottom: 1.5rem;
+  }
+  .msg .en {
+    display: block;
+    font-size: 0.88rem;
+    color: var(--ink-muted);
+    margin-top: 0.4rem;
+  }
+
+  /* ─── RETURN BADGE ─── */
+  .return-badge {
+    background: var(--terra-pale);
+    border: 1px solid #e6c9bf;
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    margin: 0 auto 1.75rem;
+    max-width: 380px;
+  }
+  .return-badge .label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--terra);
+    margin-bottom: 0.35rem;
+  }
+  .return-badge .value {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .return-badge .value .en {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 400;
+    color: var(--ink-muted);
+    margin-top: 0.2rem;
+  }
+
+  /* ─── CONTACT ─── */
+  .contact {
+    font-size: 0.85rem;
+    color: var(--ink-muted);
+    line-height: 1.8;
+    border-top: 1px solid var(--cream-border);
+    padding-top: 1.5rem;
+  }
+  .contact a {
+    color: var(--terra);
+    text-decoration: none;
+    font-weight: 700;
+  }
+  .contact a:hover { text-decoration: underline; }
+
+  /* ─── TAGLINE ─── */
+  .tagline {
+    margin-top: 1.75rem;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 0.8rem;
+    color: var(--ink-muted);
+    letter-spacing: 0.06em;
+  }
+  .tagline span { color: var(--terra); }
+
+  footer {
+    margin-top: 1.75rem;
+    font-size: 0.72rem;
+    color: var(--ink-muted);
+    letter-spacing: 0.03em;
+    text-align: center;
+  }
+  footer span { color: var(--terra); }
+</style>
+</head>
+<body>
+
+  <div class="card">
+    <img src="https://jawschat.com/shark.gif" alt="JawsChat" class="shark">
+    <div class="logo-text">JAWS<span>CHAT</span></div>
+
+    <h1>メンテナンス中</h1>
+    <div class="headline-en">Under Maintenance</div>
+
+    <p class="msg">
+      現在、サイトのメンテナンスを行っております。ご不便をおかけして申し訳ございません。
+      <span class="en">We're currently doing some maintenance behind the scenes. Sorry for the inconvenience — we'll be back shortly.</span>
+    </p>
+
+    <!-- ── Edit the return line below to change the expected date ── -->
+    <div class="return-badge">
+      <div class="label">再開予定 · Back Soon</div>
+      <div class="value">
+        約1週間後に再開予定です
+        <span class="en">Expected back within about a week</span>
+      </div>
+    </div>
+
+    <p class="contact">
+      お急ぎのご用件は、こちらまでご連絡ください。<br>
+      For anything urgent, please reach us at<br>
+      <a href="mailto:peter@jawschat.com">peter@jawschat.com</a>
+    </p>
+
+    <div class="tagline">上手になろう · <span>Real Conversation</span></div>
+  </div>
+
+  <footer>
+    © 2026 JawsChat · <span>PTV</span> — Polmeartagami Ventures · jawschat.com
+  </footer>
+
+</body>
+</html>
