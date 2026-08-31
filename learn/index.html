@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>無料英語学習リソース · 英検・レベル診断 | JawsChat</title>
+<meta name="description" content="JawsChatの無料英語学習リソース。CEFRレベル診断テストで自分の英語力を確認し、英検対策のワークシートで練習できます。登録不要、すべて無料です。">
+<link rel="canonical" href="https://jawschat.com/learn/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="無料英語学習リソース · 英検・レベル診断 | JawsChat">
+<meta property="og:description" content="CEFRレベル診断テストと英検対策ワークシート。登録不要、すべて無料。">
+<meta property="og:url" content="https://jawschat.com/learn/">
+<meta property="og:image" content="https://jawschat.com/shark.gif">
+<meta property="og:site_name" content="JawsChat">
+<link rel="icon" href="https://jawschat.com/shark.gif">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Noto+Sans+JP:wght@300;400;500;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f5f0e6;
+    --cream-dark: #ede8dc;
+    --cream-border: #ddd8cc;
+    --ink: #1a1a1a;
+    --ink-soft: #444;
+    --ink-muted: #888;
+    --terra: #c04a2a;
+    --terra-light: #d4603e;
+    --terra-pale: #f9ede9;
+    --teal: #2d7a5f;
+    --teal-pale: #e4f1ea;
+    --white: #ffffff;
+    --shadow: 0 4px 40px rgba(100,80,60,0.10);
+    --shadow-lg: 0 12px 60px rgba(100,80,60,0.16);
+    --radius: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Nunito', 'Noto Sans JP', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--terra);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* ── GLOBAL NAV ── */
+  .site-nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(245,240,230,0.98);
+    border-bottom: 1px solid var(--cream-border);
+    padding: 0 2rem;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-logo img { width: 36px; height: 36px; object-fit: contain; }
+  .nav-logo-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.06em;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .nav-logo-text span { color: var(--terra); }
+  .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+  .nav-links a {
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ink-soft);
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--terra); }
+  .nav-cta {
+    background: var(--terra);
+    color: var(--white) !important;
+    padding: 0.5rem 1.2rem;
+    border-radius: 100px;
+    white-space: nowrap;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--terra-light) !important; color: var(--white) !important; }
+  .nav-links .nav-portal {
+    background: #2d7a5f;
+    color: var(--white) !important;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 0.5rem 1.1rem;
+    border-radius: 100px;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+    transition: background 0.2s !important;
+  }
+  .nav-links .nav-portal:hover { background: #236650; color: var(--white) !important; }
+  .nav-links .nav-learn {
+    background: transparent;
+    color: var(--ink) !important;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 0.45rem 1.1rem;
+    border: 1.5px solid var(--ink);
+    border-radius: 100px;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+    transition: border-color 0.2s, color 0.2s !important;
+  }
+  .nav-links .nav-learn:hover,
+  .nav-links .nav-learn.is-active {
+    border-color: var(--terra);
+    color: var(--terra) !important;
+  }
+  .lbl-sm { display: none; }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    background: var(--ink);
+    padding: 8.5rem 2rem 3.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .header-inner { max-width: 960px; margin: 0 auto; position: relative; }
+  .header-kicker {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--terra);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .header-kicker::before {
+    content: '';
+    display: block;
+    width: 26px;
+    height: 2px;
+    background: var(--terra);
+  }
+  .header-title-jp {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: clamp(1.7rem, 4.5vw, 2.5rem);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.35;
+    margin-bottom: 0.35rem;
+  }
+  .header-title-en {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.4rem, 7vw, 3.6rem);
+    letter-spacing: 0.05em;
+    line-height: 1;
+    color: rgba(255,255,255,0.28);
+    margin-bottom: 1.25rem;
+  }
+  .header-sub {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.62);
+    max-width: 36rem;
+    line-height: 1.9;
+  }
+
+  /* ── MAIN ── */
+  main { max-width: 960px; margin: 0 auto; padding: 3rem 2rem 4rem; }
+
+  .section-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--terra);
+    margin-bottom: 0.4rem;
+  }
+  .section-title-jp {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.4;
+    margin-bottom: 1.4rem;
+  }
+
+  /* ── START-HERE BANNER (the CEFR tool) ── */
+  .starter {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    background: var(--ink);
+    border-radius: var(--radius-xl);
+    padding: 2rem 2.25rem;
+    margin-bottom: 3.25rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .starter:hover { transform: translateY(-3px); box-shadow: 0 16px 70px rgba(100,80,60,0.22); }
+  .starter::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: 40%;
+    background: linear-gradient(120deg, transparent, rgba(192,74,42,0.14));
+    pointer-events: none;
+  }
+  .starter-grid {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .starter-left { flex: 1; min-width: 260px; }
+  .starter-step {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.66rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--terra-light);
+    margin-bottom: 0.7rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .starter-step .dot {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    border: 1px solid rgba(192,74,42,0.6);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.62rem;
+  }
+  .starter-title-jp {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.35;
+    margin-bottom: 0.3rem;
+  }
+  .starter-title-en {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 0.05em;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 0.85rem;
+  }
+  .starter-desc {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 0.86rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.85;
+    max-width: 30rem;
+    margin-bottom: 1rem;
+  }
+  .starter-badges { display: flex; flex-wrap: wrap; gap: 6px; }
+  .sbadge {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.64rem;
+    font-weight: 500;
+    padding: 4px 11px;
+    border-radius: 100px;
+    border: 1px solid rgba(255,255,255,0.18);
+    color: rgba(255,255,255,0.6);
+    background: rgba(255,255,255,0.04);
+    letter-spacing: 0.04em;
+  }
+  .starter-action {
+    flex-shrink: 0;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    background: var(--terra);
+    color: var(--white);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 0.9rem 1.9rem;
+    border-radius: 100px;
+    white-space: nowrap;
+    transition: background 0.2s;
+  }
+  .starter:hover .starter-action { background: var(--terra-light); }
+  .starter-action small {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.64rem;
+    font-weight: 400;
+    opacity: 0.85;
+    letter-spacing: 0.03em;
+  }
+
+  /* ── MATERIAL GRID ── */
+  .mat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 3.5rem;
+  }
+  .mat-card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--cream-border);
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .mat-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+  .mat-bar { height: 5px; background: var(--terra); flex-shrink: 0; }
+  .mat-body {
+    padding: 1.35rem 1.5rem 1.4rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+  .mat-meta { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+  .mat-cat {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.66rem;
+    font-weight: 500;
+    color: var(--terra);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .mat-count {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    padding: 3px 10px;
+    border-radius: 100px;
+    background: var(--terra-pale);
+    color: var(--terra);
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+  .mat-title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--ink);
+    line-height: 1.35;
+  }
+  .mat-title .en {
+    display: block;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.66rem;
+    font-weight: 400;
+    color: var(--ink-muted);
+    letter-spacing: 0.06em;
+    margin-top: 3px;
+    text-transform: uppercase;
+  }
+  .mat-desc {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 0.84rem;
+    color: var(--ink-soft);
+    line-height: 1.8;
+    flex: 1;
+  }
+  .mat-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1.5rem;
+    border-top: 1px solid var(--cream-dark);
+    background: var(--cream);
+  }
+  .mat-open {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 500;
+    color: var(--terra);
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .mat-open svg { width: 13px; height: 13px; stroke: currentColor; stroke-width: 2; fill: none; }
+
+  /* coming-soon card */
+  .mat-card.soon { opacity: 0.6; pointer-events: none; box-shadow: none; }
+  .mat-card.soon .mat-bar { background: var(--cream-border); }
+  .mat-card.soon .mat-title,
+  .mat-card.soon .mat-desc,
+  .mat-card.soon .mat-cat { color: var(--ink-muted); }
+  .soon-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.05em;
+    color: var(--ink-muted);
+    background: var(--cream-dark);
+    border: 1px solid var(--cream-border);
+    border-radius: 100px;
+    padding: 3px 10px;
+    white-space: nowrap;
+  }
+
+  /* ── CTA ── */
+  .cta {
+    background: var(--white);
+    border: 1px solid var(--cream-border);
+    border-left: 5px solid var(--terra);
+    border-radius: var(--radius-lg);
+    padding: 2rem 2.25rem;
+    box-shadow: var(--shadow);
+  }
+  .cta-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--terra);
+    margin-bottom: 0.6rem;
+  }
+  .cta-title {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.5;
+    margin-bottom: 0.6rem;
+  }
+  .cta-text {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 0.87rem;
+    color: var(--ink-soft);
+    line-height: 1.95;
+    max-width: 40rem;
+    margin-bottom: 1.4rem;
+  }
+  .cta-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
+  .btn-primary {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--terra);
+    color: var(--white);
+    text-decoration: none;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 0.75rem 1.6rem;
+    border-radius: 100px;
+    line-height: 1.35;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .btn-primary small { font-size: 0.68rem; font-weight: 400; opacity: 0.85; }
+  .btn-primary:hover { background: var(--terra-light); transform: translateY(-2px); }
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    color: var(--ink);
+    text-decoration: none;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 0.75rem 1.5rem;
+    border: 1.5px solid var(--ink);
+    border-radius: 100px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--terra); color: var(--terra); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 2rem;
+    text-align: center;
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.04em;
+  }
+  footer span { color: var(--terra); }
+  footer a {
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    transition: color 0.2s;
+  }
+  footer a:hover { color: var(--terra); }
+  .footer-copy {
+    display: block;
+    margin-top: 1rem;
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.22);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .site-nav { padding: 0 1rem; }
+    .nav-links { gap: 0.5rem; }
+    .nav-links .nav-portal,
+    .nav-links .nav-cta,
+    .nav-links .nav-learn { padding: 0.5rem 0.85rem; font-size: 0.72rem; }
+  }
+  @media (max-width: 640px) {
+    .page-header { padding: 8rem 1.25rem 2.75rem; }
+    main { padding: 2.5rem 1.25rem 3rem; }
+    .starter { padding: 1.6rem 1.35rem; }
+    .starter-action { width: 100%; }
+    .mat-grid { grid-template-columns: 1fr; }
+    .cta { padding: 1.6rem 1.35rem; }
+    .lbl-lg { display: none; }
+    .lbl-sm { display: inline; }
+  }
+  @media (max-width: 400px) {
+    .nav-logo-text { display: none; }
+    .nav-links .nav-portal,
+    .nav-links .nav-cta,
+    .nav-links .nav-learn { padding: 0.5rem 0.7rem; font-size: 0.68rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    .starter:hover, .mat-card:hover, .btn-primary:hover { transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── GLOBAL NAV ── -->
+<nav class="site-nav">
+  <a href="/" class="nav-logo">
+    <img src="https://jawschat.com/shark.gif" alt="JawsChat">
+    <div class="nav-logo-text">JAWS<span>Chat</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/learn/" class="nav-learn is-active"><span class="lbl-lg">無料英検教材</span><span class="lbl-sm">無料教材</span></a></li>
+    <li><a href="/student-portal.html" class="nav-portal"><span class="lbl-lg">マイページ · My Portal</span><span class="lbl-sm">マイページ</span></a></li>
+    <li><a href="/#pricing" class="nav-cta"><span class="lbl-lg">体験レッスン予約</span><span class="lbl-sm">体験予約</span></a></li>
+  </ul>
+</nav>
+
+<!-- ── HEADER ── -->
+<header class="page-header">
+  <div class="header-inner">
+    <div class="header-kicker">JawsChat 無料学習リソース</div>
+    <h1 class="header-title-jp">英語学習リソース</h1>
+    <div class="header-title-en">Free Learning Resources</div>
+    <p class="header-sub">
+      自分の英語レベルを診断して、目的に合った教材で練習しましょう。英検対策のワークシートやレベル診断テストを無料で公開しています。登録は不要です。
+    </p>
+  </div>
+</header>
+
+<main>
+
+  <!-- ── STEP 1: FIND YOUR LEVEL (the tool) ── -->
+  <a class="starter" href="/learn/CEFRplacement/">
+    <div class="starter-grid">
+      <div class="starter-left">
+        <div class="starter-step"><span class="dot">1</span>まずはここから · Start here</div>
+        <div class="starter-title-jp">自分のレベルを知る</div>
+        <div class="starter-title-en">Find your level</div>
+        <p class="starter-desc">
+          30問のアダプティブ診断テストで、あなたの英語力をCEFR（A1〜C2）で推定します。約10〜15分。結果はレベル・スコア・スキル別の内訳で表示されます。
+        </p>
+        <div class="starter-badges">
+          <span class="sbadge">CEFRレベル診断</span>
+          <span class="sbadge">30 questions · adaptive</span>
+          <span class="sbadge">A1 – C2</span>
+        </div>
+      </div>
+      <span class="starter-action">
+        診断をはじめる →
+        <small>10–15 min · free</small>
+      </span>
+    </div>
+  </a>
+
+  <!-- ── STEP 2: STUDY MATERIAL ── -->
+  <div class="section-label">Study material</div>
+  <h2 class="section-title-jp">目的別の教材</h2>
+
+  <div class="mat-grid">
+
+    <a class="mat-card" href="/learn/eiken/pre1/speaking/">
+      <div class="mat-bar"></div>
+      <div class="mat-body">
+        <div class="mat-meta">
+          <span class="mat-cat">英検 準1級</span>
+          <span class="mat-count">8 sheets</span>
+        </div>
+        <div class="mat-title">スピーキング練習<span class="en">Speaking Practice</span></div>
+        <div class="mat-desc">二次試験対策のワークシート。4コマイラストのナレーション練習、4つの質問と模範解答、本番と同じ1分・2分のタイマー付き。</div>
+      </div>
+      <div class="mat-foot">
+        <div class="mat-open">
+          開く · Open
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+        </div>
+      </div>
+    </a>
+
+    <div class="mat-card soon">
+      <div class="mat-bar"></div>
+      <div class="mat-body">
+        <div class="mat-meta">
+          <span class="mat-cat">英検</span>
+          <span class="soon-badge">準備中</span>
+        </div>
+        <div class="mat-title">他の級・技能<span class="en">More levels &amp; skills</span></div>
+        <div class="mat-desc">他の英検の級、ライティング・リーディングなどの教材を順次追加していく予定です。</div>
+      </div>
+      <div class="mat-foot">
+        <div class="mat-open">Coming soon</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── CTA ── -->
+  <div class="cta">
+    <div class="cta-label">Practice live</div>
+    <div class="cta-title">教材で準備したら、次は実際に話してみませんか。</div>
+    <p class="cta-text">
+      無料の教材は一人でも使えますが、英語を話す力はやはり話すことでしか伸びません。JawsChatの25分レッスンでは、オーストラリア人講師と一対一で、自分の言葉で話す練習ができます。英検対策やレベルに合わせたレッスンにも対応しています。
+    </p>
+    <div class="cta-actions">
+      <a href="https://buy.stripe.com/14AbJ2cQy8Ng5lTgyu1RC03" target="_blank" rel="noopener" class="btn-primary">
+        体験レッスンを予約する<small>25分 · ¥1,000</small>
+      </a>
+      <a href="/#pricing" class="btn-secondary">料金を見る</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  © 2026 JawsChat · <span>PTV</span> — Polmeartagami Ventures · jawschat.com
+  <br><br>
+  <a href="/jawschat_terms.html">利用規約 · Terms and Conditions</a>
+  &nbsp;&nbsp;·&nbsp;&nbsp;
+  <a href="/learn/">学習リソース · Free Materials</a>
+  <span class="footer-copy">無断転載・複製を禁じます。</span>
+</footer>
+
+<!-- Traffic Ledger -->
+<script src="https://ptvartspace-go.github.io/Webstatsmine/tracker.js"
+        data-site="jawschat" defer></script>
+
+</body>
+</html>

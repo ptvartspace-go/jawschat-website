@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CEFR Placement Test · JawsChat</title>
+<link rel="canonical" href="https://jawschat.com/learn/CEFRplacement/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="CEFR Placement Test · JawsChat">
+<meta property="og:description" content="30問のアダプティブ診断で英語力をCEFR（A1〜C2）で推定。登録不要・無料。">
+<meta property="og:url" content="https://jawschat.com/learn/CEFRplacement/">
+<meta property="og:image" content="https://jawschat.com/shark.gif">
+<meta property="og:site_name" content="JawsChat">
+<link rel="icon" href="https://jawschat.com/shark.gif">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@400;500;700&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a1a; --ink-soft: #444444; --ink-faint: #8a857c;
+    --bg: #f5f0e6; --bg-warm: #ede8dc; --bg-mid: #ddd8cc; --surface: #ffffff;
+    --terra: #c04a2a; --terra-light: #f9ede9;
+    --teal: #2d7a5f; --teal-light: #e4f1ea;
+    --orange: #c04a2a; --orange-light: #f9ede9;
+    --blue: #2a4a7a; --blue-light: #e7edf6;
+    --rose: #a63a55; --rose-light: #fbe9ee;
+    --green: #4a6a1f; --green-light: #eef3e1;
+    --radius: 12px; --radius-sm: 8px;
+    --shadow: 0 2px 14px rgba(100,80,60,0.08), 0 1px 4px rgba(100,80,60,0.05);
+    --shadow-lg: 0 6px 28px rgba(100,80,60,0.12), 0 2px 8px rgba(100,80,60,0.07);
+  }
+
+  /* ── GLOBAL NAV (grafted to match jawschat.com) ── */
+  .site-nav { position:fixed; top:0; left:0; right:0; z-index:100; background:rgba(245,240,230,0.98); border-bottom:1px solid var(--bg-mid); padding:0 2rem; height:64px; display:flex; align-items:center; justify-content:space-between; }
+  .nav-logo { display:flex; align-items:center; gap:10px; text-decoration:none; }
+  .nav-logo img { width:36px; height:36px; object-fit:contain; }
+  .nav-logo-text { font-family:'Bebas Neue',sans-serif; font-size:1.6rem; letter-spacing:0.06em; color:var(--ink); line-height:1; }
+  .nav-logo-text span { color:var(--terra); }
+  .nav-links { display:flex; align-items:center; gap:2rem; list-style:none; margin:0; padding:0; }
+  .nav-links a { text-decoration:none; font-size:0.85rem; font-weight:600; color:var(--ink-soft); letter-spacing:0.04em; transition:color 0.2s; }
+  .nav-links a:hover { color:var(--terra); }
+  .nav-cta { background:var(--terra); color:#fff !important; padding:0.5rem 1.2rem; border-radius:100px; white-space:nowrap; transition:background 0.2s !important; }
+  .nav-cta:hover { background:#d4603e !important; color:#fff !important; }
+  .nav-links .nav-portal { background:var(--teal); color:#fff !important; font-size:0.78rem; font-weight:700; padding:0.5rem 1.1rem; border-radius:100px; letter-spacing:0.03em; white-space:nowrap; transition:background 0.2s !important; }
+  .nav-links .nav-portal:hover { background:#236650; color:#fff !important; }
+  .nav-links .nav-learn { background:transparent; color:var(--ink) !important; font-size:0.78rem; font-weight:700; padding:0.45rem 1.1rem; border:1.5px solid var(--ink); border-radius:100px; letter-spacing:0.03em; white-space:nowrap; transition:border-color 0.2s,color 0.2s !important; }
+  .nav-links .nav-learn:hover, .nav-links .nav-learn.is-active { border-color:var(--terra); color:var(--terra) !important; }
+  .lbl-sm { display:none; }
+
+  /* ── LEVEL SUB-STRIP (keeps the A1-C2 / Adaptive info from the old header) ── */
+  .level-strip { position:fixed; top:64px; left:0; right:0; z-index:99; background:var(--bg-warm); border-bottom:1px solid var(--bg-mid); height:42px; display:flex; align-items:center; }
+  .level-strip-inner { max-width:640px; width:100%; margin:0 auto; padding:0 1.5rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+  .ls-title { font-family:'Nunito','Noto Sans JP',sans-serif; font-size:0.74rem; font-weight:700; color:var(--ink-soft); letter-spacing:0.03em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .ls-pills { display:flex; gap:6px; flex-shrink:0; }
+
+  @media (max-width:900px) { .site-nav { padding:0 1rem; } .nav-links { gap:0.5rem; } .nav-links .nav-portal,.nav-links .nav-cta,.nav-links .nav-learn { padding:0.5rem 0.85rem; font-size:0.72rem; } }
+  @media (max-width:640px) { .lbl-lg { display:none; } .lbl-sm { display:inline; } }
+  @media (max-width:400px) { .nav-logo-text { display:none; } .nav-links .nav-portal,.nav-links .nav-cta,.nav-links .nav-learn { padding:0.5rem 0.7rem; font-size:0.68rem; } }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family:'Nunito',sans-serif; background:var(--bg); color:var(--ink); min-height:100vh; line-height:1.65; -webkit-font-smoothing:antialiased; }
+
+  /* Header */
+  .level-pill { background:var(--terra); color:#fff; font-size:0.68rem; font-weight:800; padding:4px 12px; border-radius:99px; letter-spacing:0.06em; }
+  .vol-pill { background:var(--terra-light); color:var(--terra); font-size:0.68rem; font-weight:800; padding:4px 12px; border-radius:99px; letter-spacing:0.06em; }
+
+  .container { max-width:640px; margin:0 auto; padding:calc(106px + 2rem) 1.5rem 4rem; }
+
+  .card { background:var(--surface); border:1px solid var(--bg-mid); border-radius:var(--radius); padding:1.75rem 2rem; margin-bottom:1rem; box-shadow:var(--shadow); animation:fadeUp 0.25s ease both; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(8px);} to{opacity:1;transform:translateY(0);} }
+
+  .act-label { font-size:0.67rem; font-weight:700; letter-spacing:0.13em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:0.7rem; display:flex; align-items:center; gap:8px; }
+  .act-label::before { content:''; display:block; width:16px; height:1.5px; background:var(--teal); flex-shrink:0; }
+
+  .instructions p { font-size:0.92rem; line-height:1.7; color:var(--ink-soft); margin:0 0 0.55rem; }
+  .instructions p:last-child { margin-bottom:0; }
+  .instructions strong { color:var(--ink); }
+  .badges { display:flex; flex-wrap:wrap; gap:6px; margin-top:1.1rem; }
+  .badge { font-size:0.7rem; font-weight:600; padding:3px 11px; border-radius:99px; display:inline-flex; align-items:center; }
+  .b-teal { background:var(--teal-light); color:var(--teal); }
+  .b-orange { background:var(--orange-light); color:var(--orange); }
+  .b-blue { background:var(--blue-light); color:var(--blue); }
+
+  .btn-primary { font-family:'Nunito',sans-serif; font-weight:700; font-size:0.95rem; color:#fff; background:var(--ink); border:none; border-radius:99px; padding:0.85rem 2.1rem; cursor:pointer; transition:all 0.18s ease; }
+  .btn-primary:hover { background:#333; transform:translateY(-1px); box-shadow:var(--shadow); }
+  .btn-primary:disabled { opacity:0.5; cursor:default; transform:none; }
+  .btn-reset { font-family:'Nunito',sans-serif; font-weight:700; font-size:0.85rem; color:var(--ink-soft); background:transparent; border:1.5px solid var(--bg-mid); border-radius:99px; padding:0.85rem 1.4rem; cursor:pointer; transition:all 0.15s ease; }
+  .btn-reset:hover { border-color:var(--terra); color:var(--terra); background:var(--terra-light); }
+
+  /* Test card */
+  .game-card { background:var(--surface); border:1px solid var(--bg-mid); border-radius:var(--radius); box-shadow:var(--shadow-lg); padding:2.2rem 1.9rem; }
+  .progress-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:0.9rem; }
+  .progress-label { font-size:0.76rem; font-weight:600; color:var(--ink-faint); letter-spacing:0.02em; }
+  .progress-label strong { color:var(--terra); font-weight:800; }
+  .progress-track { width:100%; height:6px; background:var(--bg-warm); border-radius:99px; overflow:hidden; margin-bottom:1.6rem; }
+  .progress-fill { height:100%; width:0%; background:var(--terra); border-radius:99px; transition:width 0.35s ease; }
+
+  .q-type { font-size:0.64rem; font-weight:800; letter-spacing:0.12em; text-transform:uppercase; color:var(--teal); margin-bottom:0.7rem; }
+  .passage { background:var(--bg-warm); border-left:3px solid var(--terra); border-radius:var(--radius-sm); padding:0.85rem 1rem; font-size:0.95rem; line-height:1.6; color:var(--ink-soft); margin-bottom:1rem; font-style:italic; }
+  .q-text { font-size:1.22rem; font-weight:800; line-height:1.45; color:var(--ink); margin-bottom:1.3rem; animation:fadeUp 0.28s ease both; }
+
+  .options { display:flex; flex-direction:column; gap:0.6rem; }
+  .opt { display:flex; align-items:flex-start; gap:0.7rem; text-align:left; font-family:'Nunito',sans-serif; font-size:0.98rem; font-weight:600; color:var(--ink); background:var(--surface); border:1.5px solid var(--bg-mid); border-radius:var(--radius-sm); padding:0.8rem 1rem; cursor:pointer; transition:all 0.14s ease; width:100%; }
+  .opt:hover { border-color:var(--terra); background:var(--terra-light); }
+  .opt:focus-visible { outline:2px solid var(--terra); outline-offset:2px; }
+  .opt .key { flex-shrink:0; width:22px; height:22px; border-radius:6px; background:var(--bg-warm); color:var(--ink-soft); font-size:0.72rem; font-weight:800; display:flex; align-items:center; justify-content:center; margin-top:1px; }
+  .opt.chosen { border-color:var(--terra); background:var(--terra); color:#fff; }
+  .opt.chosen .key { background:rgba(255,255,255,0.25); color:#fff; }
+  .opt:disabled { cursor:default; }
+
+  /* Results */
+  .result-hero { text-align:center; padding:0.5rem 0 0.4rem; }
+  .result-eyebrow { font-size:0.66rem; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--ink-faint); }
+  .result-band { font-family:'Bebas Neue',sans-serif; font-size:5rem; line-height:1; color:var(--terra); letter-spacing:0.03em; margin:0.35rem 0 0.15rem; }
+  .result-name { font-size:1.05rem; font-weight:800; color:var(--ink); }
+  .result-score { font-size:0.85rem; color:var(--ink-faint); font-weight:600; margin-top:0.5rem; }
+  .result-score b { color:var(--ink); }
+  .conf { margin-top:1.2rem; font-size:0.85rem; font-weight:600; color:var(--ink-soft); background:var(--teal-light); border-radius:var(--radius-sm); padding:0.7rem 0.95rem; line-height:1.55; }
+  .conf.borderline { background:var(--blue-light); color:var(--blue); }
+  .can-do { margin-top:1rem; font-size:0.92rem; line-height:1.65; color:var(--ink-soft); }
+
+  .strand { margin-top:0.75rem; }
+  .strand-row { display:flex; align-items:center; gap:0.7rem; margin-bottom:0.5rem; }
+  .strand-name { font-size:0.78rem; font-weight:700; color:var(--ink-soft); width:74px; flex-shrink:0; }
+  .strand-track { flex:1; height:8px; background:var(--bg-warm); border-radius:99px; overflow:hidden; }
+  .strand-bar { display:block; height:100%; border-radius:99px; transition:width 0.4s ease; }
+  .strand-val { font-size:0.74rem; font-weight:700; color:var(--ink-faint); width:52px; text-align:right; flex-shrink:0; }
+
+  .review-toggle { margin-top:1.4rem; }
+  .review { margin-top:1rem; border-top:1px solid var(--bg-mid); padding-top:1rem; }
+  .rev-item { padding:0.8rem 0; border-bottom:1px solid var(--bg-warm); }
+  .rev-item:last-child { border-bottom:none; }
+  .rev-q { font-size:0.9rem; font-weight:700; color:var(--ink); margin-bottom:0.35rem; }
+  .rev-q .lvltag { font-size:0.6rem; font-weight:800; letter-spacing:0.08em; color:#fff; background:var(--ink-faint); border-radius:99px; padding:2px 7px; margin-right:6px; vertical-align:middle; }
+  .rev-line { font-size:0.82rem; line-height:1.55; }
+  .rev-correct { color:var(--green); font-weight:700; }
+  .rev-wrong { color:var(--rose); font-weight:700; text-decoration:line-through; }
+  .mark { font-weight:800; margin-right:3px; display:inline-block; }
+  .mark.ok { color:var(--green); }
+  .mark.no { color:var(--rose); }
+  .rev-why { font-size:0.8rem; color:var(--ink-faint); margin-top:0.3rem; font-style:italic; }
+
+  .actions-row { margin-top:1.6rem; display:flex; gap:0.7rem; justify-content:center; flex-wrap:wrap; }
+  .footer-note { text-align:center; font-size:0.76rem; color:var(--ink-faint); margin-top:2rem; }
+  .footer-note span { color:var(--terra); font-weight:800; }
+  .footer-disclaimer { text-align:center; font-size:0.68rem; line-height:1.55; color:var(--ink-faint); opacity:0.8; max-width:460px; margin:0.55rem auto 0; }
+  .hidden { display:none !important; }
+
+  @media (max-width:480px) {
+    .q-text { font-size:1.1rem; }
+    .card { padding:1.4rem 1.3rem; }
+    .game-card { padding:1.7rem 1.3rem; }
+    .result-band { font-size:4rem; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { animation:none !important; transition:none !important; } }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a href="/" class="nav-logo">
+    <img src="https://jawschat.com/shark.gif" alt="JawsChat">
+    <div class="nav-logo-text">JAWS<span>Chat</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/learn/" class="nav-learn is-active"><span class="lbl-lg">無料英検教材</span><span class="lbl-sm">無料教材</span></a></li>
+    <li><a href="/student-portal.html" class="nav-portal"><span class="lbl-lg">マイページ · My Portal</span><span class="lbl-sm">マイページ</span></a></li>
+    <li><a href="/#pricing" class="nav-cta"><span class="lbl-lg">体験レッスン予約</span><span class="lbl-sm">体験予約</span></a></li>
+  </ul>
+</nav>
+
+<div class="level-strip">
+  <div class="level-strip-inner">
+    <span class="ls-title">CEFRレベル診断 · English Placement</span>
+    <span class="ls-pills">
+      <span class="level-pill">A1 – C2</span>
+      <span class="vol-pill">Adaptive</span>
+    </span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- INTRO -->
+  <div class="card instructions" id="introCard">
+    <div class="act-label">CEFR Placement Test</div>
+    <p><strong>What this is:</strong> a 30-question adaptive placement test that estimates your English level on the CEFR scale, from A1 (beginner) to C2 (proficient).</p>
+    <p><strong>How it works:</strong> the test adjusts as you go. Answer well and the questions get harder; struggle and they get easier — so it homes in on your real level with far fewer questions than a fixed test.</p>
+    <p>Choose the best answer for each question. You can't go back, and there's no time limit — expect about <strong>10–15 minutes</strong>. Your result appears at the end with a level, a score, and a breakdown by skill.</p>
+    <div class="badges">
+      <span class="badge b-teal">30 questions</span>
+      <span class="badge b-orange">Adapts to you</span>
+      <span class="badge b-blue">CEFR-aligned result</span>
+    </div>
+    <div class="actions-row" style="justify-content:flex-start;margin-top:1.4rem;">
+      <button class="btn-primary" id="startBtn">Start the test →</button>
+    </div>
+  </div>
+
+  <!-- TEST -->
+  <div class="game-card hidden" id="testCard">
+    <div class="progress-row">
+      <span class="progress-label">Question <strong id="qNum">1</strong> / <span id="qTotal">30</span></span>
+      <span class="progress-label" id="phaseLabel">Finding your level…</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="q-type" id="qType"></div>
+    <div class="passage hidden" id="passage"></div>
+    <div class="q-text" id="qText"></div>
+    <div class="options" id="options"></div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="card hidden" id="resultCard">
+    <div class="result-hero">
+      <div class="result-eyebrow">Your estimated level</div>
+      <div class="result-band" id="rBand">B1</div>
+      <div class="result-name" id="rName">Intermediate</div>
+      <div class="result-score">EF SET-aligned score: <b id="rScore">45</b> / 100</div>
+    </div>
+    <div class="conf" id="rConf"></div>
+    <div class="can-do" id="rCanDo"></div>
+
+    <div class="act-label" style="margin-top:1.6rem;">Skill breakdown</div>
+    <div class="strand" id="rStrands"></div>
+    <p style="font-size:0.76rem;color:var(--ink-faint);margin-top:0.6rem;font-style:italic;">Based on the questions you saw in each skill — a rough guide, not a separate score.</p>
+
+    <div class="review-toggle">
+      <button class="btn-reset" id="reviewBtn">Review answers ▾</button>
+    </div>
+    <div class="review hidden" id="reviewList"></div>
+
+    <div class="actions-row">
+      <button class="btn-primary" id="retakeBtn">Take it again</button>
+    </div>
+  </div>
+
+  <div class="footer-note">JawsChat · <span>Placement Series</span> · CEFR Adaptive Test</div>
+  <div class="footer-disclaimer">JawsChat is not affiliated with, endorsed by, or connected to the Council of Europe. This test is modelled on the CEFR levels and gives an informal estimate for guidance only — it is not an official assessment or a definitive statement of your English level.</div>
+</div>
+
+<script>
+/* ============================ ITEM BANK ============================ */
+const BANK = [{"id":"g_a1_1","lvl":"A1","diff":8,"type":"grammar","point":"to be","q":"She ___ a teacher.","opts":["is","are","am","be"],"a":0,"why":"Third-person singular of 'to be' is 'is'."},{"id":"g_a1_2","lvl":"A1","diff":10,"type":"grammar","point":"present simple question","q":"___ you like coffee?","opts":["Do","Are","Does","Is"],"a":0,"why":"Present-simple yes/no question with 'you' uses 'Do'. 'Are' is the be/do trap."},{"id":"g_a1_3","lvl":"A1","diff":12,"type":"grammar","point":"articles","q":"I have ___ apple and ___ banana.","opts":["an, a","a, an","a, a","an, an"],"a":0,"why":"'an' before a vowel sound (apple), 'a' before a consonant (banana)."},{"id":"g_a1_4","lvl":"A1","diff":14,"type":"grammar","point":"plural nouns","q":"There are three ___ on the table.","opts":["boxes","boxs","box","boxies"],"a":0,"why":"Nouns ending in -x take -es in the plural."},{"id":"g_a1_5","lvl":"A1","diff":17,"type":"grammar","point":"pronouns","q":"That is my brother. ___ is ten years old.","opts":["He","She","It","They"],"a":0,"why":"'Brother' is male, so the subject pronoun is 'He'."},{"id":"g_a1_6","lvl":"A1","diff":20,"type":"grammar","point":"prepositions","q":"She lives ___ Japan.","opts":["in","on","at","of"],"a":0,"why":"'in' is used with countries: 'in Japan'."},{"id":"g_a1_7","lvl":"A1","diff":23,"type":"grammar","point":"can (ability)","q":"I ___ swim, but I can't ride a bike.","opts":["can","cans","am can","do can"],"a":0,"why":"'can' is a modal: no -s, no auxiliary."},{"id":"g_a1_8","lvl":"A1","diff":26,"type":"grammar","point":"present simple -s","q":"My father ___ to work by train.","opts":["goes","go","going","gos"],"a":0,"why":"Third-person singular of 'go' is 'goes'."},{"id":"v_a1_1","lvl":"A1","diff":9,"type":"vocab","point":"colours","q":"Bananas are usually ___.","opts":["yellow","blue","purple","grey"],"a":0,"why":"Basic colour vocabulary."},{"id":"v_a1_2","lvl":"A1","diff":11,"type":"vocab","point":"family","q":"My mother's mother is my ___.","opts":["grandmother","aunt","sister","cousin"],"a":0,"why":"Family relationships."},{"id":"v_a1_3","lvl":"A1","diff":13,"type":"vocab","point":"days","q":"The day after Monday is ___.","opts":["Tuesday","Sunday","Friday","Thursday"],"a":0,"why":"Days of the week in order."},{"id":"v_a1_4","lvl":"A1","diff":16,"type":"vocab","point":"everyday verbs","q":"I'm thirsty. I want to ___ some water.","opts":["drink","eat","wear","read"],"a":0,"why":"Collocation: drink + water."},{"id":"v_a1_5","lvl":"A1","diff":19,"type":"vocab","point":"places","q":"You can buy bread at the ___.","opts":["bakery","library","hospital","bank"],"a":0,"why":"Places in town and what you do there."},{"id":"v_a1_6","lvl":"A1","diff":22,"type":"vocab","point":"adjectives","q":"An elephant is very ___.","opts":["big","tiny","empty","quiet"],"a":0,"why":"Basic size adjectives."},{"id":"v_a1_7","lvl":"A1","diff":25,"type":"vocab","point":"weather","q":"Take an umbrella — it's ___ outside.","opts":["raining","sunny","dry","warm"],"a":0,"why":"Weather vocabulary and logical link to 'umbrella'."},{"id":"v_a1_8","lvl":"A1","diff":28,"type":"vocab","point":"time","q":"I get up ___ seven o'clock in the morning.","opts":["at","in","on","by"],"a":0,"why":"'at' + clock time."},{"id":"r_a1_1","lvl":"A1","diff":10,"type":"reading","point":"literal detail","passage":"Tom has a dog. The dog is black and white.","q":"What colour is the dog?","opts":["Black and white","Brown","All black","White only"],"a":0,"why":"Direct detail retrieval."},{"id":"r_a1_2","lvl":"A1","diff":13,"type":"reading","point":"literal detail","passage":"The shop opens at 9 a.m. and closes at 6 p.m.","q":"What time does the shop close?","opts":["6 p.m.","9 a.m.","9 p.m.","6 a.m."],"a":0,"why":"Locating a stated time."},{"id":"r_a1_3","lvl":"A1","diff":15,"type":"reading","point":"sign meaning","passage":"Sign: NO PARKING","q":"What does the sign mean?","opts":["You cannot leave your car here","You can park for free","Cars only","Park here"],"a":0,"why":"Understanding a common public sign."},{"id":"r_a1_4","lvl":"A1","diff":18,"type":"reading","point":"literal detail","passage":"Anna is from Italy. She lives in Rome with her family.","q":"Where does Anna live?","opts":["Rome","Italy only","France","With friends"],"a":0,"why":"Distinguishing city from country in the text."},{"id":"r_a1_5","lvl":"A1","diff":21,"type":"reading","point":"simple message","passage":"Message: 'Hi Ken, I'm at the café near the station. See you at 3.'","q":"Where is the writer?","opts":["At the café","At the station","At home","At school"],"a":0,"why":"Locating place in a short message."},{"id":"r_a1_6","lvl":"A1","diff":24,"type":"reading","point":"literal detail","passage":"We have two cats and a dog. The cats are small but the dog is big.","q":"How many cats are there?","opts":["Two","One","Three","A dog"],"a":0,"why":"Reading numbers and matching to the right noun."},{"id":"r_a1_7","lvl":"A1","diff":26,"type":"reading","point":"simple inference","passage":"Ben is wearing a coat, a hat and gloves.","q":"How is the weather probably?","opts":["Cold","Very hot","Rainy and warm","Sunny"],"a":0,"why":"Simple inference from clothing."},{"id":"r_a1_8","lvl":"A1","diff":28,"type":"reading","point":"simple inference","passage":"Maria closes her book, turns off the light and says good night.","q":"What is Maria going to do?","opts":["Go to sleep","Start studying","Go shopping","Cook dinner"],"a":0,"why":"Inferring the next action from clues."},{"id":"g_a2_1","lvl":"A2","diff":31,"type":"grammar","point":"past simple regular","q":"We ___ tennis yesterday.","opts":["played","play","have played","are playing"],"a":0,"why":"'yesterday' signals past simple; regular verb + -ed."},{"id":"g_a2_2","lvl":"A2","diff":32,"type":"grammar","point":"comparative","q":"This book is ___ than that one.","opts":["more interesting","interestinger","most interesting","interesting"],"a":0,"why":"Long adjectives form the comparative with 'more'."},{"id":"g_a2_3","lvl":"A2","diff":33,"type":"grammar","point":"some/any","q":"There isn't ___ milk in the fridge.","opts":["any","some","a","many"],"a":0,"why":"'any' with uncountable nouns in negatives."},{"id":"g_a2_4","lvl":"A2","diff":34,"type":"grammar","point":"going to","q":"Look at those clouds! It ___ rain.","opts":["is going to","goes to","will be","going to"],"a":0,"why":"'be going to' for a prediction based on present evidence."},{"id":"g_a2_5","lvl":"A2","diff":35,"type":"grammar","point":"past simple irregular","q":"She ___ to Paris last summer.","opts":["went","goed","gone","was go"],"a":0,"why":"Irregular past of 'go' is 'went'."},{"id":"g_a2_6","lvl":"A2","diff":36,"type":"grammar","point":"adverbs of frequency","q":"He ___ late for work.","opts":["is never","never is","is ever","never be"],"a":0,"why":"Adverbs of frequency go after 'be'."},{"id":"g_a2_7","lvl":"A2","diff":37,"type":"grammar","point":"present continuous","q":"Be quiet — the baby ___.","opts":["is sleeping","sleeps","slept","sleep"],"a":0,"why":"Present continuous for an action happening now."},{"id":"g_a2_8","lvl":"A2","diff":38,"type":"grammar","point":"have to","q":"You ___ wear a uniform at this school. It's a rule.","opts":["have to","can","would","used to"],"a":0,"why":"'have to' expresses obligation."},{"id":"g_a2_9","lvl":"A2","diff":39,"type":"grammar","point":"countable/uncountable","q":"How ___ sugar do you want?","opts":["much","many","some","few"],"a":0,"why":"'much' with uncountable nouns in questions."},{"id":"g_a2_10","lvl":"A2","diff":40,"type":"grammar","point":"possessive 's","q":"This is ___ car.","opts":["my sister's","my sisters","my sister","mine sister"],"a":0,"why":"Possessive apostrophe: sister's car."},{"id":"v_a2_1","lvl":"A2","diff":31,"type":"vocab","point":"daily routine","q":"Every morning I ___ a shower before breakfast.","opts":["have","make","do","take off"],"a":0,"why":"Collocation: have/take a shower ('have' is offered)."},{"id":"v_a2_2","lvl":"A2","diff":32,"type":"vocab","point":"travel","q":"We need to ___ our tickets before we get on the train.","opts":["buy","cook","borrow","paint"],"a":0,"why":"Logical collocation with 'tickets'."},{"id":"v_a2_3","lvl":"A2","diff":33,"type":"vocab","point":"opposites","q":"The opposite of 'cheap' is ___.","opts":["expensive","small","empty","slow"],"a":0,"why":"Common adjective antonyms."},{"id":"v_a2_4","lvl":"A2","diff":34,"type":"vocab","point":"phrasal basics","q":"Please ___ your shoes before you come in.","opts":["take off","take up","take after","take out"],"a":0,"why":"'take off' = remove (clothing)."},{"id":"v_a2_5","lvl":"A2","diff":35,"type":"vocab","point":"food","q":"I'd like a ___ of orange juice, please.","opts":["glass","slice","loaf","bar"],"a":0,"why":"Containers/quantifiers: a glass of juice."},{"id":"v_a2_6","lvl":"A2","diff":36,"type":"vocab","point":"jobs","q":"A person who cooks food in a restaurant is a ___.","opts":["chef","waiter","farmer","pilot"],"a":0,"why":"Jobs and their duties."},{"id":"v_a2_7","lvl":"A2","diff":37,"type":"vocab","point":"collocation","q":"Can you ___ me a favour and open the window?","opts":["do","make","give","take"],"a":0,"why":"Fixed collocation: do a favour."},{"id":"v_a2_8","lvl":"A2","diff":38,"type":"vocab","point":"feelings","q":"I was really ___ when I lost my keys again.","opts":["annoyed","delighted","calm","proud"],"a":0,"why":"Matching emotion to situation."},{"id":"v_a2_9","lvl":"A2","diff":39,"type":"vocab","point":"directions","q":"Go straight and then ___ left at the traffic lights.","opts":["turn","move","drive back","stand"],"a":0,"why":"Giving directions: turn left/right."},{"id":"v_a2_10","lvl":"A2","diff":40,"type":"vocab","point":"make/do","q":"I have to ___ my homework tonight.","opts":["do","make","take","have"],"a":0,"why":"Collocation: do homework."},{"id":"r_a2_1","lvl":"A2","diff":31,"type":"reading","point":"main idea","passage":"The library is closed on Sundays. From Monday to Saturday it is open from 10 a.m. to 5 p.m.","q":"When is the library closed?","opts":["On Sundays","On Mondays","Every afternoon","At 10 a.m."],"a":0,"why":"Locating the exception in a schedule."},{"id":"r_a2_2","lvl":"A2","diff":32,"type":"reading","point":"literal detail","passage":"Email: 'The meeting is now on Thursday, not Wednesday. Same room, same time.'","q":"What has changed about the meeting?","opts":["The day","The room","The time","The topic"],"a":0,"why":"Identifying what changed vs what stayed the same."},{"id":"r_a2_3","lvl":"A2","diff":33,"type":"reading","point":"inference","passage":"Sam looked at the empty fridge and sighed. 'Looks like I'm going to the supermarket again,' he said.","q":"Why is Sam going to the supermarket?","opts":["There is no food at home","He likes shopping","He needs new clothes","He is meeting a friend"],"a":0,"why":"Inference from 'empty fridge'."},{"id":"r_a2_4","lvl":"A2","diff":34,"type":"reading","point":"notice","passage":"Notice: 'Lift out of order. Please use the stairs.'","q":"What should people do?","opts":["Use the stairs","Wait for the lift","Leave the building","Call a taxi"],"a":0,"why":"Understanding instructions in a notice."},{"id":"r_a2_5","lvl":"A2","diff":35,"type":"reading","point":"main idea","passage":"Yuki started learning the guitar two years ago. At first it was hard, but now she plays in a band with her friends.","q":"What is the text mainly about?","opts":["Yuki's progress with the guitar","How to buy a guitar","Yuki's friends","A famous band"],"a":0,"why":"Identifying the overall topic."},{"id":"r_a2_6","lvl":"A2","diff":36,"type":"reading","point":"reference","passage":"My uncle gave me a bike for my birthday. It is red and very fast.","q":"What does 'It' refer to?","opts":["The bike","My uncle","My birthday","The colour"],"a":0,"why":"Tracking a pronoun reference."},{"id":"r_a2_7","lvl":"A2","diff":37,"type":"reading","point":"inference","passage":"'Sorry I'm late,' said Mia, out of breath. 'I missed the bus and had to run all the way.'","q":"Why is Mia out of breath?","opts":["She ran to get there","She was singing","She was ill","She woke up late only"],"a":0,"why":"Cause-and-effect inference."},{"id":"r_a2_8","lvl":"A2","diff":38,"type":"reading","point":"literal detail","passage":"The recipe needs two eggs, some flour and a little sugar. You do not need butter.","q":"Which ingredient is NOT needed?","opts":["Butter","Eggs","Flour","Sugar"],"a":0,"why":"Reading for a negative detail."},{"id":"r_a2_9","lvl":"A2","diff":39,"type":"reading","point":"purpose","passage":"'Don't forget to water the plants while I'm away. Thanks so much! — Grandma'","q":"Why did Grandma write this note?","opts":["To ask for help with the plants","To say goodbye forever","To sell her plants","To invite someone to dinner"],"a":0,"why":"Identifying the writer's purpose."},{"id":"r_a2_10","lvl":"A2","diff":40,"type":"reading","point":"inference","passage":"The children put on their coats and picked up their bags. The bell rang and they ran out of the classroom, smiling.","q":"What time of day is it probably?","opts":["The end of the school day","Early morning","The middle of a lesson","Lunchtime start"],"a":0,"why":"Combining clues (coats, bags, bell, running out) to infer time."},{"id":"g_b1_1","lvl":"B1","diff":41,"type":"grammar","point":"present perfect + since","q":"I ___ here since 2019.","opts":["have lived","live","lived","am living"],"a":0,"why":"Present perfect with 'since' for an unfinished period."},{"id":"g_b1_2","lvl":"B1","diff":41,"type":"grammar","point":"first conditional","q":"If it rains tomorrow, we ___ at home.","opts":["will stay","stay","would stay","stayed"],"a":0,"why":"First conditional: if + present, will + base."},{"id":"g_b1_3","lvl":"B1","diff":42,"type":"grammar","point":"used to","q":"I ___ smoke, but I gave up years ago.","opts":["used to","use to","am used to","was using to"],"a":0,"why":"'used to' for a past habit that stopped."},{"id":"g_b1_4","lvl":"B1","diff":43,"type":"grammar","point":"past continuous vs simple","q":"While I ___ dinner, the phone rang.","opts":["was cooking","cooked","have cooked","cook"],"a":0,"why":"Past continuous for the longer background action interrupted by a past simple event."},{"id":"g_b1_5","lvl":"B1","diff":43,"type":"grammar","point":"defining relative clause","q":"That's the man ___ helped me yesterday.","opts":["who","which","whose","where"],"a":0,"why":"'who' refers to a person as subject of the clause."},{"id":"g_b1_6","lvl":"B1","diff":44,"type":"grammar","point":"present perfect + for","q":"They ___ each other for ten years.","opts":["have known","know","knew","are knowing"],"a":0,"why":"Present perfect with 'for' + a duration; 'know' is a state verb."},{"id":"g_b1_7","lvl":"B1","diff":45,"type":"grammar","point":"gerund vs infinitive","q":"I enjoy ___ to music in the evening.","opts":["listening","to listen","listen","listened"],"a":0,"why":"'enjoy' is followed by the -ing form."},{"id":"g_b1_8","lvl":"B1","diff":46,"type":"grammar","point":"present passive","q":"This bridge ___ every two years.","opts":["is painted","paints","is painting","painted"],"a":0,"why":"Present simple passive: is + past participle."},{"id":"g_b1_9","lvl":"B1","diff":46,"type":"grammar","point":"modal deduction (present)","q":"She isn't answering. She ___ be asleep.","opts":["might","can","would","need"],"a":0,"why":"'might' expresses a present possibility."},{"id":"g_b1_10","lvl":"B1","diff":47,"type":"grammar","point":"comparative + than ever","q":"The exam was ___ than I expected.","opts":["much harder","more hard","hardest","as hard"],"a":0,"why":"'much' intensifies a comparative; 'hard' is short, so -er not 'more'."},{"id":"g_b1_11","lvl":"B1","diff":48,"type":"grammar","point":"reported speech (basic)","q":"He said he ___ tired and went straight to bed.","opts":["was","is","has been","will be"],"a":0,"why":"The past narrative ('went to bed') forces backshift to 'was', not 'is'."},{"id":"g_b1_12","lvl":"B1","diff":49,"type":"grammar","point":"question tag","q":"You've finished, ___?","opts":["haven't you","don't you","aren't you","didn't you"],"a":0,"why":"Tag matches the auxiliary 'have' and reverses polarity."},{"id":"g_b1_13","lvl":"B1","diff":50,"type":"grammar","point":"so/such","q":"It was ___ a good film that we watched it twice.","opts":["such","so","very","too"],"a":0,"why":"'such' + (a) + adjective + noun; 'so' would need no noun."},{"id":"v_b1_1","lvl":"B1","diff":41,"type":"vocab","point":"phrasal verb","q":"My car broke ___ on the motorway this morning.","opts":["down","up","into","off"],"a":0,"why":"'break down' = stop working (of a machine)."},{"id":"v_b1_2","lvl":"B1","diff":42,"type":"vocab","point":"collocation","q":"You should ___ a decision soon.","opts":["make","do","have","get"],"a":0,"why":"Collocation: make a decision ('take a decision' also exists in BrE, so it is not offered)."},{"id":"v_b1_3","lvl":"B1","diff":42,"type":"vocab","point":"word formation","q":"The instructions were very ___, so nobody understood.","opts":["confusing","confused","confuse","confusion"],"a":0,"why":"-ing adjective describes the thing causing the feeling."},{"id":"v_b1_4","lvl":"B1","diff":43,"type":"vocab","point":"phrasal verb","q":"I need to ___ my English before the trip.","opts":["brush up on","brush off","brush aside","brush in"],"a":0,"why":"'brush up on' = improve/revise a skill."},{"id":"v_b1_5","lvl":"B1","diff":44,"type":"vocab","point":"near synonym","q":"The weather was ___, so we cancelled the picnic.","opts":["dreadful","delicate","dense","distant"],"a":0,"why":"'dreadful' = very bad; the others don't fit weather here."},{"id":"v_b1_6","lvl":"B1","diff":45,"type":"vocab","point":"collocation","q":"She's very good at ___ problems quickly.","opts":["solving","answering","fixing up","making up"],"a":0,"why":"Collocation: solve a problem."},{"id":"v_b1_7","lvl":"B1","diff":45,"type":"vocab","point":"dependent preposition","q":"He's really keen ___ photography.","opts":["on","for","with","of"],"a":0,"why":"'keen on' + noun/-ing."},{"id":"v_b1_8","lvl":"B1","diff":46,"type":"vocab","point":"phrasal verb","q":"The meeting was ___ until next week.","opts":["put off","put on","put up","put out"],"a":0,"why":"'put off' = postpone."},{"id":"v_b1_9","lvl":"B1","diff":47,"type":"vocab","point":"adjective nuance","q":"It was a ___ mistake — anyone could have made it.","opts":["minor","massive","serious","fatal"],"a":0,"why":"'minor' matches 'anyone could have made it'."},{"id":"v_b1_10","lvl":"B1","diff":48,"type":"vocab","point":"collocation","q":"I'd like to ___ an appointment with the doctor.","opts":["make","do","give","put"],"a":0,"why":"Collocation: make an appointment."},{"id":"v_b1_11","lvl":"B1","diff":48,"type":"vocab","point":"word formation","q":"Regular exercise can ___ your health.","opts":["improve","improvement","improved","improving"],"a":0,"why":"A base-form verb is needed after 'can'."},{"id":"v_b1_12","lvl":"B1","diff":49,"type":"vocab","point":"phrasal verb","q":"I ran ___ an old friend at the station yesterday.","opts":["into","in","onto","off"],"a":0,"why":"'run into someone' = meet by chance."},{"id":"v_b1_13","lvl":"B1","diff":50,"type":"vocab","point":"dependent preposition","q":"The film is based ___ a true story.","opts":["on","in","of","from"],"a":0,"why":"'based on' is the fixed collocation."},{"id":"r_b1_1","lvl":"B1","diff":41,"type":"reading","point":"main idea","passage":"Many people believe that reading before bed helps them relax. Studies suggest even six minutes of reading can lower stress levels more than listening to music or going for a walk.","q":"What is the main point?","opts":["Reading before bed can reduce stress","Music is better than reading","Walks take six minutes","Everyone reads at night"],"a":0,"why":"Identifying the central claim."},{"id":"r_b1_2","lvl":"B1","diff":42,"type":"reading","point":"inference","passage":"Dan checked the time for the third time and kept glancing at the door. His coffee had gone cold.","q":"How does Dan probably feel?","opts":["Impatient","Relaxed","Bored of coffee","Sleepy"],"a":0,"why":"Inferring mood from behaviour, not a stated word."},{"id":"r_b1_3","lvl":"B1","diff":43,"type":"reading","point":"detail","passage":"The museum offers free entry on the first Sunday of each month. On other days, tickets cost £8 for adults and £5 for students.","q":"How much does a student pay on a normal Tuesday?","opts":["£5","£8","Free","£13"],"a":0,"why":"Applying the correct rule to the right day."},{"id":"r_b1_4","lvl":"B1","diff":44,"type":"reading","point":"reference","passage":"Lisa handed the report to her manager. She had spent all weekend on it and hoped it would be enough.","q":"Who does 'it' in 'on it' refer to?","opts":["The report","Her manager","The weekend","Lisa"],"a":0,"why":"Tracking reference across a sentence."},{"id":"r_b1_5","lvl":"B1","diff":45,"type":"reading","point":"writer's opinion","passage":"Some say online classes will replace schools entirely. I doubt it. Screens can teach facts, but they can't easily teach children how to share, argue and make friends.","q":"What is the writer's view?","opts":["Schools still matter for social skills","Online classes are useless","Schools should close","Facts can't be taught online"],"a":0,"why":"Identifying a qualified opinion, not an extreme one."},{"id":"r_b1_6","lvl":"B1","diff":45,"type":"reading","point":"inference","passage":"By the time the guests arrived, Priya had cleaned every room, arranged the flowers and set the table.","q":"What can we conclude?","opts":["She prepared before they came","She was still cleaning","The guests were late","She forgot the flowers"],"a":0,"why":"'By the time' + past perfect signals prior completion."},{"id":"r_b1_7","lvl":"B1","diff":46,"type":"reading","point":"main idea","passage":"Cycling to work sounds healthy, and it is — but only if roads are safe. In cities without proper cycle lanes, many people who would like to cycle simply don't dare.","q":"According to the text, what stops many people cycling?","opts":["A lack of safe roads","The cost of bikes","Bad weather","Long distances"],"a":0,"why":"Selecting the stated cause."},{"id":"r_b1_8","lvl":"B1","diff":47,"type":"reading","point":"detail","passage":"Applicants must send a CV and a short letter by 30 April. Interviews will be held in May. Successful candidates start in June.","q":"When are interviews held?","opts":["In May","In April","In June","In March"],"a":0,"why":"Matching an event to its month."},{"id":"r_b1_9","lvl":"B1","diff":48,"type":"reading","point":"inference","passage":"'I'm fine,' Marco said flatly, staring out of the window and not touching his food.","q":"What does the text suggest about Marco?","opts":["He is probably not fine","He is very hungry","He loves the view","He is excited"],"a":0,"why":"Reading contrast between words and behaviour."},{"id":"r_b1_10","lvl":"B1","diff":48,"type":"reading","point":"purpose","passage":"This leaflet explains how to sort your rubbish into the correct bins. Sorting correctly helps the town recycle more and send less waste to landfill.","q":"What is the purpose of the leaflet?","opts":["To explain how to sort rubbish","To advertise new bins","To complain about the town","To sell recycled products"],"a":0,"why":"Identifying communicative purpose."},{"id":"r_b1_11","lvl":"B1","diff":49,"type":"reading","point":"detail","passage":"The train to Kyoto leaves from platform 4, not platform 2 as printed on some tickets. Passengers should allow extra time to find it.","q":"Which platform should passengers use?","opts":["Platform 4","Platform 2","Any platform","Platform printed on the ticket"],"a":0,"why":"Correcting for a stated exception."},{"id":"r_b1_12","lvl":"B1","diff":50,"type":"reading","point":"inference","passage":"The recipe promised results 'in minutes', but two hours later Nadia was still scrubbing burnt pans and ordering pizza.","q":"How did the cooking go?","opts":["Badly","Quickly","Perfectly","Better than expected"],"a":0,"why":"Inferring outcome from contrasting details and irony."},{"id":"r_b1_13","lvl":"B1","diff":50,"type":"reading","point":"main idea","passage":"Volunteering isn't only good for others. People who give their time regularly often report feeling happier and more connected to their community than those who don't.","q":"What does the text say about volunteers?","opts":["They tend to feel happier","They earn more money","They have less free time","They dislike their community"],"a":0,"why":"Selecting the supported benefit."},{"id":"g_b2_1","lvl":"B2","diff":51,"type":"grammar","point":"third conditional","q":"If I ___ harder, I would have passed.","opts":["had studied","studied","would study","have studied"],"a":0,"why":"Third conditional: if + past perfect, would have + participle."},{"id":"g_b2_2","lvl":"B2","diff":51,"type":"grammar","point":"past perfect","q":"By the time we arrived, the film ___.","opts":["had already started","already started","has already started","was already starting"],"a":0,"why":"Past perfect for the earlier of two past events."},{"id":"g_b2_3","lvl":"B2","diff":52,"type":"grammar","point":"wish + past perfect","q":"I wish I ___ that email — it caused so much trouble.","opts":["hadn't sent","didn't send","wouldn't send","haven't sent"],"a":0,"why":"Regret about the past: wish + past perfect."},{"id":"g_b2_4","lvl":"B2","diff":53,"type":"grammar","point":"non-defining relative","q":"My boss, ___ has worked here for 20 years, is retiring.","opts":["who","that","which","whom"],"a":0,"why":"Non-defining clauses use 'who' (not 'that') for people, after a comma."},{"id":"g_b2_5","lvl":"B2","diff":53,"type":"grammar","point":"modal deduction (past)","q":"The ground is wet. It ___ during the night.","opts":["must have rained","must rain","had to rain","must be raining"],"a":0,"why":"'must have + participle' for a confident past deduction."},{"id":"g_b2_6","lvl":"B2","diff":54,"type":"grammar","point":"causative","q":"I'm going to ___ my hair cut tomorrow.","opts":["have","make","let","do"],"a":0,"why":"Causative 'have something done' — 'have my hair cut' ('get' also works, so it is not offered)."},{"id":"g_b2_7","lvl":"B2","diff":55,"type":"grammar","point":"reported question","q":"She asked me where ___.","opts":["I lived","did I live","do I live","I did live"],"a":0,"why":"Reported questions use statement word order, no auxiliary."},{"id":"g_b2_8","lvl":"B2","diff":55,"type":"grammar","point":"gerund/infinitive meaning","q":"I stopped ___ coffee because it kept me awake.","opts":["drinking","to drink","drink","to drinking"],"a":0,"why":"'stop + -ing' = quit the activity; 'stop to' would mean pause in order to."},{"id":"g_b2_9","lvl":"B2","diff":56,"type":"grammar","point":"present perfect continuous","q":"I ___ the kitchen since this morning and I still haven't finished.","opts":["have been painting","have painted","am painting","painted"],"a":0,"why":"'since this morning' + an unfinished ongoing action needs the present perfect continuous."},{"id":"g_b2_10","lvl":"B2","diff":57,"type":"grammar","point":"passive with reporting verb","q":"He ___ to be one of the best players of his generation.","opts":["is considered","considers","is considering","has considered"],"a":0,"why":"Impersonal passive: 'is considered to be'."},{"id":"g_b2_11","lvl":"B2","diff":58,"type":"grammar","point":"linkers (concession)","q":"___ the rain, the match went ahead.","opts":["Despite","Although","However","Even"],"a":0,"why":"'Despite' + noun; 'Although' would need a clause."},{"id":"g_b2_12","lvl":"B2","diff":59,"type":"grammar","point":"second conditional","q":"If I ___ you, I'd apologise straight away.","opts":["were","am","was being","would be"],"a":0,"why":"Second conditional with 'were' (subjunctive) after 'if I'."},{"id":"g_b2_13","lvl":"B2","diff":60,"type":"grammar","point":"participle clause","q":"___ by the noise, the neighbours called the police.","opts":["Woken","Waking","Having woke","Wake"],"a":0,"why":"Passive participle clause: 'Woken (having been woken) by the noise'."},{"id":"v_b2_1","lvl":"B2","diff":51,"type":"vocab","point":"collocation","q":"The company failed to ___ the deadline.","opts":["meet","reach","catch","gain"],"a":0,"why":"Collocation: meet a deadline."},{"id":"v_b2_2","lvl":"B2","diff":52,"type":"vocab","point":"phrasal verb","q":"Sales figures have ___ sharply since the price rise.","opts":["fallen off","fallen down","fallen out","fallen for"],"a":0,"why":"'fall off' = decrease/decline."},{"id":"v_b2_3","lvl":"B2","diff":52,"type":"vocab","point":"connotation","q":"He gave a ___ smile that didn't reach his eyes.","opts":["forced","genuine","warm","broad"],"a":0,"why":"'forced' fits the negative cue 'didn't reach his eyes'."},{"id":"v_b2_4","lvl":"B2","diff":53,"type":"vocab","point":"word formation","q":"The new policy proved highly ___ among staff.","opts":["controversial","controversy","controvert","controversially"],"a":0,"why":"An adjective is needed after 'highly' before a noun position; 'controversial'."},{"id":"v_b2_5","lvl":"B2","diff":54,"type":"vocab","point":"idiom","q":"When the CEO resigned, the news took everyone ___.","opts":["by surprise","in surprise","on surprise","for surprise"],"a":0,"why":"Fixed idiom: take someone by surprise."},{"id":"v_b2_6","lvl":"B2","diff":54,"type":"vocab","point":"near synonym","q":"The witness gave a ___ account of the accident, mentioning every tiny detail.","opts":["detailed","vague","brief","hasty"],"a":0,"why":"'every tiny detail' points to a detailed account; the distractors are opposites."},{"id":"v_b2_7","lvl":"B2","diff":55,"type":"vocab","point":"phrasal verb","q":"We'll have to ___ the meeting; too many people are ill.","opts":["call off","call up","call in","call for"],"a":0,"why":"'call off' = cancel."},{"id":"v_b2_8","lvl":"B2","diff":56,"type":"vocab","point":"dependent preposition","q":"Her success was largely down ___ years of quiet effort.","opts":["to","on","for","with"],"a":0,"why":"'down to' = attributable to."},{"id":"v_b2_9","lvl":"B2","diff":57,"type":"vocab","point":"collocation","q":"The two sides finally reached a ___.","opts":["compromise","concession","comprehension","commitment"],"a":0,"why":"Collocation: reach a compromise."},{"id":"v_b2_10","lvl":"B2","diff":57,"type":"vocab","point":"adjective nuance","q":"The evidence was ___ — it pointed clearly to one conclusion.","opts":["compelling","appealing","tempting","persuasion"],"a":0,"why":"'compelling evidence' = very convincing."},{"id":"v_b2_11","lvl":"B2","diff":58,"type":"vocab","point":"phrasal verb","q":"Don't let one bad review ___ you ___ trying.","opts":["put / off","put / out","take / off","turn / off"],"a":0,"why":"'put someone off (doing) something' = discourage."},{"id":"v_b2_12","lvl":"B2","diff":59,"type":"vocab","point":"formal synonym","q":"The manager asked staff to ___ from using phones in meetings.","opts":["refrain","prevent","avoid to","resist to"],"a":0,"why":"'refrain from + -ing' is the correct formal structure."},{"id":"v_b2_13","lvl":"B2","diff":60,"type":"vocab","point":"idiom","q":"After months of arguing, they decided to ___ and move on.","opts":["bury the hatchet","break the ice","cut corners","face the music"],"a":0,"why":"'bury the hatchet' = end a quarrel."},{"id":"r_b2_1","lvl":"B2","diff":51,"type":"reading","point":"tone","passage":"Ah yes, another 'revolutionary' phone that looks exactly like last year's, costs more, and removes a feature you actually used. Progress, apparently.","q":"What is the writer's tone?","opts":["Sarcastic","Enthusiastic","Neutral","Grateful"],"a":0,"why":"Recognising sarcasm from exaggeration and scare quotes."},{"id":"r_b2_2","lvl":"B2","diff":52,"type":"reading","point":"implication","passage":"The committee's report was praised for its 'admirable ambition'. On the practical question of funding, however, it remained conspicuously silent.","q":"What is implied about the report?","opts":["It avoided the hard financial detail","It solved the funding problem","It was too detailed","It rejected all ambition"],"a":0,"why":"Reading implication from 'conspicuously silent'."},{"id":"r_b2_3","lvl":"B2","diff":53,"type":"reading","point":"main idea","passage":"Remote work was once a perk; now, for many firms, it is simply how business is done. The debate has shifted from whether it works to how to do it well.","q":"What is the main point?","opts":["The conversation about remote work has moved on","Remote work has failed","All firms have banned offices","Remote work is still just a perk"],"a":0,"why":"Identifying the 'shift' as the central idea."},{"id":"r_b2_4","lvl":"B2","diff":54,"type":"reading","point":"inference","passage":"Although the charity raised a record sum this year, its director warned members not to celebrate too soon: demand for its services had risen even faster.","q":"Why did the director urge caution?","opts":["Needs were growing faster than funds","The money had been lost","Members were lazy","The charity would close"],"a":0,"why":"Contrast structure ('although… even faster') carries the reason."},{"id":"r_b2_5","lvl":"B2","diff":55,"type":"reading","point":"writer's stance","passage":"Supporters call the scheme bold and necessary. Critics call it reckless. The truth, as so often, probably lies somewhere less dramatic in between.","q":"What is the writer's position?","opts":["Balanced, resisting both extremes","Fully supportive","Strongly opposed","Undecided and confused"],"a":0,"why":"Distinguishing a considered middle stance from indecision."},{"id":"r_b2_6","lvl":"B2","diff":55,"type":"reading","point":"detail","passage":"The study found that participants who slept seven to eight hours performed best. Both shorter and longer sleep were linked to slower reaction times.","q":"What did the study find about very long sleep?","opts":["It was also linked to slower reactions","It gave the best results","It had no effect","It was not studied"],"a":0,"why":"Noting that 'both shorter and longer' share the same outcome."},{"id":"r_b2_7","lvl":"B2","diff":56,"type":"reading","point":"purpose","passage":"Rather than banning the technology outright, the article argues, regulators should focus on transparency — making companies show clearly how their systems reach decisions.","q":"What does the article recommend?","opts":["Requiring transparency instead of a ban","Banning the technology","Ignoring the issue","Letting companies self-regulate secretly"],"a":0,"why":"Identifying the 'rather than X, do Y' recommendation."},{"id":"r_b2_8","lvl":"B2","diff":57,"type":"reading","point":"inference","passage":"The reviewer noted the actor's 'undeniable energy', while carefully avoiding any comment on whether he could actually act.","q":"What is the reviewer suggesting?","opts":["The actor may not be very skilled","The actor is highly talented","The film had no energy","The reviewer loved the acting"],"a":0,"why":"Damning with faint praise; the omission is the point."},{"id":"r_b2_9","lvl":"B2","diff":58,"type":"reading","point":"cohesion","passage":"The plan looks sensible on paper. In reality, though, it depends on a level of cooperation between rival departments that has rarely, if ever, existed here.","q":"What does 'though' signal?","opts":["A contrast with the previous sentence","An example","A conclusion","Agreement"],"a":0,"why":"Understanding a discourse marker's function."},{"id":"r_b2_10","lvl":"B2","diff":58,"type":"reading","point":"main idea","passage":"It is tempting to blame young people for reading less. Yet libraries with good funding, comfortable spaces and events for teenagers report the opposite trend entirely.","q":"What does the writer imply?","opts":["Conditions, not youth, may explain reading habits","Young people never read","Libraries are a waste of money","Teenagers dislike events"],"a":0,"why":"The counter-example reframes where the 'blame' belongs."},{"id":"r_b2_11","lvl":"B2","diff":59,"type":"reading","point":"inference","passage":"'We value your feedback,' the automated voice repeated, for the twenty-third minute, as the hold music looped once more.","q":"What is the effect of these details?","opts":["They ironically undercut the company's claim","They show excellent service","They praise the music","They report a short wait"],"a":0,"why":"Irony created by the gap between statement and situation."},{"id":"r_b2_12","lvl":"B2","diff":60,"type":"reading","point":"attitude","passage":"Naturally, the minister insisted the figures had been 'taken out of context' — the standard reply, one begins to suspect, for any number that proves inconvenient.","q":"How does the writer regard the minister's reply?","opts":["Sceptically, as a predictable excuse","Sympathetically","Neutrally","Admiringly"],"a":0,"why":"'one begins to suspect' + 'standard reply' signals scepticism."},{"id":"r_b2_13","lvl":"B2","diff":60,"type":"reading","point":"detail/logic","passage":"The results held true for adults of all ages except the very oldest group, for whom the benefit shrank but did not disappear.","q":"What is true of the oldest group?","opts":["They saw a smaller but real benefit","They saw no benefit","They saw the greatest benefit","They were not measured"],"a":0,"why":"Precise reading of 'shrank but did not disappear'."},{"id":"g_c1_1","lvl":"C1","diff":61,"type":"grammar","point":"inversion (negative fronting)","q":"Not only ___ late, but he also forgot the documents.","opts":["was he","he was","he is","did he"],"a":0,"why":"Fronted 'Not only' triggers subject–auxiliary inversion."},{"id":"g_c1_2","lvl":"C1","diff":62,"type":"grammar","point":"cleft sentence","q":"It was only later ___ I understood what she really meant.","opts":["that","when","which","what"],"a":0,"why":"An it-cleft introduces the clause with 'that', not 'when/which'."},{"id":"g_c1_3","lvl":"C1","diff":63,"type":"grammar","point":"mixed conditional","q":"If she had taken the job, she ___ in London now.","opts":["would be living","would have lived","lived","will live"],"a":0,"why":"Past condition, present result: 'would be living now'."},{"id":"g_c1_4","lvl":"C1","diff":64,"type":"grammar","point":"inversion (only)","q":"Only after the guests had left ___ how tired she was.","opts":["did she realise","she realised","she did realise","realised she"],"a":0,"why":"'Only after…' fronting forces inversion."},{"id":"g_c1_5","lvl":"C1","diff":65,"type":"grammar","point":"reduced relative","q":"The proposals ___ at the meeting were rejected.","opts":["put forward","which put forward","that put forward","putting forward"],"a":0,"why":"Reduced passive relative: 'the proposals (that were) put forward'."},{"id":"g_c1_6","lvl":"C1","diff":66,"type":"grammar","point":"concessive inversion","q":"___ as the task was, she completed it on time.","opts":["Difficult","However difficult","Though difficult","So difficult"],"a":0,"why":"Concessive 'Adjective + as + clause': 'Difficult as the task was…'."},{"id":"g_c1_7","lvl":"C1","diff":67,"type":"grammar","point":"future perfect","q":"By next June, I ___ here for ten years.","opts":["will have worked","will work","have worked","would have worked"],"a":0,"why":"Future perfect for completion by a future point."},{"id":"g_c1_8","lvl":"C1","diff":68,"type":"grammar","point":"emphatic structure","q":"Little ___ that the decision would change everything.","opts":["did they know","they knew","they did know","knew they"],"a":0,"why":"Negative adverb 'Little' fronted requires inversion."},{"id":"g_c1_9","lvl":"C1","diff":69,"type":"grammar","point":"passive infinitive","q":"The documents are believed ___ during the fire.","opts":["to have been destroyed","to be destroyed","to have destroyed","being destroyed"],"a":0,"why":"Perfect passive infinitive after a reporting-verb passive."},{"id":"g_c1_10","lvl":"C1","diff":70,"type":"grammar","point":"unreal past wish","q":"He talks as if he ___ everything, but he clearly doesn't.","opts":["knew","knows","has known","would know"],"a":0,"why":"'as if' + past for an unreal present situation."},{"id":"v_c1_1","lvl":"C1","diff":61,"type":"vocab","point":"near-synonym nuance","q":"The report gave a ___ overview rather than a detailed analysis.","opts":["cursory","meticulous","exhaustive","painstaking"],"a":0,"why":"'cursory' = quick and superficial, matching the contrast with 'detailed'."},{"id":"v_c1_2","lvl":"C1","diff":62,"type":"vocab","point":"collocation","q":"The scandal did lasting ___ to his reputation.","opts":["damage","injury","wound","scar"],"a":0,"why":"Collocation: do (lasting) damage to a reputation."},{"id":"v_c1_3","lvl":"C1","diff":63,"type":"vocab","point":"phrasal verb (formal)","q":"The committee will ___ the matter at its next session.","opts":["look into","look after","look up to","look down on"],"a":0,"why":"'look into' = investigate."},{"id":"v_c1_4","lvl":"C1","diff":64,"type":"vocab","point":"idiom","q":"Instead of addressing the real problem, they spent the meeting ___ over the exact wording.","opts":["splitting hairs","breaking the ice","clearing the air","pulling strings"],"a":0,"why":"'splitting hairs' = arguing over trivial distinctions."},{"id":"v_c1_5","lvl":"C1","diff":65,"type":"vocab","point":"register","q":"We regret to inform you that your application has been ___.","opts":["unsuccessful","a fail","turned bad","no good"],"a":0,"why":"Formal register: 'unsuccessful'."},{"id":"v_c1_6","lvl":"C1","diff":66,"type":"vocab","point":"collocation","q":"The two accounts of events are difficult to ___.","opts":["reconcile","reunite","reassemble","recover"],"a":0,"why":"'reconcile' conflicting accounts."},{"id":"v_c1_7","lvl":"C1","diff":67,"type":"vocab","point":"connotation","q":"His so-called 'help' only ___ the situation.","opts":["exacerbated","alleviated","eased","remedied"],"a":0,"why":"'exacerbated' = made worse, fitting the ironic 'so-called'."},{"id":"v_c1_8","lvl":"C1","diff":68,"type":"vocab","point":"precise verb","q":"The new evidence ___ doubt on the original verdict.","opts":["cast","put","laid","placed"],"a":0,"why":"Fixed collocation: cast doubt on."},{"id":"v_c1_9","lvl":"C1","diff":69,"type":"vocab","point":"idiom","q":"After the merger, several senior staff were quietly ___.","opts":["let go","let down","let off","let in"],"a":0,"why":"'let go' = dismissed (euphemism)."},{"id":"v_c1_10","lvl":"C1","diff":70,"type":"vocab","point":"nuance","q":"Her argument was ___: elegant, but built on a single unproven assumption.","opts":["tenuous","robust","watertight","sound"],"a":0,"why":"'tenuous' = weak/flimsy, matching the 'unproven assumption'."},{"id":"r_c1_1","lvl":"C1","diff":61,"type":"reading","point":"writer's stance","passage":"That the policy is popular is not in question. Whether popularity should be the measure of a good law, however, is a question the campaign is careful never to ask.","q":"What is the writer suggesting?","opts":["Popularity alone shouldn't judge a law","The law is unpopular","The campaign asks hard questions","Good laws are always popular"],"a":0,"why":"The writer questions the campaign's chosen measure."},{"id":"r_c1_2","lvl":"C1","diff":62,"type":"reading","point":"implication","passage":"His memoir is generous to almost everyone he worked with — a generosity, some former colleagues note drily, not always evident at the time.","q":"What do the colleagues imply?","opts":["He was less kind in reality","He was always kind","The memoir is dull","They dislike memoirs"],"a":0,"why":"'not always evident at the time' undercuts the praise."},{"id":"r_c1_3","lvl":"C1","diff":63,"type":"reading","point":"main idea","passage":"We often assume creativity means producing something from nothing. In practice it more often means noticing an unlikely connection between things everyone else had already seen.","q":"What is the central claim?","opts":["Creativity is largely about connecting the familiar","Creativity comes from nothing","Only geniuses are creative","Noticing things is not creative"],"a":0,"why":"Reframing the definition of creativity is the thesis."},{"id":"r_c1_4","lvl":"C1","diff":64,"type":"reading","point":"inference","passage":"The minister's answer was a masterpiece of its kind: fluent, confident, and entirely unrelated to the question she had been asked.","q":"What is the writer's actual assessment?","opts":["She evaded the question skilfully","She answered clearly","She was confused","She was honest"],"a":0,"why":"'masterpiece' is ironic given 'unrelated to the question'."},{"id":"r_c1_5","lvl":"C1","diff":65,"type":"reading","point":"argument structure","passage":"Granting that automation will destroy some jobs, the author insists this is not the same as destroying work itself; new needs, she argues, generate new roles we cannot yet name.","q":"How does the author treat the job-loss claim?","opts":["She concedes it but limits its scope","She denies it completely","She ignores it","She proves it false"],"a":0,"why":"'Granting that…' is a concession, then a counter-argument."},{"id":"r_c1_6","lvl":"C1","diff":66,"type":"reading","point":"tone","passage":"The brochure describes the flat as 'cosy and full of character' — words which, seasoned renters know, translate roughly as 'small and in urgent need of repair'.","q":"What is the tone of the passage?","opts":["Wry / knowing","Sincere","Angry","Anxious"],"a":0,"why":"A knowing, wry decoding of euphemism."},{"id":"r_c1_7","lvl":"C1","diff":67,"type":"reading","point":"implication","passage":"Critics of the reform have been remarkably quiet since the figures were published — a silence that speaks rather louder than their earlier objections.","q":"What does the silence suggest?","opts":["The figures probably weakened their case","They now support the reform loudly","Nothing at all","They were never critical"],"a":0,"why":"'silence that speaks louder' implies the data undermined critics."},{"id":"r_c1_8","lvl":"C1","diff":68,"type":"reading","point":"nuance","passage":"It would be an exaggeration to call the results disappointing; it would be equally misleading to call them a triumph. They were, in the end, simply adequate.","q":"How does the writer characterise the results?","opts":["Neither a failure nor a success — just middling","A clear triumph","A clear failure","Impossible to judge"],"a":0,"why":"The double negative frames a precisely middling verdict."},{"id":"r_c1_9","lvl":"C1","diff":69,"type":"reading","point":"writer's purpose","passage":"This essay does not aim to settle the dispute. Its more modest ambition is to show why the two sides, using the same word to mean different things, have been talking past each other for a decade.","q":"What is the essay's stated purpose?","opts":["To explain a persistent misunderstanding","To declare a winner","To end the debate","To take one side"],"a":0,"why":"The purpose is diagnostic, not conclusive."},{"id":"r_c1_10","lvl":"C1","diff":70,"type":"reading","point":"inference","passage":"Whatever its faults, the old system had one virtue the new one lacks: when it failed, everyone could see exactly where, and why.","q":"What advantage did the old system have?","opts":["Its failures were transparent","It never failed","It was faultless","It was faster"],"a":0,"why":"The 'one virtue' is transparency of failure, implying the new one hides it."},{"id":"g_c2_1","lvl":"C2","diff":73,"type":"grammar","point":"correlative inversion","q":"___ had she sat down than the phone rang.","opts":["No sooner","Hardly","Scarcely","As soon as"],"a":0,"why":"'No sooner … than' with inversion; 'Hardly/Scarcely' take 'when', 'As soon as' doesn't invert."},{"id":"g_c2_2","lvl":"C2","diff":76,"type":"grammar","point":"perfect participle clause","q":"___ finished the report, she finally allowed herself a short break.","opts":["Having","Have","Had","Being"],"a":0,"why":"Perfect participle 'Having finished…' compresses 'After she had finished…'."},{"id":"g_c2_3","lvl":"C2","diff":80,"type":"grammar","point":"fronting + inversion","q":"So convincing ___ that no one dared object.","opts":["was her argument","her argument was","was her argument that it","her argument was so"],"a":0,"why":"Fronted 'So + adjective' inverts subject and verb: 'So convincing was her argument'."},{"id":"g_c2_4","lvl":"C2","diff":84,"type":"grammar","point":"ellipsis / operator","q":"'Can you actually swim that far?' 'I ___, yes — I've done it before.'","opts":["can","will","am","do"],"a":0,"why":"Elliptical answer keeps just the modal operator: 'I can.'"},{"id":"g_c2_5","lvl":"C2","diff":88,"type":"grammar","point":"cleft with 'what'","q":"___ surprised everyone was how calmly she reacted.","opts":["What","That what","Which","How"],"a":0,"why":"Pseudo-cleft subject clause: 'What surprised everyone was…'."},{"id":"g_c2_6","lvl":"C2","diff":91,"type":"grammar","point":"unreal past inversion","q":"___ the warning been heeded, the disaster might have been avoided.","opts":["Had","If had","Should have","Were"],"a":0,"why":"Inverted third conditional: 'Had the warning been heeded' (= If it had been)."},{"id":"v_c2_1","lvl":"C2","diff":74,"type":"vocab","point":"fine distinction","q":"The apology felt ___ — technically correct, yet somehow hollow.","opts":["perfunctory","heartfelt","effusive","candid"],"a":0,"why":"'perfunctory' = done as a duty, without real feeling."},{"id":"v_c2_2","lvl":"C2","diff":78,"type":"vocab","point":"low-frequency idiom","q":"His grand promises turned out to be so much ___.","opts":["hot air","cold comfort","thin ice","old hat"],"a":0,"why":"'hot air' = empty, boastful talk."},{"id":"v_c2_3","lvl":"C2","diff":82,"type":"vocab","point":"register / formality","q":"The tribunal found the claimant's account of events wholly ___.","opts":["untenable","unlikeable","unbearable","unremarkable"],"a":0,"why":"'untenable' = impossible to defend or maintain — the legal register fit."},{"id":"v_c2_4","lvl":"C2","diff":85,"type":"vocab","point":"nuance / connotation","q":"A ___ observer might have missed it; she did not.","opts":["less astute","more astute","keener","sharper"],"a":0,"why":"The contrast 'she did not' requires the weaker term: 'a less astute observer'."},{"id":"v_c2_5","lvl":"C2","diff":89,"type":"vocab","point":"fine distinction","q":"Her prose is remarkably ___: every word is chosen for effect, and nothing is wasted.","opts":["economical","verbose","rambling","florid"],"a":0,"why":"'economical' prose wastes no words; the distractors all mean wordy or excessive."},{"id":"v_c2_6","lvl":"C2","diff":92,"type":"vocab","point":"precise abstract noun","q":"What the critics mistook for arrogance was, in fact, sheer ___: he was simply too shy to say so.","opts":["indifference","diffidence","deference","difference"],"a":1,"why":"'too shy' forces 'diffidence' (shyness); 'indifference' would mean not caring."},{"id":"r_c2_1","lvl":"C2","diff":75,"type":"reading","point":"irony","passage":"He was, by universal agreement, the most modest man in the room — a fact of which he never once let anyone remain unaware.","q":"What is the writer conveying?","opts":["His modesty was a performance","He was genuinely humble","He was silent","He disliked attention"],"a":0,"why":"The second clause contradicts the first, exposing false modesty."},{"id":"r_c2_2","lvl":"C2","diff":79,"type":"reading","point":"subtle implication","passage":"The biography is scrupulously fair to its subject — perhaps, one occasionally feels, a little more scrupulous than the subject ever managed to be about anyone else.","q":"What is implied about the subject of the biography?","opts":["He was not fair to others","He was very fair","The book is unfair","The author is careless"],"a":0,"why":"The comparison quietly indicts the subject's own conduct."},{"id":"r_c2_3","lvl":"C2","diff":83,"type":"reading","point":"authorial distance","passage":"Progress, we are assured — always by those comfortably insulated from its costs — demands a few unavoidable sacrifices. The identity of who sacrifices, and who is merely assured, is seldom examined.","q":"What is the writer criticising?","opts":["Who bears the cost of 'progress' versus who defends it","The concept of sacrifice itself","People who fear change","Slow progress"],"a":0,"why":"The passage targets the asymmetry between beneficiaries and those who pay."},{"id":"r_c2_4","lvl":"C2","diff":86,"type":"reading","point":"nuanced argument","passage":"To say the theory is unproven is not to say it is false; to treat 'unproven' and 'untrue' as synonyms is precisely the error the theory's opponents keep making.","q":"What distinction does the writer insist on?","opts":["Lack of proof is not the same as falsehood","The theory is proven","Opponents are always right","Proof and truth are identical"],"a":0,"why":"The writer separates 'unproven' from 'false' and faults those who conflate them."},{"id":"r_c2_5","lvl":"C2","diff":90,"type":"reading","point":"tone / register","passage":"One hesitates to call the plan naïve, that being unkind; 'optimistic beyond the reach of evidence' will perhaps serve as well, and wound less.","q":"What is the writer doing in this sentence?","opts":["Criticising the plan while affecting politeness","Praising the plan sincerely","Refusing to judge the plan","Calling the plan realistic"],"a":0,"why":"The mock-courtesy delivers the criticism it pretends to withhold."},{"id":"r_c2_6","lvl":"C2","diff":92,"type":"reading","point":"abstract inference","passage":"The paradox of expertise is that the deeper one's knowledge of a field, the more visible its uncertainties become — so that genuine authorities often sound less sure than the confident amateurs who surround them.","q":"What point is being made?","opts":["Real expertise breeds visible doubt, not false certainty","Amateurs know more than experts","Confidence proves expertise","Uncertainty means ignorance"],"a":0,"why":"The 'paradox' is that expertise reveals uncertainty rather than hiding it."}];
+
+/* ============================ ENGINE ============================ */
+/* JawsChat CEFR adaptive engine
+   Model: 3PL-style with fixed guessing floor for 4-option MCQ.
+     P(correct | theta, b) = c + (1-c) / (1 + exp(-(theta-b)/S))
+   Ability estimated by EAP (posterior mean) over a discrete theta grid,
+   updated after every response. Item selection targets max information
+   near the current estimate, drawn from a rotating content type with a
+   small random tie-break for exposure control.
+*/
+(function (root) {
+  const CFG = {
+    S: 7,          // logistic scale (discrimination)
+    c: 0.25,       // guessing floor (1 of 4 options)
+    gridLo: 1,
+    gridHi: 100,
+    priorMu: 50,
+    priorSd: 24,
+    nItems: 30,
+    startLo: 41,   // first-item difficulty window (jittered start)
+    startHi: 49,
+    nearK: 4,      // random tie-break among K nearest items
+    nearKStart: 6  // wider tie-break for the first few items (exposure control)
+  };
+  const BANDS = [
+    { band: "A1", lo: 1,  hi: 30 },
+    { band: "A2", lo: 31, hi: 40 },
+    { band: "B1", lo: 41, hi: 50 },
+    { band: "B2", lo: 51, hi: 60 },
+    { band: "C1", lo: 61, hi: 70 },
+    { band: "C2", lo: 71, hi: 100 }
+  ];
+  const TYPES = ["grammar", "vocab", "reading"];
+
+  function pCorrect(theta, b) {
+    return CFG.c + (1 - CFG.c) / (1 + Math.exp(-(theta - b) / CFG.S));
+  }
+  function bandFor(theta) {
+    // use upper thresholds so continuous values between integer bounds still map
+    for (const r of BANDS) if (theta <= r.hi + 0.5) return r.band;
+    return "C2";
+  }
+  function bandIndexFor(theta) {
+    for (let i = 0; i < BANDS.length; i++) if (theta <= BANDS[i].hi + 0.5) return i;
+    return BANDS.length - 1;
+  }
+
+  function makeSession(bank, rng) {
+    rng = rng || Math.random;
+    // build theta grid + normal prior
+    const grid = [], prior = [];
+    for (let t = CFG.gridLo; t <= CFG.gridHi; t++) {
+      grid.push(t);
+      const z = (t - CFG.priorMu) / CFG.priorSd;
+      prior.push(Math.exp(-0.5 * z * z));
+    }
+    let post = normalize(prior.slice());
+    const used = new Set();
+    const asked = [];
+    let typeIdx = Math.floor(rng() * TYPES.length);
+
+    function theta() { return dot(grid, post); }
+    function se() {
+      const m = theta();
+      let v = 0;
+      for (let i = 0; i < grid.length; i++) v += post[i] * (grid[i] - m) * (grid[i] - m);
+      return Math.sqrt(v);
+    }
+
+    function pick() {
+      const est = asked.length === 0
+        ? CFG.startLo + rng() * (CFG.startHi - CFG.startLo)
+        : theta();
+      // rotate content type; fall back to any type if exhausted near est
+      for (let step = 0; step < TYPES.length; step++) {
+        const type = TYPES[(typeIdx + step) % TYPES.length];
+        const pool = bank.filter(it => it.type === type && !used.has(it.id));
+        if (pool.length) {
+          pool.sort((a, b) => Math.abs(a.diff - est) - Math.abs(b.diff - est));
+          const kk = asked.length < 3 ? CFG.nearKStart : CFG.nearK;
+          const k = Math.min(kk, pool.length);
+          const chosen = pool[Math.floor(rng() * k)];
+          typeIdx = (TYPES.indexOf(type) + 1) % TYPES.length;
+          return chosen;
+        }
+      }
+      // all types exhausted (shouldn't happen within 30) -> nearest remaining
+      const rem = bank.filter(it => !used.has(it.id));
+      rem.sort((a, b) => Math.abs(a.diff - est) - Math.abs(b.diff - est));
+      return rem[0];
+    }
+
+    function answer(item, correct) {
+      used.add(item.id);
+      asked.push({ id: item.id, lvl: item.lvl, type: item.type, diff: item.diff, correct });
+      for (let i = 0; i < grid.length; i++) {
+        const p = pCorrect(grid[i], item.diff);
+        post[i] *= correct ? p : (1 - p);
+      }
+      post = normalize(post);
+    }
+
+    return {
+      cfg: CFG, grid,
+      pick, answer, theta, se,
+      band: () => bandFor(theta()),
+      asked, used,
+      done: () => asked.length >= CFG.nItems
+    };
+  }
+
+  function normalize(a) { const s = a.reduce((x, y) => x + y, 0) || 1; return a.map(v => v / s); }
+  function dot(g, p) { let s = 0; for (let i = 0; i < g.length; i++) s += g[i] * p[i]; return s; }
+
+  const API = { makeSession, pCorrect, bandFor, bandIndexFor, BANDS, TYPES, CFG };
+  if (typeof module !== "undefined") module.exports = API;
+  else root.CEFREngine = API;
+})(typeof window !== "undefined" ? window : this);
+
+
+/* ============================ OPTIONAL LOGGING ============================
+   To recalibrate item difficulties against real data later, point this at
+   your Supabase table. Leave enabled:false and it does nothing.
+   Expected table columns: session_id, item_id, level, type, diff, correct,
+   position, ts.  (No personal data is collected.)                          */
+const LOGGING = {
+  enabled: false,
+  url: "",        // e.g. https://xxxx.supabase.co/rest/v1/cefr_responses
+  key: ""         // anon key
+};
+function logResponse(sessionId, item, correct, position) {
+  if (!LOGGING.enabled || !LOGGING.url) return;
+  try {
+    fetch(LOGGING.url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "apikey": LOGGING.key, "Authorization": "Bearer " + LOGGING.key },
+      body: JSON.stringify({ session_id: sessionId, item_id: item.id, level: item.lvl, type: item.type, diff: item.diff, correct: correct, position: position, ts: new Date().toISOString() })
+    }).catch(() => {});
+  } catch (e) {}
+}
+
+/* ============================ CONTENT ============================ */
+const BAND_NAME = { A1:"Beginner", A2:"Elementary", B1:"Intermediate", B2:"Upper intermediate", C1:"Advanced", C2:"Proficient" };
+const CAN_DO = {
+  A1:"You can understand and use familiar everyday expressions and very basic phrases — introducing yourself, asking simple questions, and handling concrete needs.",
+  A2:"You can communicate in simple, routine tasks and describe your background, immediate environment and everyday matters in basic terms.",
+  B1:"You can handle most situations while travelling, describe experiences and plans, and produce simple connected text on familiar topics.",
+  B2:"You can interact with fluency and spontaneity, understand the main ideas of complex text, and argue a viewpoint clearly on a range of subjects.",
+  C1:"You can use English flexibly and effectively for social, academic and professional purposes, and produce clear, well-structured text on complex subjects.",
+  C2:"You can understand virtually everything read or heard with ease and express yourself precisely, even in the most demanding situations."
+};
+
+/* ============================ APP ============================ */
+const $ = id => document.getElementById(id);
+let session = null, current = null, sessionId = null, answering = false;
+
+function newSessionId() { return "s_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 8); }
+
+function startTest() {
+  sessionId = newSessionId();
+  session = CEFREngine.makeSession(BANK);
+  $("introCard").classList.add("hidden");
+  $("resultCard").classList.add("hidden");
+  $("testCard").classList.remove("hidden");
+  answering = false;
+  nextQuestion();
+  $("testCard").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function nextQuestion() {
+  if (session.done()) return showResult();
+  current = session.pick();
+  const n = session.asked.length + 1;
+  $("qNum").textContent = n;
+  $("progressFill").style.width = ((n - 1) / session.cfg.nItems * 100) + "%";
+  $("phaseLabel").textContent = n <= 8 ? "Finding your level…" : n <= 22 ? "Zeroing in…" : "Almost there…";
+
+  $("qType").textContent = { grammar:"Grammar", vocab:"Vocabulary", reading:"Reading" }[current.type];
+  const pas = $("passage");
+  if (current.passage) { pas.textContent = current.passage; pas.classList.remove("hidden"); }
+  else pas.classList.add("hidden");
+  $("qText").textContent = current.q;
+
+  // shuffle options, remember where the correct one lands
+  const idx = current.opts.map((_, i) => i);
+  for (let i = idx.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [idx[i], idx[j]] = [idx[j], idx[i]]; }
+  const box = $("options");
+  box.innerHTML = "";
+  answering = false;
+  idx.forEach((origIndex, pos) => {
+    const btn = document.createElement("button");
+    btn.className = "opt";
+    btn.innerHTML = '<span class="key">' + "ABCD"[pos] + '</span><span>' + escapeHtml(current.opts[origIndex]) + '</span>';
+    btn.onclick = () => choose(btn, origIndex);
+    box.appendChild(btn);
+  });
+}
+
+function choose(btn, chosenIdx) {
+  if (answering) return;
+  answering = true;
+  const correct = chosenIdx === current.a;
+  btn.classList.add("chosen");
+  Array.from($("options").children).forEach(b => { b.disabled = true; });
+  const pos = session.asked.length + 1;
+  session.answer(current, correct);
+  session.asked[session.asked.length - 1].choice = chosenIdx;
+  logResponse(sessionId, current, correct, pos);
+  const n = session.asked.length;
+  $("progressFill").style.width = (n / session.cfg.nItems * 100) + "%";
+  setTimeout(nextQuestion, 300);
+}
+
+function showResult() {
+  $("testCard").classList.add("hidden");
+  const theta = session.theta();
+  const band = session.band();
+  const se = session.se();
+  const score = Math.round(theta);
+
+  $("rBand").textContent = band;
+  $("rName").textContent = BAND_NAME[band];
+  $("rScore").textContent = score;
+  $("rCanDo").textContent = CAN_DO[band];
+
+  // confidence + borderline detection
+  const bounds = CEFREngine.BANDS;
+  let nearestGap = Infinity, otherBand = null;
+  bounds.forEach(r => {
+    [r.lo - 0.5, r.hi + 0.5].forEach(edge => {
+      if (edge > 1 && edge < 100) {
+        const d = Math.abs(theta - edge);
+        if (d < nearestGap) { nearestGap = d; otherBand = theta < edge ? bandAt(edge + 0.6) : bandAt(edge - 0.6); }
+      }
+    });
+  });
+  const conf = $("rConf");
+  if (nearestGap < se) {
+    conf.classList.add("borderline");
+    const pair = [band, otherBand].filter((v, i, a) => a.indexOf(v) === i);
+    conf.textContent = "You're right on the " + pair.join("–") + " boundary. On another day you could land either side — treat this as " + band + " with " + (otherBand) + " within reach.";
+  } else {
+    conf.classList.remove("borderline");
+    const level = se < 3.2 ? "a confident" : se < 4.6 ? "a reasonably confident" : "an approximate";
+    conf.textContent = "This is " + level + " placement at " + band + " (± about " + Math.max(1, Math.round(se)) + " points on the score scale). A 30-question test places into a band; it isn't a certificate.";
+  }
+
+  // strand breakdown
+  const strands = { grammar:{c:0,n:0}, vocab:{c:0,n:0}, reading:{c:0,n:0} };
+  session.asked.forEach(a => { strands[a.type].n++; if (a.correct) strands[a.type].c++; });
+  const colors = { grammar:"var(--terra)", vocab:"var(--teal)", reading:"var(--blue)" };
+  const labels = { grammar:"Grammar", vocab:"Vocabulary", reading:"Reading" };
+  const sb = $("rStrands"); sb.innerHTML = "";
+  ["grammar","vocab","reading"].forEach(t => {
+    const s = strands[t]; const pct = s.n ? Math.round(100 * s.c / s.n) : 0;
+    const row = document.createElement("div"); row.className = "strand-row";
+    row.innerHTML = '<span class="strand-name">' + labels[t] + '</span>' +
+      '<span class="strand-track"><span class="strand-bar" style="width:' + pct + '%;background:' + colors[t] + '"></span></span>' +
+      '<span class="strand-val">' + s.c + '/' + s.n + '</span>';
+    sb.appendChild(row);
+  });
+
+  buildReview();
+  $("reviewList").classList.add("hidden");
+  $("reviewBtn").textContent = "Review answers ▾";
+  $("resultCard").classList.remove("hidden");
+  $("resultCard").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function bandAt(theta) { return CEFREngine.bandFor(theta); }
+
+function buildReview() {
+  const list = $("reviewList"); list.innerHTML = "";
+  session.asked.forEach((a, i) => {
+    const item = BANK.find(x => x.id === a.id);
+    const div = document.createElement("div"); div.className = "rev-item";
+    let html = '<div class="rev-q"><span class="lvltag">' + item.lvl + '</span>' + (i + 1) + '. ' + escapeHtml(item.q) + '</div>';
+    if (a.correct) {
+      html += '<div class="rev-line"><span class="mark ok">✓</span> <span class="rev-correct">' + escapeHtml(item.opts[item.a]) + '</span></div>';
+    } else {
+      const chosen = (typeof a.choice === "number") ? item.opts[a.choice] : "(no answer)";
+      html += '<div class="rev-line"><span class="mark no">✗</span> <span class="rev-wrong">' + escapeHtml(chosen) + '</span></div>';
+      html += '<div class="rev-line"><span class="mark ok">✓</span> <span class="rev-correct">' + escapeHtml(item.opts[item.a]) + '</span></div>';
+    }
+    html += '<div class="rev-why">' + escapeHtml(item.why) + '</div>';
+    div.innerHTML = html;
+    list.appendChild(div);
+  });
+}
+
+function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c])); }
+
+// keyboard 1-4
+document.addEventListener("keydown", e => {
+  if ($("testCard").classList.contains("hidden") || answering) return;
+  const k = parseInt(e.key, 10);
+  if (k >= 1 && k <= 4) { const opts = $("options").children; if (opts[k - 1]) opts[k - 1].click(); }
+});
+
+$("startBtn").onclick = startTest;
+$("retakeBtn").onclick = startTest;
+$("reviewBtn").onclick = () => {
+  const l = $("reviewList"); const hidden = l.classList.toggle("hidden");
+  $("reviewBtn").textContent = hidden ? "Review answers ▾" : "Hide review ▴";
+};
+</script>
+<!-- Traffic Ledger -->
+<script src="https://ptvartspace-go.github.io/Webstatsmine/tracker.js" data-site="jawschat" defer></script>
+
+</body>
+</html>

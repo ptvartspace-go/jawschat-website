@@ -53,7 +53,7 @@
   }
 
   /* ── GLOBAL NAV (matches jawschat.com) ── */
-  .site-nav {
+  nav {
     position: fixed;
     top: 0; left: 0; right: 0;
     z-index: 100;
@@ -600,7 +600,7 @@
 
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
-    .site-nav { padding: 0 1rem; }
+    nav { padding: 0 1rem; }
     .nav-links { gap: 0.5rem; }
     .nav-links .nav-portal,
     .nav-links .nav-cta,
@@ -639,13 +639,13 @@
 <body>
 
 <!-- ── GLOBAL NAV ── -->
-<nav class="site-nav">
+<nav>
   <a href="/" class="nav-logo">
     <img src="https://jawschat.com/shark.gif" alt="JawsChat">
     <div class="nav-logo-text">JAWS<span>Chat</span></div>
   </a>
   <ul class="nav-links">
-    <li><a href="/learn/" class="nav-learn is-active"><span class="lbl-lg">無料英検教材</span><span class="lbl-sm">無料教材</span></a></li>
+    <li><a href="/learn/eiken/pre1/speaking/" class="nav-learn is-active"><span class="lbl-lg">無料英検教材</span><span class="lbl-sm">無料教材</span></a></li>
     <li><a href="/student-portal.html" class="nav-portal"><span class="lbl-lg">マイページ · My Portal</span><span class="lbl-sm">マイページ</span></a></li>
     <li><a href="/#pricing" class="nav-cta"><span class="lbl-lg">体験レッスン予約</span><span class="lbl-sm">体験予約</span></a></li>
   </ul>
@@ -654,7 +654,7 @@
 <!-- ── SECTION SUB-BAR ── -->
 <div class="subbar">
   <div class="subbar-inner">
-    <a class="crumb" href="/learn/">学習リソース</a>
+    <span class="crumb">学習リソース</span>
     <span class="crumb-sep">›</span>
     <span class="crumb">英検</span>
     <span class="crumb-sep">›</span>
