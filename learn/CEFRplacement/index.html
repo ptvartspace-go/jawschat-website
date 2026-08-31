@@ -99,8 +99,10 @@
   .q-text { font-size:1.22rem; font-weight:800; line-height:1.45; color:var(--ink); margin-bottom:1.3rem; animation:fadeUp 0.28s ease both; }
 
   .options { display:flex; flex-direction:column; gap:0.6rem; }
-  .opt { display:flex; align-items:flex-start; gap:0.7rem; text-align:left; font-family:'Nunito',sans-serif; font-size:0.98rem; font-weight:600; color:var(--ink); background:var(--surface); border:1.5px solid var(--bg-mid); border-radius:var(--radius-sm); padding:0.8rem 1rem; cursor:pointer; transition:all 0.14s ease; width:100%; }
-  .opt:hover { border-color:var(--terra); background:var(--terra-light); }
+  .opt { -webkit-tap-highlight-color:transparent; display:flex; align-items:flex-start; gap:0.7rem; text-align:left; font-family:'Nunito',sans-serif; font-size:0.98rem; font-weight:600; color:var(--ink); background:var(--surface); border:1.5px solid var(--bg-mid); border-radius:var(--radius-sm); padding:0.8rem 1rem; cursor:pointer; transition:all 0.14s ease; width:100%; }
+  @media (hover:hover) and (pointer:fine) {
+    .opt:hover { border-color:var(--terra); background:var(--terra-light); }
+  }
   .opt:focus-visible { outline:2px solid var(--terra); outline-offset:2px; }
   .opt .key { flex-shrink:0; width:22px; height:22px; border-radius:6px; background:var(--bg-warm); color:var(--ink-soft); font-size:0.72rem; font-weight:800; display:flex; align-items:center; justify-content:center; margin-top:1px; }
   .opt.chosen { border-color:var(--terra); background:var(--terra); color:#fff; }
