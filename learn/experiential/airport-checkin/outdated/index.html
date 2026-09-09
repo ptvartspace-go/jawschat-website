@@ -4,24 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Airport Check-In English Simulation (A2–B1) | JawsChat</title>
-<meta name="description" content="無料の空港チェックイン英語シミュレーション。チェックイン、荷物、座席、セキュリティ質問、空港アナウンスをA2–B1レベルで体験しながら練習できます。">
+<meta name="description" content="Practice airport check-in English with an interactive A2–B1 simulation: baggage, seat selection, check-in questions, payment and airport announcements.">
 <link rel="canonical" href="https://jawschat.com/learn/experiential/airport-checkin/">
-<meta property="og:type" content="website">
 <meta property="og:title" content="Airport Check-In English Simulation (A2–B1) | JawsChat">
-<meta property="og:description" content="Interactive airport English practice with check-in, baggage, seats, announcements and optional microphone input.">
+<meta property="og:description" content="An interactive airport check-in English experience with real-world choices, baggage, seats, payment and announcements.">
+<meta property="og:type" content="website">
 <meta property="og:url" content="https://jawschat.com/learn/experiential/airport-checkin/">
-<meta property="og:image" content="https://jawschat.com/shark.gif">
-<meta property="og:site_name" content="JawsChat">
-<link rel="icon" href="https://jawschat.com/shark.gif">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Noto+Sans+JP:wght@400;500;700&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --cream-border: #ddd8cc;
-    --terra: #c04a2a;
-    --terra-light: #d4603e;
-    --white: #ffffff;
+  /* Global JawsChat Learn-page token aliases */
+  --cream-border: #ddd8cc;
+  --terra: #c04a2a;
+  --terra-light: #d4603e;
+  --white: #ffffff;
+
     /* JawsChat palette - mapped from the PTV experiential token names so every
        downstream var() reference below re-themes automatically. */
     --accent: #c04a2a;       /* terra */
@@ -68,17 +67,77 @@
 
 
   /* ── GLOBAL NAV — exact match to /learn/ ── */
-  .site-nav {position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(245,240,230,0.98);border-bottom:1px solid var(--cream-border);padding:0 2rem;height:64px;display:flex;align-items:center;justify-content:space-between;}
-  .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}.nav-logo img{width:36px;height:36px;object-fit:contain}
-  .nav-logo-text{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.06em;color:var(--ink);line-height:1}.nav-logo-text span{color:var(--terra)}
-  .nav-links{display:flex;align-items:center;gap:2rem;list-style:none}.nav-links a{text-decoration:none;font-size:.85rem;font-weight:600;color:var(--ink-soft);letter-spacing:.04em;transition:color .2s}.nav-links a:hover{color:var(--terra)}
-  .nav-cta{background:var(--terra);color:var(--white)!important;padding:.5rem 1.2rem;border-radius:100px;white-space:nowrap;transition:background .2s!important}.nav-cta:hover{background:var(--terra-light)!important;color:var(--white)!important}
-  .nav-links .nav-portal{background:#2d7a5f;color:var(--white)!important;font-size:.78rem;font-weight:700;padding:.5rem 1.1rem;border-radius:100px;letter-spacing:.03em;white-space:nowrap;transition:background .2s!important}.nav-links .nav-portal:hover{background:#236650;color:var(--white)!important}
-  .nav-links .nav-learn{background:transparent;color:var(--ink)!important;font-size:.78rem;font-weight:700;padding:.45rem 1.1rem;border:1.5px solid var(--ink);border-radius:100px;letter-spacing:.03em;white-space:nowrap;transition:border-color .2s,color .2s!important}.nav-links .nav-learn:hover,.nav-links .nav-learn.is-active{border-color:var(--terra);color:var(--terra)!important}
-  .lbl-sm{display:none}
-  @media(max-width:900px){.site-nav{padding:0 1rem}.nav-links{gap:.5rem}.nav-links .nav-portal,.nav-links .nav-cta,.nav-links .nav-learn{padding:.5rem .85rem;font-size:.72rem}}
-  @media(max-width:640px){.lbl-lg{display:none}.lbl-sm{display:inline}}
-  @media(max-width:400px){.nav-logo-text{display:none}.nav-links .nav-portal,.nav-links .nav-cta,.nav-links .nav-learn{padding:.5rem .7rem;font-size:.68rem}}
+  .site-nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(245,240,230,0.98);
+    border-bottom: 1px solid var(--cream-border);
+    padding: 0 2rem;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-logo img { width: 36px; height: 36px; object-fit: contain; }
+  .nav-logo-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.06em;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .nav-logo-text span { color: var(--terra); }
+  .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+  .nav-links a {
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ink-soft);
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--terra); }
+  .nav-cta {
+    background: var(--terra);
+    color: var(--white) !important;
+    padding: 0.5rem 1.2rem;
+    border-radius: 100px;
+    white-space: nowrap;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--terra-light) !important; color: var(--white) !important; }
+  .nav-links .nav-portal {
+    background: #2d7a5f;
+    color: var(--white) !important;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 0.5rem 1.1rem;
+    border-radius: 100px;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+    transition: background 0.2s !important;
+  }
+  .nav-links .nav-portal:hover { background: #236650; color: var(--white) !important; }
+  .nav-links .nav-learn {
+    background: transparent;
+    color: var(--ink) !important;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 0.45rem 1.1rem;
+    border: 1.5px solid var(--ink);
+    border-radius: 100px;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+    transition: border-color 0.2s, color 0.2s !important;
+  }
+  .nav-links .nav-learn:hover,
+  .nav-links .nav-learn.is-active {
+    border-color: var(--terra);
+    color: var(--terra) !important;
+  }
+  .lbl-sm { display: none; }
 
   /* ---------- Worksheet masthead ---------- */
   .site-header {
@@ -126,7 +185,11 @@
     background: var(--card);
     color: var(--ink-soft);
   }
-  .level-pill { border-color: rgba(192,74,42,0.28); background: var(--accent-light); color: var(--accent); }
+  .level-pill {
+    border-color: rgba(192,74,42,0.28);
+    background: var(--accent-light);
+    color: var(--accent);
+  }
   .masthead-right {
     display: flex;
     align-items: center;
@@ -150,16 +213,6 @@
   .voice-toggle:hover { border-color: var(--accent-mid); }
   .voice-toggle.on { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
   .voice-toggle:disabled { opacity: 0.5; cursor: not-allowed; }
-  .speak-now {
-    margin: 2px 0 18px; padding: 9px 14px; border-radius: 10px;
-    font-family: 'Nunito', sans-serif; font-size: 0.9rem; font-weight: 700;
-    display: flex; align-items: center; gap: 9px;
-    background: var(--accent-light); color: var(--accent); border: 1.5px solid var(--accent);
-  }
-  .speak-now.retry { background: #fff4ec; border-color: var(--accent-mid); }
-  .speak-now.info  { background: var(--paper); color: var(--ink-soft); border-color: var(--line); font-weight: 600; }
-  .speak-now .dot  { width: 9px; height: 9px; border-radius: 50%; background: var(--accent); animation: speakpulse 1s infinite; flex: 0 0 auto; }
-  @keyframes speakpulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: .3; transform: scale(.65); } }
 
   .speak-btn {
     display: inline-flex;
@@ -860,6 +913,55 @@
     .choices.grid2 { grid-template-columns: 1fr; }
     .bp-grid { grid-template-columns: 1fr 1fr; }
   }
+
+  /* ---------- JawsChat learning navigation ---------- */
+  .learn-nav {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 12px 16px 0;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    font-size: 0.78rem;
+  }
+  .learn-nav a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 700;
+  }
+  .learn-nav a:hover { text-decoration: underline; }
+  .learn-nav .sep { color: var(--ink-faint); }
+  .worksheet-footer {
+    max-width: 1080px;
+    margin: 34px auto 0;
+    padding: 20px 16px 0;
+    border-top: 1px solid var(--line);
+    text-align: center;
+    color: var(--ink-faint);
+    font-size: 0.76rem;
+  }
+  .worksheet-footer a { color: var(--accent); text-decoration: none; font-weight: 700; }
+
+
+  @media (max-width: 900px) {
+    .site-nav { padding: 0 1rem; }
+    .nav-links { gap: 0.5rem; }
+    .nav-links .nav-portal,
+    .nav-links .nav-cta,
+    .nav-links .nav-learn { padding: 0.5rem 0.85rem; font-size: 0.72rem; }
+  }
+  @media (max-width: 640px) {
+    .lbl-lg { display: none; }
+    .lbl-sm { display: inline; }
+  }
+  @media (max-width: 400px) {
+    .nav-logo-text { display: none; }
+    .nav-links .nav-portal,
+    .nav-links .nav-cta,
+    .nav-links .nav-learn { padding: 0.5rem 0.7rem; font-size: 0.68rem; }
+  }
+
 </style>
 </head>
 <body>
@@ -887,9 +989,16 @@
     <span class="level-pill">A2 – B1</span>
     <span class="vol-pill">Experiential</span>
     <button type="button" class="voice-toggle" id="voiceToggle" aria-pressed="true">🔊 Voice: <span id="voiceToggleLabel">On</span></button>
-    <button type="button" class="voice-toggle" id="speakToggle" aria-pressed="true">🎤 Speak: <span id="speakToggleLabel">On</span></button>
   </div>
 </header>
+<nav class="learn-nav" aria-label="Breadcrumb">
+  <a href="/learn/">無料教材 · Learn</a>
+  <span class="sep">›</span>
+  <a href="/learn/experiential/">体験型ワークシート · Experiential</a>
+  <span class="sep">›</span>
+  <span>Airport Check-In</span>
+</nav>
+
 
 <div class="wrap">
 
@@ -978,11 +1087,11 @@
 
 </div>
 
-<footer style="max-width:1080px;margin:34px auto 0;padding:20px 16px;text-align:center;border-top:1px solid var(--line);font-size:.76rem;color:var(--ink-faint);line-height:1.8;">
-  <a href="/learn/experiential/" style="color:var(--accent);text-decoration:none;font-weight:700;">← 体験型ワークシート一覧 · Experiential Worksheets</a><br>
-  © 2026 JawsChat · PTV — Polmeartagami Ventures · jawschat.com<br>
-  <span style="font-size:.7rem;">無断転載・複製を禁じます。 · All rights reserved.</span>
-</footer>
+
+<div class="worksheet-footer">
+  <div><a href="/learn/experiential/">← 体験型ワークシート一覧へ · Back to Experiential Worksheets</a></div>
+  <div style="margin-top:8px;">© 2026 JawsChat · PTV — Polmeartagami Ventures · jawschat.com<br><span style="font-size:.72rem;opacity:.72;">無断転載・複製を禁じます。 · All rights reserved.</span></div>
+</div>
 
 <script>
 (function () {
@@ -1233,7 +1342,6 @@
       stop();
       var a = new Audio(uri);
       current = a;
-      a.addEventListener('ended', function () { document.dispatchEvent(new Event('voice:clipended')); });
       if (btnEl) {
         a.addEventListener('play',  function () { btnEl.classList.add('speaking'); });
         var clear = function () { btnEl.classList.remove('speaking'); };
@@ -1977,168 +2085,6 @@
     render();
   }
 
-  // ---- Speech input (Web Speech API, closed-vocabulary) ----------------------
-  var SpeechInput = (function () {
-    var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-    var supported = !!SR;
-    var enabled = supported;   // auto-on wherever the browser supports it
-    var rec = null, listening = false, retries = 0, activeCands = null;
-    var MAX_RETRIES = 1;       // one gentle re-ask, then fall back to tapping
-    var THRESH = 0.45;         // minimum confidence to accept a spoken answer
-    var MARGIN = 0.10;         // top must beat runner-up by this much
-
-    function norm(s) { return String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').replace(/\s+/g, ' ').trim(); }
-    var NUMW = { zero:'0', oh:'0', one:'1', two:'2', three:'3', four:'4', five:'5', six:'6', seven:'7', eight:'8', nine:'9', ten:'10' };
-    var LETW = { ay:'a', eh:'a', hey:'a', bee:'b', see:'c', sea:'c', cee:'c', dee:'d', gee:'g', jay:'j' };
-    // Fold spoken forms toward the written option: number words -> digits,
-    // letter homophones -> letters, and merge "c 2" -> "c2" (gate codes).
-    function canon(s) {
-      var toks = norm(s).split(' ').filter(Boolean).map(function (w) { return NUMW[w] || LETW[w] || w; });
-      var out = [];
-      for (var i = 0; i < toks.length; i++) {
-        if (/^[a-z]$/.test(toks[i]) && i + 1 < toks.length && /^\d+$/.test(toks[i + 1])) { out.push(toks[i] + toks[i + 1]); i++; }
-        else out.push(toks[i]);
-      }
-      return out.join(' ');
-    }
-
-    function lev(a, b) {
-      if (a === b) return 1;
-      if (!a.length || !b.length) return 0;
-      var m = a.length, n = b.length, d = [], i, j;
-      for (i = 0; i <= m; i++) d[i] = [i];
-      for (j = 0; j <= n; j++) d[0][j] = j;
-      for (i = 1; i <= m; i++) for (j = 1; j <= n; j++)
-        d[i][j] = Math.min(d[i-1][j] + 1, d[i][j-1] + 1, d[i-1][j-1] + (a[i-1] === b[j-1] ? 0 : 1));
-      return 1 - d[m][n] / Math.max(m, n);
-    }
-
-    function updateToggleUI() {
-      var btn = document.getElementById('speakToggle');
-      var label = document.getElementById('speakToggleLabel');
-      if (!btn) return;
-      if (!supported) {
-        btn.setAttribute('disabled', 'disabled'); btn.classList.remove('on');
-        btn.setAttribute('aria-pressed', 'false'); if (label) label.textContent = 'n/a';
-        return;
-      }
-      btn.removeAttribute('disabled');
-      btn.classList.toggle('on', enabled);
-      btn.setAttribute('aria-pressed', enabled ? 'true' : 'false');
-      if (label) label.textContent = enabled ? 'On' : 'Off';
-    }
-
-    function toggle() { if (!supported) return; enabled = !enabled; if (!enabled) { stop(); hideBadge(); } updateToggleUI(); }
-
-    // Live, on-screen, answerable option buttons and the phrase to match each.
-    function candidates() {
-      var out = [];
-      var nodes = document.querySelectorAll('.choice:not([disabled]), .pay-opt:not([disabled])');
-      Array.prototype.forEach.call(nodes, function (b) {
-        if (b.offsetParent === null) return;            // not visible
-        var labelEl = b.querySelector('.label'), phrase;
-        if (labelEl) { var c = labelEl.cloneNode(true); var sub = c.querySelector('.sub'); if (sub) sub.parentNode.removeChild(sub); phrase = c.textContent; }
-        else phrase = b.textContent;
-        out.push({ el: b, phrase: canon(phrase) });
-      });
-      return out;
-    }
-
-    function scoreAll(transcript, cands) {
-      var t = canon(transcript), tt = t.split(' ').filter(Boolean);
-      return cands.map(function (c) {
-        var ct = c.phrase.split(' ').filter(Boolean);
-        var inter = ct.filter(function (w) { return tt.indexOf(w) >= 0; }).length;
-        var uni = {}; ct.concat(tt).forEach(function (w) { uni[w] = 1; });
-        var jacc = inter / (Object.keys(uni).length || 1);
-        var incl = (t && c.phrase && (t.indexOf(c.phrase) >= 0 || c.phrase.indexOf(t) >= 0)) ? 0.25 : 0;
-        var score = Math.max(jacc, lev(t, c.phrase)) + incl;
-        return { el: c.el, phrase: c.phrase, score: score };
-      }).sort(function (a, b) { return b.score - a.score; });
-    }
-
-    function badgeHost(cands) {
-      if (cands && cands.length) { var cont = cands[0].el.closest('.choices, .pay-options'); if (cont) return cont; }
-      return document.getElementById('questionArea') || document.getElementById('stepArea');
-    }
-    function hideBadge() { var b = document.getElementById('speakNowBadge'); if (b && b.parentNode) b.parentNode.removeChild(b); }
-    function showBadge(cands, text, cls, pulse) {
-      hideBadge();
-      var host = badgeHost(cands); if (!host) return;
-      var d = document.createElement('div');
-      d.className = 'speak-now' + (cls ? ' ' + cls : ''); d.id = 'speakNowBadge';
-      if (pulse) { var dot = document.createElement('span'); dot.className = 'dot'; d.appendChild(dot); }
-      d.appendChild(document.createTextNode(text));
-      if (host.classList && (host.classList.contains('choices') || host.classList.contains('pay-options'))) {
-        host.parentNode.insertBefore(d, host.nextSibling);
-      } else { host.appendChild(d); }
-    }
-    function flash(text) { showBadge(null, text, 'info', false); setTimeout(hideBadge, 2600); }
-
-    function stop() { if (rec) { try { rec.abort(); } catch (e) {} } listening = false; }
-
-    function onResult(e) {
-      var res = e.results[0], cands = activeCands || [], all = [];
-      for (var i = 0; i < res.length; i++) all = all.concat(scoreAll(res[i].transcript, cands));
-      all.sort(function (a, b) { return b.score - a.score; });
-      var top = all[0], second = null;
-      for (var k = 1; k < all.length; k++) { if (top && all[k].el !== top.el) { second = all[k]; break; } }
-      if (top && top.score >= THRESH && (!second || top.score - second.score >= MARGIN - 1e-9)) {
-        hideBadge(); retries = 0; top.el.click();       // select exactly as a tap would
-      } else { retryOrGiveUp(); }
-    }
-    function onError(ev) {
-      if (ev.error === 'not-allowed' || ev.error === 'service-not-allowed') {
-        enabled = false; updateToggleUI(); flash('\uD83C\uDF99 Mic unavailable \u2014 tap your answer.'); listening = false; return;
-      }
-      retryOrGiveUp();   // no-speech / aborted / network etc.
-    }
-    function onEnd() { listening = false; }
-
-    // One reused recognition instance for the whole session. Creating a fresh
-    // SpeechRecognition per question makes some browsers re-request the mic each
-    // time; reusing a single instance keeps one grant.
-    function ensureRec() {
-      if (rec) return rec;
-      rec = new SR();
-      rec.lang = 'en-US'; rec.interimResults = false; rec.maxAlternatives = 3; rec.continuous = false;
-      rec.onresult = onResult; rec.onerror = onError; rec.onend = onEnd;
-      return rec;
-    }
-
-    function listen() {
-      if (!supported || !enabled || listening) return;
-      var cands = candidates();
-      if (!cands.length) return;                         // nothing to answer by voice here
-      activeCands = cands;
-      listening = true;
-      showBadge(cands, 'Speak now\u2026', '', true);
-      try { ensureRec().start(); } catch (e) { listening = false; }
-    }
-
-    function retryOrGiveUp() {
-      listening = false;
-      if (retries < MAX_RETRIES && enabled) {
-        retries++;
-        showBadge(candidates(), 'Sorry \u2014 could you say that again?', 'retry', false);
-        setTimeout(function () { if (enabled) listen(); }, 800);
-      } else { retries = 0; flash('No problem \u2014 tap your answer.'); }
-    }
-
-    function init() {
-      updateToggleUI();
-      var btn = document.getElementById('speakToggle');
-      if (btn) btn.addEventListener('click', toggle);
-      // Auto-listen once the spoken prompt / announcement has finished.
-      document.addEventListener('voice:clipended', function () {
-        retries = 0;
-        if (enabled) setTimeout(listen, 250);
-      });
-    }
-
-    return { init: init, stop: stop };
-  })();
-
   // ---- Init ----------------------------------------------------------------
   document.getElementById('phraseToggle').addEventListener('click', function () {
     document.getElementById('phraseBank').classList.toggle('open');
@@ -2146,7 +2092,6 @@
   document.getElementById('resetBtn').addEventListener('click', doReset);
 
   Voice.init();
-  SpeechInput.init();
   resetState();
   render();
 })();
