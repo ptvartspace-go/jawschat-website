@@ -186,7 +186,7 @@ const qs=[
   {"text":"Daily meetings can ( ) a surprising amount of time that employees could spend on other work.","blank":"eat up","jp":"（時間などを）大量に使う・食い尽くす","jpSentence":"毎日の会議は、従業員がほかの仕事に使えるはずの時間を驚くほど大量に使ってしまうことがある。","note":"「eat up」は句動詞で、ここでは「（時間などを）大量に使う・食い尽くす」という意味で使われています。文全体の状況から意味を判断しましょう。","opts":["eat up","get across","hold off","sail through"],"ans":0},
   {"text":"The suspect changed his appearance in an attempt to ( ) the police for several weeks.","blank":"evade","jp":"逃れる・回避する","jpSentence":"容疑者は数週間警察から逃れるために外見を変えた。","note":"「evade」は動詞で、ここでは「逃れる・回避する」という意味で使われています。文全体の状況から意味を判断しましょう。","opts":["deprive","evade","foster","permeate"],"ans":1},
   {"text":"Living abroad gave Ken a different ( ) on problems he had once considered purely domestic.","blank":"perspective","jp":"視点・観点","jpSentence":"海外で暮らしたことで、ケンは以前は国内だけの問題だと思っていた事柄について異なる視点を得た。","note":"「perspective」は名詞で、ここでは「視点・観点」という意味で使われています。文全体の状況から意味を判断しましょう。","opts":["ascent","coincidence","perspective","expertise"],"ans":2},
-  {"text":"Although the apartment is expensive, its ( ) living room is large enough for family gatherings.","blank":"spacious","jp":"広々とした","jpSentence":"そのアパートは高価だが、広々とした居間は家族の集まりにも十分な広さがある。","note":"「spacious」は形容詞で、ここでは「広々とした」という意味で使われています。文全体の状況から意味を判断しましょう。","opts":["adjacent","spacious","abundant","eloquent"],"ans":1},
+  {"text":"Although the apartment is quite small overall, its ( ) living room is large enough for family gatherings.","blank":"spacious","jp":"広々とした","jpSentence":"そのアパートは全体としてはかなり小さいが、居間は広々としていて家族の集まりにも十分な広さがある。","note":"「spacious」は、部屋や建物などが「広々としていて十分な空間がある」ことを表す形容詞です。「a spacious room / kitchen / interior」のように使います。ここでは「apartment is quite small overall」との対比が手掛かりです。","opts":["adjacent","spacious","abundant","eloquent"],"ans":1},
   {"text":"More than 2,000 students are expected to ( ) in the university's new online course.","blank":"enroll","jp":"入学する・登録する","jpSentence":"2,000人を超える学生が、その大学の新しいオンライン講座に登録する見込みだ。","note":"「enroll」は動詞で、ここでは「入学する・登録する」という意味で使われています。文全体の状況から意味を判断しましょう。","opts":["undermine","sustain","enroll","generate"],"ans":2},
   {"text":"The software can ( ) large video files so they take up much less storage space.","blank":"compress","jp":"圧縮する・短縮する","jpSentence":"そのソフトウェアは大きな動画ファイルを圧縮し、使用する保存容量を大幅に減らすことができる。","note":"「compress」は動詞で、ここでは「圧縮する・短縮する」という意味で使われています。文全体の状況から意味を判断しましょう。","opts":["cooperate","erode","exaggerate","compress"],"ans":3},
   {"text":"The long-standing ( ) between the two companies has pushed both of them to develop better products.","blank":"rivalry","jp":"競争関係・ライバル意識","jpSentence":"その2社の長年の競争関係は、双方により良い製品を開発させる原動力となってきた。","note":"「rivalry」は名詞で、ここでは「競争関係・ライバル意識」という意味で使われています。文全体の状況から意味を判断しましょう。","opts":["turbulence","riot","diagram","rivalry"],"ans":3},
@@ -268,7 +268,7 @@ function showScore(){
   $count.textContent=queue.length+' / '+queue.length;
   const total=queue.length,pct=Math.round(score/total*100),c=ringColor(pct);
   const R=46,SW=8,circ=2*Math.PI*R,dash=circ*pct/100;
-  const msg=pct>=80?'素晴らしい！合格レベルです。Excellent — you\'re ready for Pre-1!':pct>=60?'よくできました！もう少し練習しましょう。Good effort — keep practicing!':'がんばって！毎日少しずつ勉強しましょう。Keep going — little by little!';
+  const msg=pct>=80?'素晴らしい！この語彙セットではとても良い成績です。Excellent — strong performance on this Pre-1 vocabulary set!':pct>=60?'よくできました！間違えた単語を復習しましょう。Good effort — review the words you missed!':'復習してもう一度挑戦しましょう。Keep going — review the words and try again!';
   const review=log.map((l,i)=>`
     <div class="rev-item">
       <div class="rev-num">Question ${i+1}</div>
@@ -292,7 +292,7 @@ function showScore(){
             <span class="score-ring-denom">of ${total}</span>
           </div>
         </div>
-        <div class="score-title">${pct}% — ${pct>=80?'合格！Outstanding':pct>=60?'Good effort!':'Keep going!'}</div>
+        <div class="score-title">${pct}% — ${pct>=80?'Excellent!':pct>=60?'Good effort!':'Keep going!'}</div>
         <div class="score-msg">${msg}</div>
         <button class="btn-retry" onclick="queue=shuffle(qs);cur=0;score=0;log=[];render()">↺ もう一度 | Try Again</button>
       </div>

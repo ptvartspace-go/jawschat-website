@@ -268,7 +268,7 @@ function showScore(){
   $count.textContent=queue.length+' / '+queue.length;
   const total=queue.length,pct=Math.round(score/total*100),c=ringColor(pct);
   const R=46,SW=8,circ=2*Math.PI*R,dash=circ*pct/100;
-  const msg=pct>=80?'素晴らしい！合格レベルです。Excellent — you\'re ready for Pre-1!':pct>=60?'よくできました！もう少し練習しましょう。Good effort — keep practicing!':'がんばって！毎日少しずつ勉強しましょう。Keep going — little by little!';
+  const msg=pct>=80?'素晴らしい！この語彙セットではとても良い成績です。Excellent — strong performance on this Pre-1 vocabulary set!':pct>=60?'よくできました！間違えた単語を復習しましょう。Good effort — review the words you missed!':'復習してもう一度挑戦しましょう。Keep going — review the words and try again!';
   const review=log.map((l,i)=>`
     <div class="rev-item">
       <div class="rev-num">Question ${i+1}</div>
@@ -292,7 +292,7 @@ function showScore(){
             <span class="score-ring-denom">of ${total}</span>
           </div>
         </div>
-        <div class="score-title">${pct}% — ${pct>=80?'合格！Outstanding':pct>=60?'Good effort!':'Keep going!'}</div>
+        <div class="score-title">${pct}% — ${pct>=80?'Excellent!':pct>=60?'Good effort!':'Keep going!'}</div>
         <div class="score-msg">${msg}</div>
         <button class="btn-retry" onclick="queue=shuffle(qs);cur=0;score=0;log=[];render()">↺ もう一度 | Try Again</button>
       </div>

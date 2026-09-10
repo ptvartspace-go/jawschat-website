@@ -227,7 +227,7 @@ const qs=[
     text:"A: The conference room is empty but the lights are on.\nB: Someone ( ) forgot to turn them off when the meeting ended.",
     blank:"presumably",jp:"たぶん・おそらく",
     jpSentence:"A：会議室は空なのに電気がついていますね。\nB：会議が終わったときに誰かが消し忘れたのでしょう。",
-    note:"「presumably」は「おそらく・たぶん」という意味の副詞で、根拠のある推測を表します。「probably」より確度が高いニュアンスを持ちます。",
+    note:"「presumably」は、分かっている事実や状況から「おそらく〜だろう」と合理的に推測するときに使う副詞です。「probably」と単純な確率の高低で区別するより、推測の根拠があることに注目すると理解しやすいです。",
     opts:["presumably","deliberately","frantically","reluctantly"],ans:0
   },
   {
@@ -252,11 +252,11 @@ const qs=[
     opts:["refrain","aspire","stagger","denounce"],ans:0
   },
   {
-    text:"The environmental group decided to ( ) the candidate after she announced a detailed plan to reduce carbon emissions by 40 percent.",
+    text:"Impressed by her detailed plan to reduce carbon emissions by 40 percent, the environmental group decided to publicly ( ) the candidate.",
     blank:"endorse",jp:"支持する・推薦する",
-    jpSentence:"環境団体は、その候補者が炭素排出量を40%削減する詳細な計画を発表した後、彼女を支持することを決定した。",
+    jpSentence:"炭素排出量を40%削減するという彼女の詳細な計画を高く評価し、環境団体はその候補者を公に支持することを決定した。",
     note:"「endorse」は人・計画・製品などを「支持する・推薦する」という意味の動詞です。「endorse a candidate/product/policy」の形でよく使われます。",
-    opts:["endorse","withhold","scrutinize","denounce"],ans:0
+    opts:["endorse","withhold","scrutinize","overlook"],ans:0
   },
   {
     text:"All food manufacturers operating in the region are required by law to ( ) with the new nutritional labeling regulations by the end of the year.",
@@ -358,7 +358,7 @@ function showScore(){
   $count.textContent=queue.length+' / '+queue.length;
   const total=queue.length,pct=Math.round(score/total*100),c=ringColor(pct);
   const R=46,SW=8,circ=2*Math.PI*R,dash=circ*pct/100;
-  const msg=pct>=80?'素晴らしい！合格レベルです。Excellent — you\'re ready for Pre-1!':pct>=60?'よくできました！もう少し練習しましょう。Good effort — keep practicing!':'がんばって！毎日少しずつ勉強しましょう。Keep going — little by little!';
+  const msg=pct>=80?'素晴らしい！この語彙セットではとても良い成績です。Excellent — strong performance on this Pre-1 vocabulary set!':pct>=60?'よくできました！間違えた単語を復習しましょう。Good effort — review the words you missed!':'復習してもう一度挑戦しましょう。Keep going — review the words and try again!';
   const review=log.map((l,i)=>`
     <div class="rev-item">
       <div class="rev-num">Question ${i+1}</div>
@@ -382,7 +382,7 @@ function showScore(){
             <span class="score-ring-denom">of ${total}</span>
           </div>
         </div>
-        <div class="score-title">${pct}% — ${pct>=80?'合格！Outstanding':pct>=60?'Good effort!':'Keep going!'}</div>
+        <div class="score-title">${pct}% — ${pct>=80?'Excellent!':pct>=60?'Good effort!':'Keep going!'}</div>
         <div class="score-msg">${msg}</div>
         <button class="btn-retry" onclick="queue=shuffle(qs);cur=0;score=0;log=[];render()">↺ もう一度 | Try Again</button>
       </div>

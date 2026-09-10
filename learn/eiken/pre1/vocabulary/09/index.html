@@ -192,7 +192,7 @@ const qs=[
   {"text":"We've discussed the proposal long enough; it's time to ( ) the actual work.","blank":"get down to","jp":"〜に本腰を入れて取りかかる","jpSentence":"その提案については十分話し合ったので、そろそろ実際の仕事に本腰を入れて取りかかる時だ。","note":"「get down to」は句動詞で、ここでは「〜に本腰を入れて取りかかる」という意味で使われています。文全体の状況から意味を判断しましょう。","opts":["phase out","add up","make up for","get down to"],"ans":3},
   {"text":"If the team is to meet the deadline, everyone will need to ( ) their best effort this week.","blank":"put forth","jp":"（努力などを）出す・発揮する","jpSentence":"チームが締め切りに間に合わせるには、今週は全員が最大限の努力をしなければならない。","note":"「put forth」は句動詞で、ここでは「（努力などを）出す・発揮する」という意味で使われています。文全体の状況から意味を判断しましょう。","opts":["feel for","put forth","wear off","point out"],"ans":1},
   {"text":"When several classmates mocked the new student, Hana decided to ( ) him and told them to stop.","blank":"stick up for","jp":"〜を擁護する","jpSentence":"何人かのクラスメートが転校生をからかったとき、ハナは彼を擁護し、やめるよう言った。","note":"「stick up for」は句動詞で、ここでは「〜を擁護する」という意味で使われています。文全体の状況から意味を判断しましょう。","opts":["fall back on","get down","stick up for","put forth"],"ans":2},
-  {"text":"The journalist used a ( ) company name in the article to protect the identity of the real business.","blank":"fictitious","jp":"架空の","jpSentence":"その記者は実在する会社の身元を守るため、記事の中で架空の会社名を使った。","note":"「fictitious」は形容詞で、ここでは「架空の」という意味で使われています。文全体の状況から意味を判断しましょう。","opts":["fictitious","widespread","severe","skeptical"],"ans":0},
+  {"text":"To protect the real business's identity, the journalist invented a completely ( ) company name for the article.","blank":"fictitious","jp":"架空の・作り上げた","jpSentence":"実在する会社の身元を守るため、その記者は記事用に完全に架空の会社名を作り出した。","note":"「fictitious」は、実在せず意図的に作られた「架空の」という意味です。「a fictitious name / character / account」のように使います。ここでは「invented」が明確な手掛かりです。","opts":["fictitious","confidential","legitimate","prominent"],"ans":0},
   {"text":"Employees can lose their jobs for sharing ( ) government documents with unauthorized people.","blank":"classified","jp":"機密扱いの","jpSentence":"職員は機密扱いの政府文書を権限のない人と共有すると職を失うことがある。","note":"「classified」は形容詞で、ここでは「機密扱いの」という意味で使われています。文全体の状況から意味を判断しましょう。","opts":["classified","disposable","arbitrary","remarkable"],"ans":0},
   {"text":"Residents were ordered to ( ) the building immediately after engineers found serious structural damage.","blank":"vacate","jp":"立ち退く・明け渡す","jpSentence":"技術者が深刻な構造上の損傷を発見したため、住民は直ちに建物から立ち退くよう命じられた。","note":"「vacate」は動詞で、ここでは「立ち退く・明け渡す」という意味で使われています。文全体の状況から意味を判断しましょう。","opts":["vacate","undergo","enroll","curb"],"ans":0},
   {"text":"Parents who constantly buy children everything they demand may ( ) them.","blank":"spoil","jp":"甘やかす","jpSentence":"子どもが欲しがるものを何でもいつも買い与える親は、子どもを甘やかしてしまうことがある。","note":"「spoil」は動詞で、ここでは「甘やかす」という意味で使われています。文全体の状況から意味を判断しましょう。","opts":["scrutinize","spoil","disrupt","inhibit"],"ans":1}
@@ -268,7 +268,7 @@ function showScore(){
   $count.textContent=queue.length+' / '+queue.length;
   const total=queue.length,pct=Math.round(score/total*100),c=ringColor(pct);
   const R=46,SW=8,circ=2*Math.PI*R,dash=circ*pct/100;
-  const msg=pct>=80?'素晴らしい！合格レベルです。Excellent — you\'re ready for Pre-1!':pct>=60?'よくできました！もう少し練習しましょう。Good effort — keep practicing!':'がんばって！毎日少しずつ勉強しましょう。Keep going — little by little!';
+  const msg=pct>=80?'素晴らしい！この語彙セットではとても良い成績です。Excellent — strong performance on this Pre-1 vocabulary set!':pct>=60?'よくできました！間違えた単語を復習しましょう。Good effort — review the words you missed!':'復習してもう一度挑戦しましょう。Keep going — review the words and try again!';
   const review=log.map((l,i)=>`
     <div class="rev-item">
       <div class="rev-num">Question ${i+1}</div>
@@ -292,7 +292,7 @@ function showScore(){
             <span class="score-ring-denom">of ${total}</span>
           </div>
         </div>
-        <div class="score-title">${pct}% — ${pct>=80?'合格！Outstanding':pct>=60?'Good effort!':'Keep going!'}</div>
+        <div class="score-title">${pct}% — ${pct>=80?'Excellent!':pct>=60?'Good effort!':'Keep going!'}</div>
         <div class="score-msg">${msg}</div>
         <button class="btn-retry" onclick="queue=shuffle(qs);cur=0;score=0;log=[];render()">↺ もう一度 | Try Again</button>
       </div>

@@ -189,7 +189,7 @@ const qs=[
   {"text":"You can leave after dinner, but I may ( ) for a while to help clean up.","blank":"stick around","jp":"その場に残る・近くにいる","jpSentence":"あなたは夕食後に帰っていいですが、私は片づけを手伝うためにしばらく残るかもしれません。","note":"「stick around」は句動詞で、ここでは「その場に残る・近くにいる」という意味で使われています。文全体の状況から意味を判断しましょう。","opts":["stick around","wear off","add up","live up to"],"ans":0},
   {"text":"The research team spent three weeks in a ( ) village that could only be reached by boat.","blank":"remote","jp":"人里離れた・遠隔の","jpSentence":"研究チームは、船でしか行けない人里離れた村で3週間を過ごした。","note":"「remote」は形容詞で、ここでは「人里離れた・遠隔の」という意味で使われています。文全体の状況から意味を判断しましょう。","opts":["plausible","classified","remote","conventional"],"ans":2},
   {"text":"The speaker's voice was barely ( ) at the back of the hall, so the technician increased the volume.","blank":"audible","jp":"聞こえる・聞き取れる","jpSentence":"講演者の声は会場の後方ではほとんど聞こえなかったため、技術者が音量を上げた。","note":"「audible」は形容詞で、ここでは「聞こえる・聞き取れる」という意味で使われています。文全体の状況から意味を判断しましょう。","opts":["audible","insufficient","fictitious","moderate"],"ans":0},
-  {"text":"The railway added more morning trains after complaints from ( ) who were tired of overcrowding.","blank":"commuter","jp":"通勤者・通学者","jpSentence":"鉄道会社は、混雑にうんざりした通勤者からの苦情を受け、朝の列車を増便した。","note":"「commuter」は名詞で、ここでは「通勤者・通学者」という意味で使われています。文全体の状況から意味を判断しましょう。","opts":["commuter","anatomy","deficiency","conviction"],"ans":0},
+  {"text":"The railway added more morning trains after complaints from ( ) who were tired of overcrowding.","blank":"commuters","jp":"通勤者・通学者","jpSentence":"鉄道会社は、混雑にうんざりした通勤者たちからの苦情を受け、朝の列車を増便した。","note":"「commuter」は、定期的に自宅と職場・学校の間を通う「通勤者・通学者」です。ここでは複数の利用者からの苦情を表すため、複数形の「commuters」が必要です。「commuter train / commuter rail」のような表現もよく使われます。","opts":["commuters","pedestrians","spectators","residents"],"ans":0},
   {"text":"In addition to her salary, the salesperson earns a ( ) on every contract she successfully closes.","blank":"commission","jp":"歩合・手数料","jpSentence":"その営業担当者は給与に加え、成立させた契約ごとに歩合を受け取る。","note":"「commission」は名詞で、ここでは「歩合・手数料」という意味で使われています。文全体の状況から意味を判断しましょう。","opts":["consensus","diagnosis","rivalry","commission"],"ans":3},
   {"text":"Driver ( ) is a serious safety risk on long overnight journeys.","blank":"fatigue","jp":"疲労・疲れ","jpSentence":"運転者の疲労は、長時間の夜間運転では重大な安全上の危険となる。","note":"「fatigue」は名詞で、ここでは「疲労・疲れ」という意味で使われています。文全体の状況から意味を判断しましょう。","opts":["diagram","mural","tolerance","fatigue"],"ans":3},
   {"text":"The interview ended ( ) when the candidate stood up and left without explaining why.","blank":"abruptly","jp":"突然に・不意に","jpSentence":"候補者が理由を説明せず立ち上がって退出したため、面接は突然終わった。","note":"「abruptly」は副詞で、ここでは「突然に・不意に」という意味で使われています。文全体の状況から意味を判断しましょう。","opts":["abruptly","presumably","respectively","deliberately"],"ans":0},
@@ -268,7 +268,7 @@ function showScore(){
   $count.textContent=queue.length+' / '+queue.length;
   const total=queue.length,pct=Math.round(score/total*100),c=ringColor(pct);
   const R=46,SW=8,circ=2*Math.PI*R,dash=circ*pct/100;
-  const msg=pct>=80?'素晴らしい！合格レベルです。Excellent — you\'re ready for Pre-1!':pct>=60?'よくできました！もう少し練習しましょう。Good effort — keep practicing!':'がんばって！毎日少しずつ勉強しましょう。Keep going — little by little!';
+  const msg=pct>=80?'素晴らしい！この語彙セットではとても良い成績です。Excellent — strong performance on this Pre-1 vocabulary set!':pct>=60?'よくできました！間違えた単語を復習しましょう。Good effort — review the words you missed!':'復習してもう一度挑戦しましょう。Keep going — review the words and try again!';
   const review=log.map((l,i)=>`
     <div class="rev-item">
       <div class="rev-num">Question ${i+1}</div>
@@ -292,7 +292,7 @@ function showScore(){
             <span class="score-ring-denom">of ${total}</span>
           </div>
         </div>
-        <div class="score-title">${pct}% — ${pct>=80?'合格！Outstanding':pct>=60?'Good effort!':'Keep going!'}</div>
+        <div class="score-title">${pct}% — ${pct>=80?'Excellent!':pct>=60?'Good effort!':'Keep going!'}</div>
         <div class="score-msg">${msg}</div>
         <button class="btn-retry" onclick="queue=shuffle(qs);cur=0;score=0;log=[];render()">↺ もう一度 | Try Again</button>
       </div>
