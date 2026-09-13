@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>体験型英語ワークシート（無料） | Experiential English Practice | JawsChat</title>
+<meta name="description" content="JawsChatの無料体験型英語ワークシート。空港・旅行・仕事・日常生活など、実際の場面をシミュレーションしながら英語を練習できます。">
+<link rel="canonical" href="https://jawschat.com/learn/experiential/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="体験型英語ワークシート（無料） | JawsChat">
+<meta property="og:description" content="実際の場面を体験しながら英語を使う、無料のインタラクティブ英語シミュレーション。">
+<meta property="og:url" content="https://jawschat.com/learn/experiential/">
+<meta property="og:image" content="https://jawschat.com/shark.gif">
+<meta property="og:site_name" content="JawsChat">
+<link rel="icon" href="https://jawschat.com/shark.gif">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Noto+Sans+JP:wght@300;400;500;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream:#f5f0e6; --cream-dark:#ede8dc; --cream-border:#ddd8cc;
+  --ink:#1a1a1a; --ink-soft:#444; --ink-muted:#888;
+  --terra:#c04a2a; --terra-light:#d4603e; --terra-pale:#f9ede9;
+  --teal:#2d7a5f; --teal-pale:#e4f1ea; --white:#fff;
+  --shadow:0 4px 40px rgba(100,80,60,.10);
+  --shadow-lg:0 12px 60px rgba(100,80,60,.16);
+  --radius:12px; --radius-lg:16px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Nunito','Noto Sans JP',sans-serif;background:var(--cream);color:var(--ink);line-height:1.7;overflow-x:hidden}
+a:focus-visible,button:focus-visible{outline:2px solid var(--terra);outline-offset:3px;border-radius:4px}
+
+
+  /* ── GLOBAL NAV — exact match to /learn/ ── */
+  .site-nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(245,240,230,0.98);
+    border-bottom: 1px solid var(--cream-border);
+    padding: 0 2rem;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-logo img { width: 36px; height: 36px; object-fit: contain; }
+  .nav-logo-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.06em;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .nav-logo-text span { color: var(--terra); }
+  .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+  .nav-links a {
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ink-soft);
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--terra); }
+  .nav-cta {
+    background: var(--terra);
+    color: var(--white) !important;
+    padding: 0.5rem 1.2rem;
+    border-radius: 100px;
+    white-space: nowrap;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--terra-light) !important; color: var(--white) !important; }
+  .nav-links .nav-portal {
+    background: #2d7a5f;
+    color: var(--white) !important;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 0.5rem 1.1rem;
+    border-radius: 100px;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+    transition: background 0.2s !important;
+  }
+  .nav-links .nav-portal:hover { background: #236650; color: var(--white) !important; }
+  .nav-links .nav-learn {
+    background: transparent;
+    color: var(--ink) !important;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 0.45rem 1.1rem;
+    border: 1.5px solid var(--ink);
+    border-radius: 100px;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+    transition: border-color 0.2s, color 0.2s !important;
+  }
+  .nav-links .nav-learn:hover,
+  .nav-links .nav-learn.is-active {
+    border-color: var(--terra);
+    color: var(--terra) !important;
+  }
+  .lbl-sm { display: none; }
+
+
+/* Breadcrumb subbar — matched to Eiken section */
+.subbar{position:fixed;top:64px;left:0;right:0;z-index:99;height:42px;background:var(--cream-dark);border-bottom:1px solid var(--cream-border);display:flex;align-items:center;overflow-x:auto;scrollbar-width:none}
+.subbar::-webkit-scrollbar{display:none}
+.subbar-inner{max-width:940px;width:100%;margin:0 auto;padding:0 2rem;display:flex;align-items:center;gap:.5rem;white-space:nowrap}
+.crumb{font-family:'Noto Sans JP',sans-serif;font-size:.75rem;font-weight:500;color:var(--ink-muted);text-decoration:none;letter-spacing:.03em}
+.crumb:hover{color:var(--terra)}
+.crumb-sep{color:var(--cream-border);font-size:.7rem}
+.crumb-current{color:var(--ink);font-weight:700}
+
+/* Header */
+.page-header{background:var(--ink);padding:8.5rem 2rem 3.25rem;position:relative;overflow:hidden}
+.header-inner{max-width:940px;margin:0 auto;position:relative}
+.header-kicker{font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--terra);margin-bottom:1rem;display:flex;align-items:center;gap:10px}
+.header-kicker::before{content:'';display:block;width:26px;height:2px;background:var(--terra)}
+.header-title-jp{font-family:'Noto Sans JP',sans-serif;font-size:clamp(1.6rem,4.5vw,2.35rem);font-weight:700;color:var(--white);line-height:1.35;margin-bottom:.35rem}
+.header-title-en{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.2rem,7vw,3.4rem);letter-spacing:.05em;line-height:1;color:rgba(255,255,255,.28);margin-bottom:1.25rem}
+.header-sub{font-family:'Noto Sans JP',sans-serif;font-size:.92rem;font-weight:300;color:rgba(255,255,255,.62);max-width:39rem;line-height:1.9;margin-bottom:.7rem}
+.header-sub-en{font-size:.86rem;color:rgba(255,255,255,.48);max-width:39rem;line-height:1.75;margin-bottom:1.5rem}
+.header-badges{display:flex;flex-wrap:wrap;gap:8px}
+.hbadge{font-family:'DM Mono',monospace;font-size:.68rem;font-weight:500;padding:5px 13px;border-radius:100px;border:1px solid;letter-spacing:.04em}
+.hbadge-terra{color:var(--terra-light);border-color:rgba(192,74,42,.5);background:rgba(192,74,42,.10)}
+.hbadge-plain{color:rgba(255,255,255,.6);border-color:rgba(255,255,255,.18);background:rgba(255,255,255,.04)}
+
+/* How to use */
+.howto{background:#111;border-top:1px solid rgba(255,255,255,.07)}
+.howto-inner{max-width:940px;margin:0 auto;padding:1.4rem 2rem}
+.howto-label{font-size:.68rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--terra);margin-bottom:.8rem}
+.howto-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;list-style:none}
+.howto-steps li{font-family:'Noto Sans JP',sans-serif;font-size:.8rem;color:rgba(255,255,255,.62);display:flex;gap:9px;align-items:flex-start}
+.step-num{font-family:'DM Mono',monospace;font-size:.65rem;font-weight:500;width:21px;height:21px;border-radius:50%;border:1px solid rgba(192,74,42,.6);color:var(--terra-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.step-copy span{display:block;color:rgba(255,255,255,.38);font-size:.72rem;margin-top:2px}
+
+/* Main and worksheet cards */
+main{max-width:940px;margin:0 auto;padding:3.25rem 2rem 4rem}
+.section-label{font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--terra);margin-bottom:.4rem}
+.section-title-jp{font-family:'Noto Sans JP',sans-serif;font-size:1.3rem;font-weight:700;color:var(--ink);line-height:1.4;margin-bottom:.25rem}
+.section-title-en{font-family:'DM Mono',monospace;font-size:.68rem;color:var(--ink-muted);letter-spacing:.07em;text-transform:uppercase;margin-bottom:1.5rem}
+.ws-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem;margin-bottom:3.5rem}
+.ws-card{background:var(--white);border-radius:var(--radius-lg);border:1px solid var(--cream-border);overflow:hidden;text-decoration:none;color:inherit;display:flex;flex-direction:column;box-shadow:var(--shadow);transition:transform .2s ease,box-shadow .2s ease}
+.ws-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+.ws-bar{height:5px;background:var(--terra);flex-shrink:0}
+.ws-body{padding:1.25rem 1.4rem 1.35rem;flex:1;display:flex;flex-direction:column;gap:.65rem}
+.ws-meta{display:flex;align-items:center;justify-content:space-between;gap:.5rem}
+.ws-num{font-family:'DM Mono',monospace;font-size:.68rem;font-weight:500;color:var(--terra);letter-spacing:.06em}
+.ws-tag{font-family:'DM Mono',monospace;font-size:.62rem;padding:3px 9px;border-radius:100px;background:var(--terra-pale);color:var(--terra);letter-spacing:.03em;white-space:nowrap}
+.ws-title{font-size:1.08rem;font-weight:800;color:var(--ink);line-height:1.35}
+.ws-title-jp{font-family:'Noto Sans JP',sans-serif;font-size:.82rem;font-weight:500;color:var(--ink-soft)}
+.ws-desc{font-family:'Noto Sans JP',sans-serif;font-size:.82rem;color:var(--ink-soft);line-height:1.7}
+.ws-desc-en{font-size:.78rem;color:var(--ink-muted);line-height:1.65;flex:1}
+.ws-foot{display:flex;align-items:center;justify-content:space-between;padding:.7rem 1.35rem;border-top:1px solid var(--cream-dark);background:var(--cream)}
+.ws-open{font-family:'DM Mono',monospace;font-size:.68rem;font-weight:500;color:var(--terra);letter-spacing:.05em;display:flex;align-items:center;gap:6px}
+.ws-open svg{width:13px;height:13px;stroke:currentColor;stroke-width:2;fill:none}
+.ws-feats{display:flex;gap:5px}
+.feat{font-family:'DM Mono',monospace;font-size:.58rem;padding:3px 7px;border-radius:100px;background:var(--terra-pale);color:var(--terra)}
+.ws-card.soon{opacity:.6;pointer-events:none;box-shadow:none}
+.ws-card.soon .ws-bar{background:var(--cream-border)}
+.soon-badge{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.05em;color:var(--ink-muted);background:var(--cream-dark);border:1px solid var(--cream-border);border-radius:100px;padding:3px 9px;white-space:nowrap}
+
+/* About / purpose panel */
+.ref{background:var(--ink);border-radius:var(--radius-lg);padding:1.9rem 2rem;margin-bottom:3.5rem}
+.ref-title{font-family:'Noto Sans JP',sans-serif;font-size:.95rem;font-weight:700;color:var(--white);margin-bottom:.2rem}
+.ref-title-en{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--terra-light);margin-bottom:1.2rem}
+.ref-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:.9rem}
+.ref-item{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:var(--radius);padding:.9rem 1rem}
+.ref-label{font-family:'Noto Sans JP',sans-serif;font-size:.82rem;font-weight:700;color:rgba(255,255,255,.9);margin-bottom:4px}
+.ref-label-en{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--terra-light);margin-bottom:6px}
+.ref-value{font-family:'Noto Sans JP',sans-serif;font-size:.78rem;color:rgba(255,255,255,.55);line-height:1.65}
+.ref-value-en{font-size:.73rem;color:rgba(255,255,255,.38);line-height:1.55;margin-top:4px}
+
+/* CTA */
+.cta{background:var(--white);border:1px solid var(--cream-border);border-left:5px solid var(--terra);border-radius:var(--radius-lg);padding:2rem 2.25rem;box-shadow:var(--shadow)}
+.cta-label{font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--terra);margin-bottom:.6rem}
+.cta-title{font-family:'Noto Sans JP',sans-serif;font-size:1.25rem;font-weight:700;line-height:1.5;margin-bottom:.25rem}
+.cta-title-en{font-size:.83rem;color:var(--ink-muted);margin-bottom:.7rem}
+.cta-text{font-family:'Noto Sans JP',sans-serif;font-size:.87rem;color:var(--ink-soft);line-height:1.9;max-width:42rem;margin-bottom:.25rem}
+.cta-text-en{font-size:.8rem;color:var(--ink-muted);line-height:1.7;max-width:42rem;margin-bottom:1.4rem}
+.cta-actions{display:flex;flex-wrap:wrap;gap:.75rem;align-items:center}
+.btn-primary{display:inline-flex;flex-direction:column;align-items:center;background:var(--terra);color:var(--white);text-decoration:none;font-family:'Noto Sans JP',sans-serif;font-weight:700;font-size:.9rem;padding:.75rem 1.6rem;border-radius:100px;line-height:1.35}
+.btn-primary small{font-size:.68rem;font-weight:400;opacity:.85}
+.btn-primary:hover{background:var(--terra-light)}
+.btn-secondary{display:inline-flex;align-items:center;color:var(--ink);text-decoration:none;font-family:'Noto Sans JP',sans-serif;font-weight:700;font-size:.85rem;padding:.75rem 1.5rem;border:1.5px solid var(--ink);border-radius:100px}
+.btn-secondary:hover{border-color:var(--terra);color:var(--terra)}
+
+/* Footer */
+footer{background:var(--ink);border-top:1px solid rgba(255,255,255,.08);padding:2rem;text-align:center;font-size:.78rem;color:rgba(255,255,255,.3);letter-spacing:.04em}
+footer span{color:var(--terra)}
+footer a{color:rgba(255,255,255,.4);text-decoration:none;font-size:.75rem;letter-spacing:.06em}
+footer a:hover{color:var(--terra)}
+.footer-copy{display:block;margin-top:1rem;font-size:.7rem;color:rgba(255,255,255,.22)}
+
+@media(max-width:900px){.site-nav{padding:0 1rem}.nav-links{gap:.5rem}.nav-links .nav-portal,.nav-links .nav-cta,.nav-links .nav-learn{padding:.5rem .85rem;font-size:.72rem}.subbar-inner{padding:0 1rem}}
+@media(max-width:700px){.howto-steps{grid-template-columns:1fr}}
+@media(max-width:640px){.page-header{padding:8rem 1.25rem 2.5rem}.howto-inner{padding:1.25rem}.site-nav{padding:0 1rem}main{padding:2.5rem 1.25rem 3rem}.ws-grid{grid-template-columns:1fr}.ref{padding:1.5rem 1.25rem}.cta{padding:1.6rem 1.35rem}.lbl-lg{display:none}.lbl-sm{display:inline}}
+@media(max-width:400px){.nav-logo-text{display:none}.nav-links .nav-portal,.nav-links .nav-cta,.nav-links .nav-learn{padding:.5rem .7rem;font-size:.68rem}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}.ws-card:hover{transform:none}}
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a href="/" class="nav-logo">
+    <img src="https://jawschat.com/shark.gif" alt="JawsChat">
+    <div class="nav-logo-text">JAWS<span>Chat</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/learn/" class="nav-learn is-active"><span class="lbl-lg">無料英検教材</span><span class="lbl-sm">無料教材</span></a></li>
+    <li><a href="/student-portal.html" class="nav-portal"><span class="lbl-lg">マイページ · My Portal</span><span class="lbl-sm">マイページ</span></a></li>
+    <li><a href="/#pricing" class="nav-cta"><span class="lbl-lg">体験レッスン予約</span><span class="lbl-sm">体験予約</span></a></li>
+  </ul>
+</nav>
+
+<div class="subbar">
+  <div class="subbar-inner">
+    <a class="crumb" href="/learn/">学習リソース · Learn</a>
+    <span class="crumb-sep">›</span>
+    <span class="crumb crumb-current">体験型ワークシート · Experiential</span>
+  </div>
+</div>
+
+<header class="page-header">
+  <div class="header-inner">
+    <div class="header-kicker">JawsChat 無料教材 · Interactive English</div>
+    <h1 class="header-title-jp">体験型英語ワークシート</h1>
+    <div class="header-title-en">Experiential English Practice</div>
+    <p class="header-sub">読むだけではなく、実際の場面を「体験」しながら英語を使う無料教材です。選択・判断・会話・リスニングを組み合わせ、現実に近い流れの中で練習します。</p>
+    <p class="header-sub-en" lang="en">Free interactive simulations that put you inside realistic situations. Make choices, respond to people, listen carefully and practice the English you actually need.</p>
+    <div class="header-badges">
+      <span class="hbadge hbadge-terra">A2–B1</span>
+      <span class="hbadge hbadge-plain">Real-world English</span>
+      <span class="hbadge hbadge-plain">Interactive</span>
+      <span class="hbadge hbadge-plain">登録不要 · No sign-up</span>
+    </div>
+  </div>
+</header>
+
+<div class="howto">
+  <div class="howto-inner">
+    <div class="howto-label">使い方 / How to use</div>
+    <ol class="howto-steps">
+      <li><span class="step-num">1</span><div class="step-copy">場面を読んで状況を確認<span lang="en">Read the situation and understand your goal.</span></div></li>
+      <li><span class="step-num">2</span><div class="step-copy">自分で選んで英語で反応<span lang="en">Make choices and respond in English.</span></div></li>
+      <li><span class="step-num">3</span><div class="step-copy">最後まで進み、もう一度挑戦<span lang="en">Finish the experience, then try again.</span></div></li>
+    </ol>
+  </div>
+</div>
+
+<main>
+  <div class="section-label">Simulations</div>
+  <h2 class="section-title-jp">体験型ワークシート</h2>
+  <div class="section-title-en">Experiential worksheets</div>
+
+  <div class="ws-grid">
+    <a class="ws-card" href="/learn/experiential/airport-checkin/">
+      <div class="ws-bar"></div>
+      <div class="ws-body">
+        <div class="ws-meta">
+          <span class="ws-num">No. 01</span>
+          <span class="ws-tag">Travel English</span>
+        </div>
+        <div class="ws-title">Airport Check-In</div>
+        <div class="ws-title-jp">空港チェックイン英語シミュレーション</div>
+        <div class="ws-desc">Skyline Airwaysの乗客として、チェックイン、荷物、座席選択、セキュリティ質問、搭乗口のアナウンスまで体験します。</div>
+        <div class="ws-desc-en" lang="en">Check in for a Skyline Airways flight, handle your baggage, choose a seat, answer security questions and listen for terminal announcements.</div>
+      </div>
+      <div class="ws-foot">
+        <div class="ws-open">体験する · Start
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+        </div>
+        <div class="ws-feats"><span class="feat">A2–B1</span><span class="feat">AUDIO</span></div>
+      </div>
+    </a>
+
+    <div class="ws-card soon">
+      <div class="ws-bar"></div>
+      <div class="ws-body">
+        <div class="ws-meta">
+          <span class="ws-num" style="color:var(--ink-muted)">No. 02</span>
+          <span class="soon-badge">準備中 · Coming soon</span>
+        </div>
+        <div class="ws-title">Next Real-World Simulation</div>
+        <div class="ws-title-jp">次の体験型ワークシート</div>
+        <div class="ws-desc">旅行・仕事・日常生活など、新しい場面の体験型教材を順次追加していきます。</div>
+        <div class="ws-desc-en" lang="en">More interactive simulations for travel, work and everyday situations will be added as the collection grows.</div>
+      </div>
+      <div class="ws-foot"><div class="ws-open" style="color:var(--ink-muted)">Coming soon</div></div>
+    </div>
+  </div>
+
+  <div class="ref">
+    <div class="ref-title">このシリーズで練習すること</div>
+    <div class="ref-title-en">What you practice</div>
+    <div class="ref-grid">
+      <div class="ref-item">
+        <div class="ref-label">その場で考える</div><div class="ref-label-en">Think in the moment</div>
+        <div class="ref-value">答えを暗記するのではなく、状況を見て自分で判断します。</div>
+        <div class="ref-value-en" lang="en">Respond to the situation instead of memorizing a fixed script.</div>
+      </div>
+      <div class="ref-item">
+        <div class="ref-label">実際に使う表現</div><div class="ref-label-en">Useful language</div>
+        <div class="ref-value">旅行や日常生活で本当に必要になる英語を練習します。</div>
+        <div class="ref-value-en" lang="en">Practice language you can use in real travel and everyday situations.</div>
+      </div>
+      <div class="ref-item">
+        <div class="ref-label">聞いて反応する</div><div class="ref-label-en">Listen and react</div>
+        <div class="ref-value">音声対応の場面では、聞き取った情報を使って次の行動を選びます。</div>
+        <div class="ref-value-en" lang="en">Where audio is available, listen for key information and react to what you hear.</div>
+      </div>
+      <div class="ref-item">
+        <div class="ref-label">何度でも挑戦</div><div class="ref-label-en">Try again</div>
+        <div class="ref-value">違う選択肢を試しながら、表現と対応力を身につけます。</div>
+        <div class="ref-value-en" lang="en">Repeat the simulation, try different choices and build confidence.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta">
+    <div class="cta-label">Practice live</div>
+    <div class="cta-title">シミュレーションの次は、実際の会話で使ってみませんか。</div>
+    <div class="cta-title-en" lang="en">Next, put the same English into a real conversation.</div>
+    <p class="cta-text">体験型ワークシートでは自分のペースで練習できます。JawsChatの25分レッスンでは、オーストラリア人講師と一対一で、同じような実生活の場面を自分の言葉で練習できます。</p>
+    <p class="cta-text-en" lang="en">The simulations let you practice at your own pace. In a 25-minute JawsChat lesson, you can practice similar real-life situations one-to-one with an Australian teacher using your own words.</p>
+    <div class="cta-actions">
+      <a href="https://buy.stripe.com/14AbJ2cQy8Ng5lTgyu1RC03" target="_blank" rel="noopener" class="btn-primary">体験レッスンを予約する<small>25分 · ¥1,000</small></a>
+      <a href="/learn/" class="btn-secondary">学習リソースへ · Back to Learn</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  © 2026 JawsChat · <span>PTV</span> — Polmeartagami Ventures · jawschat.com
+  <br><br>
+  <a href="/jawschat_terms.html">利用規約 · Terms and Conditions</a>
+  &nbsp;&nbsp;·&nbsp;&nbsp;
+  <a href="/learn/">学習リソース · Free Materials</a>
+  <span class="footer-copy">無断転載・複製を禁じます。 · All rights reserved.</span>
+</footer>
+
+<script src="https://ptvartspace-go.github.io/Webstatsmine/tracker.js" data-site="jawschat" defer></script>
+</body>
+</html>
