@@ -62,34 +62,6 @@ button{font:inherit}
 .speak-reset:hover{background:var(--terra-light);border-color:var(--terra)}
 .speak-now.info .speak-reset{display:none}
 .transcript-bar{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 10px}
-.activity-start{
-  margin:0 0 18px;
-  padding:18px;
-  border:1px solid var(--line);
-  border-radius:12px;
-  background:var(--paper);
-  text-align:center;
-}
-.activity-start p{
-  margin:0 0 12px;
-  color:var(--soft);
-  font-size:.9rem;
-}
-.start-conversation-btn{
-  border:0;
-  border-radius:10px;
-  padding:12px 20px;
-  background:var(--ink);
-  color:#fff;
-  font-family:'Nunito',sans-serif;
-  font-weight:800;
-  font-size:1rem;
-  cursor:pointer;
-  box-shadow:var(--shadow);
-}
-.start-conversation-btn:hover{transform:translateY(-1px)}
-.start-conversation-btn:disabled{opacity:.65;cursor:default;transform:none}
-
 .transcript-label{font-size:.68rem;text-transform:uppercase;letter-spacing:.07em;font-weight:800;color:var(--faint);white-space:nowrap}
 .heard{background:var(--warm);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:.82rem;color:var(--soft);min-height:38px}
 
@@ -147,7 +119,6 @@ body{padding-top:106px}
 </style>
 </head>
 <body>
-
 <nav class="site-nav">
   <a href="/" class="nav-logo"><img src="https://jawschat.com/shark.gif" alt="JawsChat"><div class="nav-logo-text">JAWS<span>Chat</span></div></a>
   <ul class="nav-links">
@@ -163,7 +134,8 @@ body{padding-top:106px}
   <div><div class="logo">Jaws<em>Chat</em></div><div class="header-sub">上手になろう · Interactive Speaking Practice</div></div>
   <div class="header-pills">
     <span class="pill level">A2 – B1</span><span class="pill mode">Restaurant Simulation</span>
-    <button class="voice-toggle on" id="voiceToggle" aria-pressed="true">🔊 Waitress voice: <span id="voiceLabel">On</span></button>
+    <button class="voice-toggle on" id="voiceToggle" aria-pressed="true">🔊 Voice: <span id="voiceLabel">On</span></button>
+    <button class="voice-toggle" id="startVoiceBtn" type="button" title="Tap once to enable the embedded Kokoro waitress voice">▶ Start voice</button>
     <span style="font-size:.68rem;color:var(--faint);">音声入力 · Voice input</span>
     <button class="voice-toggle on" id="speakToggle" aria-pressed="true">🎤 Speak: <span id="speakToggleLabel">On</span></button>
   </div>
@@ -198,10 +170,6 @@ body{padding-top:106px}
         <p class="prompt">What do you say?</p>
         <div class="choices" id="choices"></div>
 
-        <div class="activity-start" id="activityStart">
-          <p>Take a moment to look at the scene and read the introduction. Start when you are ready.</p>
-          <button class="start-conversation-btn" id="startConversationBtn" type="button">▶ Start Conversation</button>
-        </div>
         <div class="micbox">
           <div id="speakNowHost"></div>
           <div class="transcript-bar">
@@ -257,10 +225,8 @@ body{padding-top:106px}
     </aside>
   </div>
   <footer>© JawsChat · Interactive English Speaking Practice · A2–B1</footer>
-
 <div class="site-footer">© 2026 JawsChat · PTV — Polmeartagami Ventures · jawschat.com<br><a href="/jawschat_terms.html">利用規約 · Terms and Conditions</a> · <a href="/learn/">学習リソース · Free Materials</a></div>
 <script src="https://ptvartspace-go.github.io/Webstatsmine/tracker.js" data-site="jawschat" defer></script>
-
 </main>
 
 <script>
@@ -713,7 +679,6 @@ let current="attention";
 let log=[];
 let state={meal:"Chicken pasta ❌",drink:"Iced tea · waiting",service:"Very busy",situation:"Wrong meal delivered",dessert:false,bill:false,billError:false,billFixed:false,paid:false,payment:null,note:"The waiter is passing your table carrying two plates. You need to get their attention first."};
 let voiceOn=true;
-let activityStarted=false;
 let recognition=null;
 
 const Voice=(function(){
@@ -762,7 +727,7 @@ const Voice=(function(){
       setTimeout(()=>document.dispatchEvent(new Event("voice:clipended")),80);
       return;
     }
-    if(!activityStarted || !voiceOn || !unlocked){
+    if(!voiceOn || !unlocked){
       setTimeout(()=>document.dispatchEvent(new Event("voice:clipended")),100);
       return;
     }
@@ -846,7 +811,7 @@ function render(){
   choices.querySelectorAll(".choice").forEach(b=>b.onclick=()=>choose(n.options[+b.dataset.i]));
   document.getElementById("heard").textContent="Waiting for your response…";document.getElementById("voiceMatch").textContent="";document.getElementById("voiceMatch").className="voice-match";
   renderSide();
-  if(activityStarted) setTimeout(()=>document.dispatchEvent(new CustomEvent("restaurant:turnrendered",{detail:{hasStaff:!!n.staff}})),30);
+  setTimeout(()=>document.dispatchEvent(new CustomEvent("restaurant:turnrendered",{detail:{hasStaff:!!n.staff}})),30);
 }
 function renderSide(){
   document.getElementById("mealStatus").textContent=state.meal;
@@ -956,7 +921,16 @@ document.getElementById("voiceToggle").onclick=function(){
   document.getElementById("voiceLabel").textContent=voiceOn?"On":"Off";
   if(!voiceOn) Voice.stop();
 };
-
+document.getElementById("startVoiceBtn").onclick=async function(){
+  const ok=await Voice.unlock();
+  if(ok){
+    this.textContent="✓ Voice ready";
+    this.classList.add("on");
+    this.disabled=true;
+  }else{
+    this.textContent="Tap again to enable voice";
+  }
+};
 
 const SpeechInput=(function(){
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
@@ -1053,15 +1027,9 @@ const SpeechInput=(function(){
     rec.onerror=onError;
     rec.onend=()=>{
       listening=false;
-      if(!activityStarted || matchedThisTurn) return;
-      if(utteranceBuffer.trim()){
+      if(!matchedThisTurn && utteranceBuffer.trim()){
         if(matchTimer) clearTimeout(matchTimer);
-        matchTimer=setTimeout(()=>{
-          interpretBufferedSpeech();
-          if(!matchedThisTurn && activeNode===current && !listening){
-            restartAfterPartial();
-          }
-        },500);
+        matchTimer=setTimeout(interpretBufferedSpeech,450);
       }
     };
     return rec;
@@ -1076,18 +1044,6 @@ const SpeechInput=(function(){
     let hits=0;
     s.forEach(w=>{if(tSet.has(w)) hits++;});
     return Math.min(1,hits/Math.max(1,t.length));
-  }
-
-
-  function restartAfterPartial(){
-    if(!enabled || matchedThisTurn) return;
-    listening=false;
-    if(rec){try{rec.abort()}catch(e){}}
-    setTimeout(()=>{
-      if(enabled && !matchedThisTurn && activeNode===current){
-        listen(true);
-      }
-    },220);
   }
 
   function interpretBufferedSpeech(){
@@ -1134,7 +1090,6 @@ const SpeechInput=(function(){
     }else{
       if(spokenWords < Math.min(3,targetWords) || top.coverage < 0.38){
         showBadge("Keep speaking…","processing",true,true);
-        restartAfterPartial();
         return;
       }
       retryOrGiveUp();
@@ -1179,20 +1134,18 @@ const SpeechInput=(function(){
     retryOrGiveUp();
   }
 
-  function listen(continueUtterance=false){
-    if(!activityStarted || !supported || !enabled || listening) return;
+  function listen(){
+    if(!supported||!enabled||listening) return;
     const node=NODES[current];
     if(!node||!node.options||!node.options.length) return;
     if(activeNode!==current){
       utteranceBuffer="";
       matchedThisTurn=false;
       retries=0;
-    }else if(!continueUtterance && !utteranceBuffer){
-      matchedThisTurn=false;
     }
     activeNode=current;
     listening=true;
-    showBadge(continueUtterance ? "Keep speaking…" : "Speak now…",continueUtterance?"processing":"",true,true);
+    showBadge("Speak now…","",true,true);
     const heard=document.getElementById("heard");
     if(heard && !utteranceBuffer) heard.textContent="Listening…";
     try{ensureRec().start()}catch(e){listening=false;}
@@ -1229,11 +1182,11 @@ const SpeechInput=(function(){
     if(btn) btn.addEventListener("click",toggle);
     document.addEventListener("voice:clipended",()=>{
       retries=0;
-      if(activityStarted && enabled) setTimeout(()=>listen(false),250);
+      if(enabled) setTimeout(listen,250);
     });
     // If a turn has no waiter audio (narrative-only), still start listening shortly after render.
     document.addEventListener("restaurant:turnrendered",(e)=>{
-      if(!activityStarted || !enabled) return;
+      if(!enabled) return;
       const detail=e.detail||{};
       if(!detail.hasStaff) setTimeout(listen,350);
     });
@@ -1241,24 +1194,6 @@ const SpeechInput=(function(){
 
   return {init,stop,listen};
 })();
-
-
-document.getElementById("startConversationBtn").onclick=async function(){
-  this.disabled=true;
-  this.textContent="Starting…";
-  const ok=await Voice.unlock();
-  activityStarted=true;
-
-  const startBox=document.getElementById("activityStart");
-  if(startBox) startBox.style.display="none";
-
-  const node=NODES[current];
-  if(node && node.staff && voiceOn && ok){
-    setTimeout(()=>speak(node.staff),120);
-  }else if(node && node.options && node.options.length){
-    setTimeout(()=>SpeechInput.listen(),180);
-  }
-};
 
 SpeechInput.init();
 render();
