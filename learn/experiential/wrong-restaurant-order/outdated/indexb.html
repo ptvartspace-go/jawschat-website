@@ -132,7 +132,7 @@ footer{text-align:center;color:var(--faint);font-size:.72rem;margin-top:28px}
 }
 
 
-/* JawsChat website integration */
+/* JawsChat global navigation + experiential breadcrumb */
 body{padding-top:106px}
 .site-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(245,240,230,.98);border-bottom:1px solid var(--line);padding:0 2rem;height:64px;display:flex;align-items:center;justify-content:space-between}
 .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}.nav-logo img{width:36px;height:36px;object-fit:contain}.nav-logo-text{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.06em;color:var(--ink);line-height:1}.nav-logo-text span{color:var(--terra)}
@@ -237,10 +237,10 @@ body{padding-top:106px}
       <section class="card panel">
         <h2>Running bill</h2>
         <div class="bill" id="billPanel">
-          <div class="bill-row"><span>Grilled chicken</span><span>$14.80</span></div>
-          <div class="bill-row"><span>Iced tea</span><span>$4.00</span></div>
-          <div class="bill-row hidden" id="dessertLine"><span>Cheesecake</span><span id="dessertPrice">$6.50</span></div>
-          <div class="bill-row total"><span>Current total</span><span id="totalPrice">$18.80</span></div>
+          <div class="bill-row"><span>Grilled chicken</span><span>¥1,480</span></div>
+          <div class="bill-row"><span>Iced tea</span><span>¥400</span></div>
+          <div class="bill-row hidden" id="dessertLine"><span>Cheesecake</span><span id="dessertPrice">¥650</span></div>
+          <div class="bill-row total"><span>Current total</span><span id="totalPrice">¥1,880</span></div>
         </div>
       </section>
 
@@ -256,7 +256,7 @@ body{padding-top:106px}
       </section>
     </aside>
   </div>
-  <footer>© JawsChat · Interactive English Speaking Practice</footer>
+  <footer>© JawsChat · Interactive English Speaking Practice · A2–B1</footer>
 
 <div class="site-footer">© 2026 JawsChat · PTV — Polmeartagami Ventures · jawschat.com<br><a href="/jawschat_terms.html">利用規約 · Terms and Conditions</a> · <a href="/learn/">学習リソース · Free Materials</a></div>
 <script src="https://ptvartspace-go.github.io/Webstatsmine/tracker.js" data-site="jawschat" defer></script>
@@ -621,7 +621,7 @@ const NODES = {
   },
   billWrong:{
     stage:"9 · Check the bill",progress:90,
-    narrative:"The waiter places the bill on the table. You notice the cheesecake has been charged at $6.50.",
+    narrative:"The waiter places the bill on the table. You notice the cheesecake has been charged at ¥650.",
     staff:"Here you go. No rush.",
     options:[
       {t:"Excuse me, I think the dessert has been added to the bill.",next:"billFix"},
@@ -858,13 +858,13 @@ function renderSide(){
   dl.classList.toggle("hidden",!state.dessert);
   const dessertPrice=document.getElementById("dessertPrice");
   if(state.dessert){
-    dessertPrice.textContent=state.billError&&!state.billFixed?"$6.50":"COMPLIMENTARY";
+    dessertPrice.textContent=state.billError&&!state.billFixed?"¥650":"COMPLIMENTARY";
     dl.classList.toggle("problem",state.billError&&!state.billFixed);
     dl.classList.toggle("comp",!state.billError||state.billFixed);
   }
-  let total=18.80;
-  if(state.dessert && state.billError && !state.billFixed) total+=6.50;
-  document.getElementById("totalPrice").textContent="$"+total.toFixed(2);
+  let total=1880;
+  if(state.dessert && state.billError && !state.billFixed) total+=650;
+  document.getElementById("totalPrice").textContent="¥"+total.toLocaleString();
 }
 function finish(){
   state.situation="Dinner finished";
