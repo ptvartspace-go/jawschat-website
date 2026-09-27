@@ -131,49 +131,12 @@
 
   .nav-links .nav-cta { white-space: nowrap; }
 
-  /* Temporary enrolment pause */
-  .disabled-cta {
-    cursor: not-allowed !important;
-    opacity: 0.58;
-    user-select: none;
-  }
-
-  .disabled-cta:hover {
-    transform: none !important;
-  }
-
-  .nav-links span.nav-cta {
-    font-size: 0.85rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-  }
-
-  .site-notice {
-    margin-top: 64px;
-    background: var(--terra-pale);
-    border-bottom: 1px solid rgba(192,74,42,0.22);
-    color: var(--ink-soft);
-    padding: 0.85rem 1.25rem;
-    text-align: center;
-    font-family: 'Noto Sans JP', sans-serif;
-    font-size: 0.9rem;
-    line-height: 1.7;
-  }
-
-  .site-notice strong { color: var(--terra); }
-
-  .site-notice a {
-    color: var(--terra);
-    font-weight: 700;
-    text-underline-offset: 3px;
-  }
-
   .lbl-sm { display: none; }
 
   /* ── HERO ── */
   .hero {
     min-height: 100vh;
-    padding: 72px 2rem 80px;
+    padding: 100px 2rem 80px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -937,7 +900,7 @@
 
   @media (max-width: 480px) {
     section { padding: 4rem 1.25rem; }
-    .hero { padding: 60px 1.25rem 60px; }
+    .hero { padding: 90px 1.25rem 60px; }
     .hero-logo-block { padding: 1.75rem 1.25rem; }
     .about-photo { width: 120px; height: 145px; }
     .lbl-lg { display: none; }
@@ -1148,15 +1111,9 @@
   <ul class="nav-links">
     <li><a href="/learn/" class="nav-learn"><span class="lbl-lg">無料英検教材</span><span class="lbl-sm">無料教材</span></a></li>
     <li><a href="student-portal.html" class="nav-portal"><span class="lbl-lg">マイページ · My Portal</span><span class="lbl-sm">マイページ</span></a></li>
-    <li><span class="nav-cta disabled-cta" aria-disabled="true"><span class="lbl-lg">新規受付休止中</span><span class="lbl-sm">受付休止中</span></span></li>
+    <li><a href="#pricing" class="nav-cta"><span class="lbl-lg">体験レッスン予約</span><span class="lbl-sm">体験予約</span></a></li>
   </ul>
 </nav>
-<!-- TEMPORARY ENROLMENT NOTICE -->
-<div class="site-notice" role="status">
-  <strong>現在、新規生徒の受付を一時休止しております。</strong><br>
-  ご迷惑をおかけして申し訳ありません。無料教材は引き続きご利用いただけますので、ぜひ<a href="/learn/">無料教材をご覧ください</a>。
-</div>
-
 
 <!-- HERO -->
 <section class="hero">
@@ -1172,11 +1129,10 @@
         Real conversation. Real progress. No textbooks, no scripts — just you and a qualified native English teacher talking about things that actually matter to you.
       </p>
       <div class="hero-actions">
-        <!-- TEMPORARILY DISABLED STRIPE LINK: https://buy.stripe.com/14AbJ2cQy8Ng5lTgyu1RC03 -->
-<span class="btn-primary disabled-cta" aria-disabled="true">
-          現在受付休止中
+        <a href="https://buy.stripe.com/14AbJ2cQy8Ng5lTgyu1RC03" target="_blank" class="btn-primary">
+          体験レッスンを予約する
           <small>¥1,000 · 25分</small>
-        </span>
+        </a>
         <a href="#pricing" class="btn-secondary">料金を見る</a>
       </div>
       <div class="hero-trust">
@@ -1396,8 +1352,7 @@
           <li>LINEサポート</li>
           <li>未使用レッスン繰り越し（最大3回）</li>
         </ul>
-        <!-- TEMPORARILY DISABLED STRIPE LINK: https://buy.stripe.com/dRm4gA8Aie7Ag0x6XU1RC0b -->
-<span class="plan-cta plan-cta-outline disabled-cta" aria-disabled="true">現在受付休止中</span>
+        <a href="https://buy.stripe.com/dRm4gA8Aie7Ag0x6XU1RC0b" target="_blank" class="plan-cta plan-cta-outline">このプランを選ぶ</a>
       </div>
 
       <!-- LIGHT -->
@@ -1417,8 +1372,7 @@
           <li>LINEサポート</li>
           <li>未使用レッスン繰り越し（最大6回）</li>
         </ul>
-        <!-- TEMPORARILY DISABLED STRIPE LINK: https://buy.stripe.com/7sYbJ2eYG6F84hP2HE1RC0d -->
-<span class="plan-cta plan-cta-outline disabled-cta" aria-disabled="true">現在受付休止中</span>
+        <a href="https://buy.stripe.com/7sYbJ2eYG6F84hP2HE1RC0d" target="_blank" class="plan-cta plan-cta-outline">このプランを選ぶ</a>
       </div>
 
       <!-- REGULAR -->
@@ -1440,8 +1394,7 @@
           <li>月次進捗レポート</li>
           <li>未使用レッスン繰り越し（最大12回）</li>
         </ul>
-        <!-- TEMPORARILY DISABLED STRIPE LINK: https://buy.stripe.com/6oU3cwg2K8Ng7u15TQ1RC0a -->
-<span class="plan-cta plan-cta-white disabled-cta" aria-disabled="true">現在受付休止中</span>
+        <a href="https://buy.stripe.com/6oU3cwg2K8Ng7u15TQ1RC0a" target="_blank" class="plan-cta plan-cta-white">このプランを選ぶ</a>
       </div>
 
       <!-- INTENSIVE -->
@@ -1462,8 +1415,7 @@
           <li>月次進捗レポート</li>
           <li>未使用レッスン繰り越し（最大18回）</li>
         </ul>
-        <!-- TEMPORARILY DISABLED STRIPE LINK: https://buy.stripe.com/eVq28s2bU6F8eWtgyu1RC0e -->
-<span class="plan-cta plan-cta-outline disabled-cta" aria-disabled="true">現在受付休止中</span>
+        <a href="https://buy.stripe.com/eVq28s2bU6F8eWtgyu1RC0e" target="_blank" class="plan-cta plan-cta-outline">このプランを選ぶ</a>
       </div>
 
     </div>
@@ -1473,8 +1425,7 @@
       <span class="trial-note-price">¥1,000</span>
       <div class="trial-note-en">25-minute trial lesson · No commitment · One per student<br>気に入ったらそのままプランへ / Move straight into a plan if you enjoy it</div>
       <br>
-      <!-- TEMPORARILY DISABLED STRIPE LINK: https://buy.stripe.com/14AbJ2cQy8Ng5lTgyu1RC03 -->
-<span class="btn-primary disabled-cta" style="display:inline-flex; margin-top:0.5rem;" aria-disabled="true">現在受付休止中<small>25分 · ¥1,000</small></span>
+      <a href="https://buy.stripe.com/14AbJ2cQy8Ng5lTgyu1RC03" target="_blank" class="btn-primary" style="display:inline-flex; margin-top:0.5rem;">体験レッスンを予約する<small>25分 · ¥1,000</small></a>
     </div>
 
     <p style="text-align:center; font-size:0.8rem; color:var(--ink-muted); margin-top:1.5rem;">
@@ -1704,11 +1655,10 @@
 <div class="footer-cta">
   <div class="footer-cta-jp">さあ、話してみましょう。</div>
   <div class="footer-cta-en">Your English journey starts with one conversation.</div>
-  <!-- TEMPORARILY DISABLED STRIPE LINK: https://buy.stripe.com/14AbJ2cQy8Ng5lTgyu1RC03 -->
-<span class="btn-primary disabled-cta" style="display:inline-flex;" aria-disabled="true">
-    現在受付休止中
+  <a href="https://buy.stripe.com/14AbJ2cQy8Ng5lTgyu1RC03" target="_blank" class="btn-primary" style="display:inline-flex;">
+    体験レッスンを予約する
     <small>¥1,000 · 25分 · No commitment</small>
-  </span>
+  </a>
 </div>
 
 <footer>
